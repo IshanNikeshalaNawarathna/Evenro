@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Evenro</string>
+    <string name="signInTitel">Sign In</string>
+    <string name="signInSubTitel">Give creatential to sign in your account</string>
+    <string name="input_plaesholder1">Type your Email</string>
+    <string name="input_plaesholder2">Type your Password</string>
+    <string name="singIn_button">SIGN IN</string>
+    <string name="line_text">or continue with</string>
+
+</resources>
