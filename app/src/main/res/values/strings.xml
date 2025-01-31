@@ -6,5 +6,6 @@
     <string name="input_plaesholder2">Type your Password</string>
     <string name="singIn_button">SIGN IN</string>
     <string name="line_text">or continue with</string>
-
+    <string name="bottom_text1">Do not have an account?</string>
+    <string name="bottom_text2">Sign Up</string>
 </resources>
