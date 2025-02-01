@@ -234,7 +234,7 @@
     <Button
         android:id="@+id/button4"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginBottom="25dp"
         android:backgroundTint="@color/button_color"
         android:fontFamily="@font/inter_semi_bold"
