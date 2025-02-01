@@ -16,4 +16,14 @@
     <string name="sign_up_bottom_text1">Alraady have an account ? </string>
     <string name="sign_up_bottom_text2">Sign In</string>
     <string name="item_button">JOIN NOW</string>
+    <string name="event_details_prices">200$</string>
+    <string name="event_details_button">BUY A TICKET</string>
+    <string name="event_details_title_name">Music Show</string>
+    <string name="event_details_locations">ABC Colombo, Colombo</string>
+    <string name="event_details_date">2025-03-05</string>
+    <string name="event_details_name">Ishan Nikeshala</string>
+    <string name="event_details_event_organiser">Event Organiser</string>
+    <string name="event_details_event_description">Description</string>
+    <string name="event_details_event_descriptions">A music event show is an exciting gathering where artists perform live for an audience.
+        It can range from intimate acoustic sessions to large-scale festivals featuring multiple acts.</string>
 </resources>

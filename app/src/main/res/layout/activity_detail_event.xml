@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#4C4C37"
+    tools:context=".DetailEventActivity">
+
+    <FrameLayout
+        android:id="@+id/details_image_frame"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/imgs" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="@string/event_details_title_name"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/details_image_frame" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="87dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/main_color_sub"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:text="@string/event_details_prices"
+        app:iconPadding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout7"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FCF5FD"
+            app:srcCompat="@drawable/baseline_location" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/event_details_locations"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout7"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout7"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout7" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout8"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        android:backgroundTint="#687077"
+        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintTop_toTopOf="@+id/textView12">
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FCF5FD"
+            app:srcCompat="@drawable/baseline_calendar" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/event_details_date"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout8"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout8" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/textView13"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout7"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout9"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/divider3"
+        app:layout_constraintTop_toBottomOf="@+id/divider3">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/profile"
+            app:civ_border_color="#FF000000" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="@string/event_details_name"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout9"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout9" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/event_details_event_organiser"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout9"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout9" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="@string/event_details_event_description"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout9"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout9" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/event_details_event_descriptions"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/button_color"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="@string/event_details_button"
+        app:layout_constraintEnd_toEndOf="@+id/textView18"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView18"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+    <FrameLayout
+        android:id="@+id/call_icon_framelayout"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="@+id/textView15">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/shape_curicle" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#FDFDFD"
+            app:srcCompat="@drawable/baseline_call" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/msg_icon_framelayout"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/call_icon_framelayout"
+        app:layout_constraintEnd_toEndOf="@+id/divider3"
+        app:layout_constraintStart_toEndOf="@+id/call_icon_framelayout"
+        app:layout_constraintTop_toTopOf="@+id/call_icon_framelayout">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/shape_curicle" />
+
+        <ImageButton
+            android:id="@+id/imageButton8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FDFDFD"
+            app:srcCompat="@drawable/baseline_message" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
