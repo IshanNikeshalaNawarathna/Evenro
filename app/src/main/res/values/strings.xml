@@ -26,4 +26,12 @@
     <string name="event_details_event_description">Description</string>
     <string name="event_details_event_descriptions">A music event show is an exciting gathering where artists perform live for an audience.
         It can range from intimate acoustic sessions to large-scale festivals featuring multiple acts.</string>
+    <string name="user_profile_title">Profile</string>
+    <string name="user_profile_name">Ishan Nikeshala Nawarathna</string>
+    <string name="user_profile_name_lable1">Mobile :</string>
+    <string name="user_profile_name_edit1">076-7235-819</string>
+    <string name="user_profile_name_lable2">Email :</string>
+    <string name="user_profile_name_edit2">ishannikeshala1999@gmail.com</string>
+    <string name="user_profile_name_lable3">Address :</string>
+    <string name="user_profile_name_edit3">Colombo, Sri lanka</string>
 </resources>
