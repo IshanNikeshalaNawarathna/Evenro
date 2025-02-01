@@ -8,4 +8,12 @@
     <string name="line_text">or continue with</string>
     <string name="bottom_text1">Do not have an account?</string>
     <string name="bottom_text2">Sign Up</string>
+    <string name="sign_up_title">Sign Up</string>
+    <string name="sign_up_sub_titel">Create account and enjoy all services</string>
+    <string name="sign_up_botton">SIGN UP</string>
+    <string name="input_plaesholder3">Type your full name</string>
+    <string name="input_plaesholder4">Type your confirm password</string>
+    <string name="sign_up_bottom_text1">Alraady have an account ? </string>
+    <string name="sign_up_bottom_text2">Sign In</string>
+    <string name="item_button">JOIN NOW</string>
 </resources>
