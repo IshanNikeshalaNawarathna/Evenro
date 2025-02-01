@@ -24,5 +24,6 @@
     <string name="event_details_name">Ishan Nikeshala</string>
     <string name="event_details_event_organiser">Event Organiser</string>
     <string name="event_details_event_description">Description</string>
-    <string name="event_details_event_descriptios">A music event show is an exciting gathering where artists perform live for an audience. It can range from intimate acoustic sessions to large-scale festivals featuring multiple acts. These events celebrate different genres, bringing people together to enjoy melodies, rhythms, and energetic performances.</string>
+    <string name="event_details_event_descriptions">A music event show is an exciting gathering where artists perform live for an audience.
+        It can range from intimate acoustic sessions to large-scale festivals featuring multiple acts.</string>
 </resources>
