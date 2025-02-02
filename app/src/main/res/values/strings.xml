@@ -47,6 +47,9 @@
     <string name="organizer_tabe2">Event</string>
     <string name="organizer_tabe3">Reviews</string>
     <string name="fragment_titel_about">About</string>
-
+    <string name="search_title">Search</string>
+    <string name="input_plaesholder5">Find amazing events</string>
+    <string name="chipe_title1">Music</string>
+    <string name="chipe_title2">Art</string>
 
 </resources>
