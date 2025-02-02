@@ -34,4 +34,13 @@
     <string name="user_profile_name_edit2">ishannikeshala1999@gmail.com</string>
     <string name="user_profile_name_lable3">Address :</string>
     <string name="user_profile_name_edit3">Colombo, Sri lanka</string>
+    <string name="user_profile_name_lable4">Birthday :</string>
+    <string name="user_profile_edit_title">Edit Profile</string>
+    <string name="user_profile_edit_name">Full Name</string>
+    <string name="user_profile_edit_address">Address</string>
+    <string name="user_profile_edit_mobile">Mobile</string>
+    <string name="user_profile_edit_email">Email</string>
+    <string name="user_profile_edit_dob">Birthday</string>
+    <string name="user_profile_edit_button">SAVE CHANGES</string>
+
 </resources>
