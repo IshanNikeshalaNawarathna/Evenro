@@ -42,5 +42,11 @@
     <string name="user_profile_edit_email">Email</string>
     <string name="user_profile_edit_dob">Birthday</string>
     <string name="user_profile_edit_button">SAVE CHANGES</string>
+    <string name="organizer_profile">Organizer</string>
+    <string name="organizer_tabe1">About</string>
+    <string name="organizer_tabe2">Event</string>
+    <string name="organizer_tabe3">Reviews</string>
+    <string name="fragment_titel_about">About</string>
+
 
 </resources>

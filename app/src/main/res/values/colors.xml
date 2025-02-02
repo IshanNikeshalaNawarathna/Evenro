@@ -8,5 +8,5 @@
     <color name="main_color">#f76b10</color>
     <color name="button_color">#20222c</color>
     <color name="item_button">#20222c</color>
-    <color name="main_color_sub">#95FFCC80</color>
+    <color name="review_star_color">#e2b93b</color>
 </resources>
