@@ -107,7 +107,7 @@
         android:backgroundTint="@color/button_color"
         android:fontFamily="@font/inter_semi_bold"
         android:text="@string/singIn_button"
-        android:textSize="14sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextText2"
         app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="@+id/editTextText2"
