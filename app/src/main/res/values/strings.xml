@@ -59,5 +59,12 @@
     <string name="input_plaesholder9">Event Time *</string>
     <string name="input_plaesholder7">Type your Event Descriptions *</string>
     <string name="add_event_publish_button">PUBLISH EVENT</string>
-
+    <string name="event_cart_title">Ticket</string>
+    <string name="event_cart_gty">Seat</string>
+    <string name="event_cart_price">Ticket Price</string>
+    <string name="event_cart_num_qty">5</string>
+    <string name="event_cart_multi">*</string>
+    <string name="event_cart_num_price">200.00</string>
+    <string name="event_cart_checkout">CHECKOUT</string>
+    <string name="input_plaesholder10">00</string>
 </resources>
