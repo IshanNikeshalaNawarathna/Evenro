@@ -53,5 +53,11 @@
     <string name="chipe_title2">Art</string>
     <string name="chipe_title3">Sport</string>
     <string name="add_event_title">Create New Event</string>
+    <string name="add_event_details">Event Details</string>
+    <string name="input_plaesholder6">Event Name *</string>
+    <string name="input_plaesholder8">Event Date *</string>
+    <string name="input_plaesholder9">Event Time *</string>
+    <string name="input_plaesholder7">Type your Event Descriptions *</string>
+    <string name="add_event_publish_button">PUBLISH EVENT</string>
 
 </resources>
