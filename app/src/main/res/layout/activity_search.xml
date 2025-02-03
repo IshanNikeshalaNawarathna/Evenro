@@ -70,16 +70,16 @@
     </FrameLayout>
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/chip_music_item"
-        style="@style/Widget.Material3.Chip.Filter"
-        android:layout_width="100dp"
+        android:id="@+id/chip_music"
+        android:layout_width="0dp"
         android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/back_button"
-        android:checked="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:chipBackgroundColor="@color/back_button"
         app:chipStrokeColor="@color/back_button"
-        app:layout_constraintStart_toStartOf="@+id/editTextText7"
+        app:layout_constraintEnd_toStartOf="@+id/chip_art"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText7" />
 
     <FrameLayout
@@ -87,66 +87,12 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/chip_music_item"
-        app:layout_constraintStart_toStartOf="@+id/chip_music_item"
-        app:layout_constraintTop_toTopOf="@+id/chip_music_item">
+        app:layout_constraintBottom_toBottomOf="@+id/chip_music"
+        app:layout_constraintStart_toStartOf="@+id/chip_music"
+        app:layout_constraintTop_toTopOf="@+id/chip_music">
 
         <ImageView
             android:id="@+id/imageView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="#FCF5FD"
-            app:srcCompat="@drawable/shape_curicle" />
-
-        <FrameLayout
-            android:layout_width="25dp"
-            android:layout_height="25dp">
-
-            <ImageView
-                android:id="@+id/imageView23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/music" />
-        </FrameLayout>
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/textView45"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/inter_semi_bold"
-        android:text="@string/chipe_title1"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/chip_music_item"
-        app:layout_constraintEnd_toEndOf="@+id/chip_music_item"
-        app:layout_constraintStart_toEndOf="@+id/frameLayout20"
-        app:layout_constraintTop_toTopOf="@+id/chip_music_item" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip"
-        android:layout_width="100dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        app:chipBackgroundColor="@color/back_button"
-        app:chipStrokeColor="@color/back_button"
-        app:layout_constraintBottom_toBottomOf="@+id/chip_music_item"
-        app:layout_constraintStart_toEndOf="@+id/chip_music_item"
-        app:layout_constraintTop_toTopOf="@+id/chip_music_item" />
-
-    <FrameLayout
-        android:id="@+id/frameLayout21"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/chip"
-        app:layout_constraintStart_toStartOf="@+id/chip"
-        app:layout_constraintTop_toTopOf="@+id/chip">
-
-        <ImageView
-            android:id="@+id/imageView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tint="#FCF5FD"
@@ -161,47 +107,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/painting" />
+                app:srcCompat="@drawable/music" />
         </FrameLayout>
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/textView46"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/inter_semi_bold"
-        android:text="@string/chipe_title2"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout21"
-        app:layout_constraintEnd_toEndOf="@+id/chip"
-        app:layout_constraintStart_toEndOf="@+id/frameLayout21"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout21" />
-
     <com.google.android.material.chip.Chip
-        android:id="@+id/chip_sport_item"
-        android:layout_width="100dp"
+        android:id="@+id/chip_art"
+        android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:chipBackgroundColor="@color/back_button"
         app:chipStrokeColor="@color/back_button"
-        app:layout_constraintBottom_toBottomOf="@+id/chip"
-        app:layout_constraintEnd_toEndOf="@+id/frameLayout19"
-        app:layout_constraintStart_toEndOf="@+id/chip"
-        app:layout_constraintTop_toTopOf="@+id/chip" />
+        app:layout_constraintEnd_toStartOf="@+id/chip_sport"
+        app:layout_constraintStart_toEndOf="@+id/chip_music"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText7" />
 
     <FrameLayout
-        android:id="@+id/frameLayout22"
+        android:id="@+id/frameLayout21"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/chip_sport_item"
-        app:layout_constraintStart_toStartOf="@+id/chip_sport_item"
-        app:layout_constraintTop_toTopOf="@+id/chip_sport_item">
+        app:layout_constraintBottom_toBottomOf="@+id/chip_art"
+        app:layout_constraintStart_toStartOf="@+id/chip_art"
+        app:layout_constraintTop_toTopOf="@+id/chip_art">
 
         <ImageView
-            android:id="@+id/imageView22"
+            android:id="@+id/imageView23"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tint="#FCF5FD"
@@ -212,7 +145,50 @@
             android:layout_height="25dp">
 
             <ImageView
-                android:id="@+id/imageView27"
+                android:id="@+id/imageView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/painting" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_sport"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:chipBackgroundColor="@color/back_button"
+        app:chipIconVisible="true"
+        app:chipStrokeColor="@color/back_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/chip_art"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText7" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout23"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/chip_sport"
+        app:layout_constraintStart_toStartOf="@+id/chip_sport"
+        app:layout_constraintTop_toTopOf="@+id/chip_sport">
+
+        <ImageView
+            android:id="@+id/imageView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="#FCF5FD"
+            app:srcCompat="@drawable/shape_curicle" />
+
+        <FrameLayout
+            android:layout_width="25dp"
+            android:layout_height="25dp">
+
+            <ImageView
+                android:id="@+id/imageView29"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -221,17 +197,40 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textView47"
-        android:layout_width="0dp"
+        android:id="@+id/textView45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="@string/chipe_title1"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout20"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout20"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout20" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="@string/chipe_title2"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout21"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout21"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout21" />
+
+    <TextView
+        android:id="@+id/textView50"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/inter_semi_bold"
         android:text="@string/chipe_title3"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout22"
-        app:layout_constraintEnd_toEndOf="@+id/chip_sport_item"
-        app:layout_constraintStart_toEndOf="@+id/frameLayout22"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout22" />
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout23"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout23"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout23" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

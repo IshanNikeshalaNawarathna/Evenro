@@ -52,5 +52,6 @@
     <string name="chipe_title1">Music</string>
     <string name="chipe_title2">Art</string>
     <string name="chipe_title3">Sport</string>
+    <string name="add_event_title">Create New Event</string>
 
 </resources>
