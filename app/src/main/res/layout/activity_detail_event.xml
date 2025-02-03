@@ -204,7 +204,7 @@
         android:id="@+id/call_icon_framelayout"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="90dp"
+        android:layout_marginStart="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView16"
         app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toTopOf="@+id/textView15">
@@ -229,9 +229,8 @@
         android:id="@+id/msg_icon_framelayout"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/call_icon_framelayout"
-        app:layout_constraintEnd_toEndOf="@+id/divider3"
         app:layout_constraintStart_toEndOf="@+id/call_icon_framelayout"
         app:layout_constraintTop_toTopOf="@+id/call_icon_framelayout">
 
@@ -247,6 +246,29 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#FDFDFD"
             app:srcCompat="@drawable/baseline_message" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/msg_icon_framelayout"
+        app:layout_constraintEnd_toEndOf="@+id/divider3"
+        app:layout_constraintStart_toEndOf="@+id/msg_icon_framelayout"
+        app:layout_constraintTop_toTopOf="@+id/msg_icon_framelayout">
+
+        <ImageView
+            android:id="@+id/imageView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/shape_curicle" />
+
+        <ImageButton
+            android:id="@+id/imageButton12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/back_button"
+            app:srcCompat="@drawable/share" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
