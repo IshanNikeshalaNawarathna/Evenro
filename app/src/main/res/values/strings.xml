@@ -83,6 +83,7 @@
     <string name="welcome_home_title">Welcome!</string>
     <string name="welcome_home_view_all">View all</string>
     <string name="welcome_home_popular_event">Popular Event</string>
+    <string name="welcome_home_category">Event Category</string>
 
 
 
