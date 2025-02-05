@@ -80,4 +80,10 @@
     <string name="menu_calender">Calender</string>
     <string name="menu_setting">Setting</string>
     <string name="menu_sign_out">Sign Out</string>
+    <string name="welcome_home_title">Welcome!</string>
+    <string name="welcome_home_view_all">View all</string>
+    <string name="welcome_home_popular_event">Popular Event</string>
+
+
+
 </resources>

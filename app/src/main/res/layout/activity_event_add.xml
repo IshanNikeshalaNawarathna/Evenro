@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/divider8" />
 
     <EditText
-        android:id="@+id/editTextText7"
+        android:id="@+id/home_search"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
@@ -122,8 +122,8 @@
         android:state_enabled="false"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/imageButton15"
-        app:layout_constraintStart_toStartOf="@+id/editTextText7"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText7" />
+        app:layout_constraintStart_toStartOf="@+id/home_search"
+        app:layout_constraintTop_toBottomOf="@+id/home_search" />
 
     <ImageButton
         android:id="@+id/imageButton15"
@@ -131,7 +131,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#FCF5FD"
         app:layout_constraintBottom_toBottomOf="@+id/editTextDate2"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText7"
+        app:layout_constraintEnd_toEndOf="@+id/home_search"
         app:layout_constraintTop_toTopOf="@+id/editTextDate2"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/baseline_calendar" />
