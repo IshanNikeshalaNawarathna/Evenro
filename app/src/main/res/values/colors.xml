@@ -10,4 +10,5 @@
     <color name="button_color">#20222c</color>
     <color name="item_button">#20222c</color>
     <color name="review_star_color">#e2b93b</color>
+    <color name="sofite_dark">#4a4d55</color>
 </resources>

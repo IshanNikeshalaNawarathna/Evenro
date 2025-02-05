@@ -12,7 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 
-import lk.evenro.even.model.ViewAdapter;
+import lk.evenro.even.adapter.ViewAdapter;
 
 public class OrganizerProfileActivity extends AppCompatActivity {
 
