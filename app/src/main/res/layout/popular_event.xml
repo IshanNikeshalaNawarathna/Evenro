@@ -80,14 +80,14 @@
         android:layout_marginBottom="8dp"
         android:background="@color/back_button"
         android:backgroundTint="@color/back_button"
-        android:tint="@color/back_button"
+        android:tint="#FCF5FD"
         app:layout_constraintBottom_toTopOf="@+id/textView63"
         app:layout_constraintEnd_toEndOf="@+id/button9"
         app:layout_constraintStart_toStartOf="@+id/textView63"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/item_shape" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView41"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -98,5 +98,9 @@
         app:layout_constraintStart_toStartOf="@+id/imageView40"
         app:layout_constraintTop_toTopOf="@+id/imageView40"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/imgs" />
+        app:srcCompat="@drawable/imgs"
+        app:shapeAppearanceOverlay="@style/RoundedSquare"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
