@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
-public class BottomSheetFragment extends Fragment {
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
