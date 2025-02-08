@@ -32,5 +32,14 @@ public class EventAddActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton time_image_button = findViewById(R.id.time_bottom_sheet_button);
+        time_image_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimeBottomSheetFragment timeBottomSheetFragment = new TimeBottomSheetFragment();
+                timeBottomSheetFragment.show(getSupportFragmentManager(), timeBottomSheetFragment.getTag());
+            }
+        });
+
     }
 }
