@@ -26,10 +26,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-//import com.google.android.gms.tasks.OnFailureListener;
-//import com.google.android.gms.tasks.OnSuccessListener;
-//import com.google.firebase.firestore.DocumentReference;
-//import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -158,7 +159,8 @@ public class EventAddActivity extends AppCompatActivity {
                     String eventLocation = event_location.getText().toString().trim();
                     String eventDescription = event_description.getText().toString().trim();
 
-                    // FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+                    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
                     HashMap<String, Object> event_data = new HashMap<>();
                     event_data.put("event_name", eventName);
@@ -172,18 +174,18 @@ public class EventAddActivity extends AppCompatActivity {
                     event_data.put("event_description", eventDescription);
                     event_data.put("event_image", imageUrl);
 
-//                    firebaseFirestore.collection("event").add(event_data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                        @Override
-//                        public void onSuccess(DocumentReference documentReference) {
-//                            Log.i("EVENT ADD", documentReference.getId());
-//
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.i("EVENT ADD", e.toString());
-//                        }
-//                    });
+                    firebaseFirestore.collection("event").add(event_data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.i("EVENT ADD", documentReference.getId());
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.i("EVENT ADD", e.toString());
+                        }
+                    });
 
                     event_name.setText("");
                     event_date.setText("");
