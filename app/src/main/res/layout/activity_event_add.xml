@@ -156,6 +156,7 @@
         android:layout_marginEnd="8dp"
         android:backgroundTint="#FCF5FD"
         android:tint="@color/main_color"
+        app:layout_constraintBottom_toBottomOf="@+id/add_event_time"
         app:layout_constraintEnd_toStartOf="@+id/add_event_date"
         app:layout_constraintTop_toTopOf="@+id/add_event_time"
         app:srcCompat="@drawable/baseline_access_time" />
