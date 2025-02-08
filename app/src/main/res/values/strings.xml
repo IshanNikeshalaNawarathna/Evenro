@@ -76,6 +76,10 @@
     <string name="action_settings">Settings</string>
     <string name="menu_name">Home</string>
 
+    <string name="input_plaesholder11">Price *</string>
+    <string name="input_plaesholder13">Location *</string>
+    <string name="input_plaesholder12">Quantity *</string>
+
     <string name="menu_account">My Profile</string>
     <string name="menu_calender">Calender</string>
     <string name="menu_setting">Setting</string>
@@ -87,6 +91,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="purchasing_history">History</string>
     <string name="purchasing">Purchasing</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
