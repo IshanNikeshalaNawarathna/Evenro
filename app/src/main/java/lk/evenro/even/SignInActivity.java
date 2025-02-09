@@ -14,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import lk.evenro.even.ui.home.HomeFragment;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -53,20 +57,23 @@ public class SignInActivity extends AppCompatActivity {
                                 String resultPassword = cursor.getString(4);
                                 Log.i("SIGN UP", resultEmail);
 
-                                if(resultEmail.equals(email.getText().toString()) && resultPassword.equals(password.getText().toString())){
-                                    Log.i("SIGN UP", "Email already Use");
-
-                                    email.setText("");
-                                    password.setText("");
-
+                                if (resultEmail.equals(email.getText().toString()) && resultPassword.equals(password.getText().toString())) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            email.setText("");
+                                            password.setText("");
+                                            FragmentManager fragmentManager =  getSupportFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            fragmentTransaction.add(R.id.nav_host_fragment_content_navigation_home, HomeFragment.class,null).setReorderingAllowed(true).commit();
+                                        }
+                                    });
                                 }else{
-
-                                    Intent intent = new Intent(getApplicationContext(),SignUpActivity.class);
-                                    startActivity(intent);
-
+                                    Log.i("SIGN UP", "Invalid user credential");
                                 }
 
                             }
+                            cursor.close();
 
 
                         }

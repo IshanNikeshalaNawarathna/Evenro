@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Evenro.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#FCF5FD"
-            app:popupTheme="@style/Theme.Evenro.PopupOverlay" />
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:background="#FCF5FD"-->
+<!--            app:popupTheme="@style/Theme.Evenro.PopupOverlay" />-->
 
     </com.google.android.material.appbar.AppBarLayout>
 
