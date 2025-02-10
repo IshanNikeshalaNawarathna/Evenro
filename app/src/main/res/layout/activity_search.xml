@@ -232,5 +232,18 @@
         app:layout_constraintStart_toEndOf="@+id/frameLayout23"
         app:layout_constraintTop_toTopOf="@+id/frameLayout23" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_item_recycle_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chip_music" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
