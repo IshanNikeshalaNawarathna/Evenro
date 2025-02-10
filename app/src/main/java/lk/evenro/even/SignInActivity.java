@@ -16,6 +16,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import lk.evenro.even.ui.home.HomeFragment;
 
@@ -63,9 +65,10 @@ public class SignInActivity extends AppCompatActivity {
                                         public void run() {
                                             email.setText("");
                                             password.setText("");
-                                            FragmentManager fragmentManager =  getSupportFragmentManager();
-                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            fragmentTransaction.add(R.id.nav_host_fragment_content_navigation_home, HomeFragment.class,null).setReorderingAllowed(true).commit();
+                                            NavController navController = Navigation.findNavController(SignInActivity.this, R.id.nav_host_fragment_content_navigation_home);
+
+                                            // Navigate to HomeFragment (Make sure it's in nav_graph.xml)
+                                            navController.navigate(R.id.nav_home);
                                         }
                                     });
                                 }else{
@@ -74,12 +77,8 @@ public class SignInActivity extends AppCompatActivity {
 
                             }
                             cursor.close();
-
-
                         }
                     }).start();
-
-
                 }
             }
 
