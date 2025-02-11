@@ -38,7 +38,7 @@ import lk.evenro.even.model.EventDetails;
 public class SearchActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<EventDetails> eventList;
-    ArrayList<EventDetails> fullEventList; // Store the full list here
+    ArrayList<EventDetails> fullEventList;
     Map<String, Object> data;
     EventDetails details;
     EditText search_text;
@@ -54,13 +54,15 @@ public class SearchActivity extends AppCompatActivity {
             return insets;
         });
 
+        loadChipData();
+
 
         recyclerView = findViewById(R.id.search_item_recycle_view);
-        search_text = findViewById(R.id.search_text); // Initialize search_text here
+        search_text = findViewById(R.id.search_text);
 
         fullEventList = new ArrayList<>();
         eventList = new ArrayList<>();
-        loadAllEvents(); // Load all events initially
+        loadAllEvents();
 
         ImageButton search_button = findViewById(R.id.search_all_button);
         search_button.setOnClickListener(new View.OnClickListener() {
@@ -70,10 +72,9 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("SearchDebug", "Searching for: " + search_item_text);
 
                 if (search_item_text.isEmpty()) {
-                    // If the search text is empty, reload all events
                     loadAllEvents();
                 } else {
-                    // Perform the search
+
                     FirebaseFirestore searchFirestore = FirebaseFirestore.getInstance();
                     Query query = searchFirestore.collection("event")
                             .whereEqualTo("event_name", search_item_text);
@@ -89,30 +90,19 @@ public class SearchActivity extends AppCompatActivity {
 
                                 eventList.clear();
                                 for (DocumentSnapshot document : task.getResult()) {
-                                    data = document.getData();
-                                    Log.i("TEST CODE", document.getData().toString());
-                                    String eventName = (String) data.get("event_name");
-                                    String eventDescription = (String) data.get("event_description");
-                                    String eventDate = (String) data.get("event_date");
-                                    String eventTime = (String) data.get("event_time");
-                                    String eventPrice = (String) data.get("price");
-                                    String eventCategory = (String) data.get("event_category");
-                                    String eventOrganizerName = (String) data.get("Organizer_name");
-                                    String eventLocation = (String) data.get("event_location");
-                                    String eventQty = (String) data.get("qty");
-
-                                    details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName);
-                                    eventList.add(details);
+                                    loadEventDetailsObject(document);
                                 }
 
                                 updateRecyclerView(eventList);
-                                search_text.setText(""); // Clear the text field
+                                search_text.setText("");
                             }
                         }
                     });
                 }
             }
         });
+
+
     }
 
     private void loadAllEvents() {
@@ -123,23 +113,11 @@ public class SearchActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     fullEventList.clear();
                     for (DocumentSnapshot document : task.getResult()) {
-                        data = document.getData();
-                        Log.i("TEST CODE", document.getData().toString());
-                        String eventName = (String) data.get("event_name");
-                        String eventDescription = (String) data.get("event_description");
-                        String eventDate = (String) data.get("event_date");
-                        String eventTime = (String) data.get("event_time");
-                        String eventPrice = (String) data.get("price");
-                        String eventCategory = (String) data.get("event_category");
-                        String eventOrganizerName = (String) data.get("Organizer_name");
-                        String eventLocation = (String) data.get("event_location");
-                        String eventQty = (String) data.get("qty");
 
-                        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName);
-                        fullEventList.add(details);
+                        loadEventDetailsObject(document);
                     }
                     updateRecyclerView(fullEventList);
-                    search_text.setText(""); // Clear the text field
+                    search_text.setText("");
                 }
             }
         });
@@ -148,6 +126,26 @@ public class SearchActivity extends AppCompatActivity {
     private void updateRecyclerView(ArrayList<EventDetails> list) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new EventAdapter(list));
+    }
+
+    private void loadChipData(){
+        
+    }
+
+    private void loadEventDetailsObject(DocumentSnapshot document) {
+        data = document.getData();
+        String eventName = (String) data.get("event_name");
+        String eventDescription = (String) data.get("event_description");
+        String eventDate = (String) data.get("event_date");
+        String eventTime = (String) data.get("event_time");
+        String eventPrice = (String) data.get("price");
+        String eventCategory = (String) data.get("event_category");
+        String eventOrganizerName = (String) data.get("Organizer_name");
+        String eventLocation = (String) data.get("event_location");
+        String eventQty = (String) data.get("qty");
+
+        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName);
+        fullEventList.add(details);
     }
 
 }
