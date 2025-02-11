@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.Chip;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -43,6 +45,8 @@ public class SearchActivity extends AppCompatActivity {
     EventDetails details;
     EditText search_text;
 
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +58,6 @@ public class SearchActivity extends AppCompatActivity {
             return insets;
         });
 
-        loadChipData();
-
 
         recyclerView = findViewById(R.id.search_item_recycle_view);
         search_text = findViewById(R.id.search_text);
@@ -63,6 +65,8 @@ public class SearchActivity extends AppCompatActivity {
         fullEventList = new ArrayList<>();
         eventList = new ArrayList<>();
         loadAllEvents();
+        FilterChip();
+
 
         ImageButton search_button = findViewById(R.id.search_all_button);
         search_button.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +76,7 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("SearchDebug", "Searching for: " + search_item_text);
 
                 if (search_item_text.isEmpty()) {
-                    loadAllEvents();
+                    updateRecyclerView(fullEventList);
                 } else {
 
                     FirebaseFirestore searchFirestore = FirebaseFirestore.getInstance();
@@ -128,9 +132,69 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(new EventAdapter(list));
     }
 
-    private void loadChipData(){
-        
+
+
+    private void FilterChip() {
+        Chip music_chip = findViewById(R.id.chip_music);
+        Chip art_chip = findViewById(R.id.chip_art);
+        Chip sport_chip = findViewById(R.id.chip_sport);
+
+        CompoundButton.OnCheckedChangeListener changeListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    String category = "";
+                    int chipId = buttonView.getId();
+                    if (chipId == R.id.chip_music) {
+                        category = "Music";
+                        Log.i("TEST CODE",category);
+                    } else if (chipId == R.id.chip_art) {
+                        category = "Art";
+                        Log.i("TEST CODE",category);
+                    } else if (chipId == R.id.chip_sport) {
+                        category = "Sport";
+                        Log.i("TEST CODE",category);
+                    }
+
+                    if (!category.isEmpty()) {
+                        LoadingChipCategory(category);
+                    }
+                } else {
+                    updateRecyclerView(fullEventList);
+                }
+            }
+        };
+
+        music_chip.setOnCheckedChangeListener(changeListener);
+        art_chip.setOnCheckedChangeListener(changeListener);
+        sport_chip.setOnCheckedChangeListener(changeListener);
+
     }
+
+    private void LoadingChipCategory(String category) {
+
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        Query query = firestore.collection("event")
+                .whereEqualTo("event_category", category);
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    eventList.clear();
+                    for (DocumentSnapshot document : task.getResult()) {
+                        loadEventDetailsObject(document);
+                    }
+                    eventList.clear();
+                    updateRecyclerView(fullEventList);
+                    search_text.setText("");
+                }
+            }
+        });
+
+    }
+
 
     private void loadEventDetailsObject(DocumentSnapshot document) {
         data = document.getData();
