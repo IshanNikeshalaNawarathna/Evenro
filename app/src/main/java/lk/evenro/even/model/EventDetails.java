@@ -14,9 +14,14 @@ public class EventDetails implements Serializable {
 
     private String eventDate;
     private String eventTime;
+    private String organizerName;
 
 
-    public EventDetails(String eventName, String eventLocations, String eventDescriptions, String prices, String eventCategory, String qty, String eventDate, String eventTime) {
+
+    public EventDetails() {
+    }
+
+    public EventDetails(String eventName, String eventLocations, String eventDescriptions, String prices, String eventCategory, String qty, String eventDate, String eventTime, String organizerName) {
         this.eventName = eventName;
         this.eventLocations = eventLocations;
         this.eventDescriptions = eventDescriptions;
@@ -25,9 +30,7 @@ public class EventDetails implements Serializable {
         this.qty = qty;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
-    }
-
-    public EventDetails() {
+        this.organizerName = organizerName;
     }
 
     public String getEventName() {
@@ -94,5 +97,11 @@ public class EventDetails implements Serializable {
         this.eventTime = eventTime;
     }
 
+    public String getOrganizerName() {
+        return organizerName;
+    }
 
+    public void setOrganizerName(String organizerName) {
+        this.organizerName = organizerName;
+    }
 }

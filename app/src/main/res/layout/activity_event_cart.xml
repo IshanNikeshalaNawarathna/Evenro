@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
     <EditText
-        android:id="@+id/home_search"
+        android:id="@+id/search_text"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
@@ -71,9 +71,9 @@
         android:id="@+id/frameLayout22"
         android:layout_width="50dp"
         android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/home_search"
+        app:layout_constraintBottom_toBottomOf="@+id/search_text"
         app:layout_constraintStart_toStartOf="@+id/textView52"
-        app:layout_constraintTop_toTopOf="@+id/home_search">
+        app:layout_constraintTop_toTopOf="@+id/search_text">
 
         <ImageView
             android:id="@+id/imageView22"
@@ -96,9 +96,9 @@
         android:id="@+id/frameLayout24"
         android:layout_width="50dp"
         android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/home_search"
+        app:layout_constraintBottom_toBottomOf="@+id/search_text"
         app:layout_constraintEnd_toEndOf="@+id/textView49"
-        app:layout_constraintTop_toTopOf="@+id/home_search">
+        app:layout_constraintTop_toTopOf="@+id/search_text">
 
         <ImageView
             android:id="@+id/imageView30"

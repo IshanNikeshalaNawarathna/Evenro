@@ -2,6 +2,10 @@ package lk.evenro.even;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -44,8 +49,6 @@ public class SearchActivity extends AppCompatActivity {
             return insets;
         });
 
-//        ArrayList<EventDetails> data = new ArrayList<>();
-//        data.add(new EventDetails("Music", "ABC", "hello", "200", "hello", "10", "2025-02-01", "8.00am"));
 
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -66,11 +69,11 @@ public class SearchActivity extends AppCompatActivity {
                         String eventTime = (String) data.get("event_time");
                         String eventPrice = (String) data.get("price");
                         String eventCategory = (String) data.get("event_category");
-                      //  String eventOrganizerName = (String) data.get("Organizer_name");
+                        String eventOrganizerName = (String) data.get("Organizer_name");
                         String eventLocation = (String) data.get("event_location");
                         String eventQty = (String) data.get("qty");
 
-                        EventDetails details = new EventDetails(eventName,eventLocation,eventDescription,eventPrice,eventCategory,eventQty,eventDate,eventTime);
+                        EventDetails details = new EventDetails(eventName,eventLocation,eventDescription,eventPrice,eventCategory,eventQty,eventDate,eventTime,eventOrganizerName);
                         eventList.add(details);
 
 
@@ -85,6 +88,8 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+
+
 
     }
 }
