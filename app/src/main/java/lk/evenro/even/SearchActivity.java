@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -31,8 +32,6 @@ import lk.evenro.even.model.EventDetails;
 
 public class SearchActivity extends AppCompatActivity {
 
-    ;
-    ArrayList<EventDetails> details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,28 +44,47 @@ public class SearchActivity extends AppCompatActivity {
             return insets;
         });
 
-        ArrayList<EventDetails> data = new ArrayList<>();
-        data.add(new EventDetails("Music", "ABC", "hello", "200", "hello", "10", "2025-02-01", "8.00am"));
+//        ArrayList<EventDetails> data = new ArrayList<>();
+//        data.add(new EventDetails("Music", "ABC", "hello", "200", "hello", "10", "2025-02-01", "8.00am"));
 
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        firestore.collection("event").document("hQl8EwyImP6kzq3QU5Vb").get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
+        firestore.collection("event").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                            DocumentSnapshot document = task.getResult();
+                if (task.isSuccessful()) {
+
+                    ArrayList<EventDetails> eventList = new ArrayList<>();
+
+                    for (DocumentSnapshot document : task.getResult()) {
+                        Map<String, Object> data = document.getData();
+                        Log.i("TEST CODE", document.getData().toString());
+                        String eventName = (String) data.get("event_name");
+                        String eventDescription = (String) data.get("event_description");
+                        String eventDate = (String) data.get("event_date");
+                        String eventTime = (String) data.get("event_time");
+                        String eventPrice = (String) data.get("price");
+                        String eventCategory = (String) data.get("event_category");
+                      //  String eventOrganizerName = (String) data.get("Organizer_name");
+                        String eventLocation = (String) data.get("event_location");
+                        String eventQty = (String) data.get("qty");
+
+                        EventDetails details = new EventDetails(eventName,eventLocation,eventDescription,eventPrice,eventCategory,eventQty,eventDate,eventTime);
+                        eventList.add(details);
 
 
-                        }
                     }
-                });
+
+                            RecyclerView recyclerView = findViewById(R.id.search_item_recycle_view);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                            recyclerView.setAdapter(new EventAdapter(eventList));
 
 
-        RecyclerView recyclerView = findViewById(R.id.search_item_recycle_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new EventAdapter(data));
+                }
+
+            }
+        });
 
     }
 }

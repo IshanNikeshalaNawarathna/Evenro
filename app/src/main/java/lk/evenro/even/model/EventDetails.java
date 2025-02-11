@@ -93,4 +93,6 @@ public class EventDetails implements Serializable {
     public void setEventTime(String eventTime) {
         this.eventTime = eventTime;
     }
+
+
 }
