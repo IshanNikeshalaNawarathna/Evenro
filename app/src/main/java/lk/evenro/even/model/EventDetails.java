@@ -4,33 +4,33 @@ import java.io.Serializable;
 
 public class EventDetails implements Serializable {
 
-    private String eventId;
+
     private String eventName;
     private String eventLocations;
     private String eventDescriptions;
     private String prices;
     private String eventCategory;
-    private int qty;
+    private String qty;
 
-    public EventDetails(String eventId, String eventName, String eventLocations, String eventDescriptions, String prices, String eventCategory, int qty) {
-        this.eventId = eventId;
+    private String eventDate;
+    private String eventTime;
+    private String organizerName;
+
+
+
+    public EventDetails() {
+    }
+
+    public EventDetails(String eventName, String eventLocations, String eventDescriptions, String prices, String eventCategory, String qty, String eventDate, String eventTime, String organizerName) {
         this.eventName = eventName;
         this.eventLocations = eventLocations;
         this.eventDescriptions = eventDescriptions;
         this.prices = prices;
         this.eventCategory = eventCategory;
         this.qty = qty;
-    }
-
-    public EventDetails() {
-    }
-
-    public String getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
+        this.eventDate = eventDate;
+        this.eventTime = eventTime;
+        this.organizerName = organizerName;
     }
 
     public String getEventName() {
@@ -73,11 +73,35 @@ public class EventDetails implements Serializable {
         this.eventCategory = eventCategory;
     }
 
-    public int getQty() {
+    public String getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(String qty) {
         this.qty = qty;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public String getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(String eventTime) {
+        this.eventTime = eventTime;
+    }
+
+    public String getOrganizerName() {
+        return organizerName;
+    }
+
+    public void setOrganizerName(String organizerName) {
+        this.organizerName = organizerName;
     }
 }

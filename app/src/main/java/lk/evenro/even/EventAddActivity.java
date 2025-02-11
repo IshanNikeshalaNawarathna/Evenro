@@ -93,7 +93,6 @@ public class EventAddActivity extends AppCompatActivity {
             }
         });
 
-
         Spinner spinner = findViewById(R.id.event_category_item);
 
         ArrayList<SpinnerItem> spinnerItems = new ArrayList<>();

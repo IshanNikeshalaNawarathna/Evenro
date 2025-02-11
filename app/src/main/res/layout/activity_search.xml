@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/home_search"
+        android:id="@+id/search_text"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -48,9 +48,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="@color/back_button"
-        app:layout_constraintBottom_toBottomOf="@+id/home_search"
+        app:layout_constraintBottom_toBottomOf="@+id/search_text"
         app:layout_constraintEnd_toEndOf="@+id/textView44"
-        app:layout_constraintTop_toTopOf="@+id/home_search">
+        app:layout_constraintTop_toTopOf="@+id/search_text">
 
         <ImageView
             android:id="@+id/imageView25"
@@ -61,7 +61,7 @@
             app:srcCompat="@drawable/shape_all_view" />
 
         <ImageButton
-            android:id="@+id/imageButton11"
+            android:id="@+id/search_all_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -80,7 +80,7 @@
         app:chipStrokeColor="@color/back_button"
         app:layout_constraintEnd_toStartOf="@+id/chip_art"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_search" />
+        app:layout_constraintTop_toBottomOf="@+id/search_text" />
 
     <FrameLayout
         android:id="@+id/frameLayout20"
@@ -122,7 +122,7 @@
         app:chipStrokeColor="@color/back_button"
         app:layout_constraintEnd_toStartOf="@+id/chip_sport"
         app:layout_constraintStart_toEndOf="@+id/chip_music"
-        app:layout_constraintTop_toBottomOf="@+id/home_search" />
+        app:layout_constraintTop_toBottomOf="@+id/search_text" />
 
     <FrameLayout
         android:id="@+id/frameLayout21"
@@ -165,7 +165,7 @@
         app:chipStrokeColor="@color/back_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/chip_art"
-        app:layout_constraintTop_toBottomOf="@+id/home_search" />
+        app:layout_constraintTop_toBottomOf="@+id/search_text" />
 
     <FrameLayout
         android:id="@+id/frameLayout23"
@@ -231,6 +231,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/frameLayout23"
         app:layout_constraintStart_toEndOf="@+id/frameLayout23"
         app:layout_constraintTop_toTopOf="@+id/frameLayout23" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_item_recycle_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chip_music" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

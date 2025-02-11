@@ -65,39 +65,45 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            int code  = (int) (Math.random() * 1000);
+                            int code = (int) (Math.random() * 1000);
 
                             Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-
+                            boolean emailExisis = false;
                             while (cursor.moveToNext()) {
                                 String resultEmail = cursor.getString(2);
                                 Log.i("SIGN UP", resultEmail);
 
-                                if(resultEmail.equals(email.getText().toString())){
+                                if (resultEmail.equals(email.getText().toString())) {
                                     Log.i("SIGN UP", "Email already Use");
-                                }else{
-
-                                    ContentValues contentValues = new ContentValues();
-                                    contentValues.put("name", full_name.getText().toString());
-                                    contentValues.put("email", email.getText().toString());
-                                    contentValues.put("password", confrom_password.getText().toString());
-                                    contentValues.put("verification", code);
-
-                                    long id = userData.getWritableDatabase().insert("user", null, contentValues);
-                                    Log.i("SIGN UP", String.valueOf(id));
-
-                                    full_name.setText("");
-                                    email.setText("");
-                                    password.setText("");
-                                    confrom_password.setText("");
-
-                                    Intent intent = new Intent(getApplicationContext(),SignInActivity.class);
-                                    startActivity(intent);
-
+                                    emailExisis = true;
+                                    break;
                                 }
-
                             }
+                            cursor.close();
 
+                            if (!emailExisis) {
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("name", full_name.getText().toString());
+                                contentValues.put("email", email.getText().toString());
+                                contentValues.put("password", confrom_password.getText().toString());
+                                contentValues.put("verification", code);
+
+                                long id = userData.getWritableDatabase().insert("user", null, contentValues);
+                                Log.i("SIGN UP", String.valueOf(id));
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        full_name.setText("");
+                                        email.setText("");
+                                        password.setText("");
+                                        confrom_password.setText("");
+
+                                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
                         }
                     }).start();
                 }
@@ -108,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
         sing_in_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),SignInActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                 startActivity(intent);
             }
         });
