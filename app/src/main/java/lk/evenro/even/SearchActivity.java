@@ -45,7 +45,7 @@ public class SearchActivity extends AppCompatActivity {
     EventDetails details;
     EditText search_text;
 
-    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
