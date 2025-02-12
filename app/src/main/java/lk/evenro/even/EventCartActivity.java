@@ -1,6 +1,8 @@
 package lk.evenro.even;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +22,15 @@ public class EventCartActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        TextView cart_item_title = findViewById(R.id.cart_item_title);
+        TextView cart_item_category = findViewById(R.id.cart_itme_category);
+        TextView cart_item_price = findViewById(R.id.cart_item_price);
+        TextView cart_item_new_qty = findViewById(R.id.cart_item_new_qty);
+        TextView cart_item_total = findViewById(R.id.cart_item_total);
+
+        ImageButton increment_button = findViewById(R.id.cart_item_increment_button);
+        ImageButton decrement_button = findViewById(R.id.cart_item_decrement_button);
+
     }
 }
