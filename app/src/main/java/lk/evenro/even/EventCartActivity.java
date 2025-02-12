@@ -1,23 +1,64 @@
 package lk.evenro.even;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import lk.evenro.even.model.EventDetails;
+import lk.payhere.androidsdk.PHConfigs;
+import lk.payhere.androidsdk.PHConstants;
+import lk.payhere.androidsdk.PHMainActivity;
+import lk.payhere.androidsdk.PHResponse;
+import lk.payhere.androidsdk.model.InitRequest;
+import lk.payhere.androidsdk.model.Item;
+import lk.payhere.androidsdk.model.StatusResponse;
+
 
 public class EventCartActivity extends AppCompatActivity {
-
-
+    TextView cart_item_total;
+    private int totalPrice;
     private int count = 0;
+    private String event_name;
+    private int code;
+
+    String typeQty;
+
+
+    private final ActivityResultLauncher<Intent> paymentLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Intent data = result.getData();
+                    if (data.hasExtra(PHConstants.INTENT_EXTRA_DATA)) {
+                        Serializable serializable = data.getSerializableExtra(PHConstants.INTENT_EXTRA_DATA);
+                        if (serializable instanceof PHResponse) {
+                            PHResponse<StatusResponse> response = (PHResponse<StatusResponse>) serializable;
+                            String msg = response.isSuccess() ? "Payment Success" + response.getData() : "Payment Failed" + response;
+                            Log.i("Payment Message", msg);
+                        }
+                    }
+                } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
+                    Log.i("Payment Message", "Payment Cancelled");
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +76,26 @@ public class EventCartActivity extends AppCompatActivity {
         TextView cart_item_price = findViewById(R.id.cart_item_price);
         TextView cart_item_new_qty = findViewById(R.id.cart_item_new_qty);
         TextView cart_item_type_qty = findViewById(R.id.cart_item_type_qty);
-        TextView cart_item_total = findViewById(R.id.cart_item_total);
+        cart_item_total = findViewById(R.id.cart_item_total_price);
+
 
         ImageButton increment_button = findViewById(R.id.cart_item_increment_button);
         ImageButton decrement_button = findViewById(R.id.cart_item_decrement_button);
+        Button checkout_button = findViewById(R.id.cart_checkout_button);
 
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("cart_details");
 
 
-        if(details != null){
-            try{
-                String event_name = details.getEventName();
+        if (details != null) {
+            try {
+                event_name = details.getEventName();
                 String event_category = details.getEventCategory();
                 int event_price = (int) Double.parseDouble(details.getPrices());
                 int event_qty = Integer.valueOf(details.getQty());
+
+                cart_item_title.setText(event_name);
+                cart_item_category.setText(event_category);
+                cart_item_price.setText(String.valueOf(event_price));
 
 
                 increment_button.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +104,9 @@ public class EventCartActivity extends AppCompatActivity {
                         if (count < event_qty) count++;
                         Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
                         cart_item_type_qty.setText(String.valueOf(count));
+                        typeQty = cart_item_type_qty.getText().toString();
+                        cart_item_new_qty.setText(String.valueOf(typeQty).toString());
+                        TicketPriceCale(typeQty, event_price);
                     }
                 });
 
@@ -67,6 +117,9 @@ public class EventCartActivity extends AppCompatActivity {
                         else count--;
                         Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
                         cart_item_type_qty.setText(String.valueOf(count));
+                        typeQty = cart_item_type_qty.getText().toString();
+                        cart_item_new_qty.setText(String.valueOf(typeQty).toString());
+                        TicketPriceCale(typeQty, event_price);
                     }
                 });
 
@@ -76,14 +129,74 @@ public class EventCartActivity extends AppCompatActivity {
         }
 
 
+        checkout_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                code = (int) (Math.random() * 1000);
 
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String date = simpleDateFormat.format(new Date());
 
+                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+                        if (cursor.moveToNext()) {
+                            String name = cursor.getString(1);
+                            String email = cursor.getString(2);
 
+                            paymentMethod(name,email);
+                        }
+                    }
+                }).start();
 
-
+            }
+        });
 
 
     }
+
+    private void TicketPriceCale(String qty, int event_price) {
+
+        String newQty = qty;
+        int newQtyInt = Integer.valueOf(newQty);
+        totalPrice = newQtyInt * event_price;
+
+        cart_item_total.setText(String.valueOf(totalPrice));
+    }
+
+    private void paymentMethod(String name, String email) {
+        InitRequest req = new InitRequest();
+        req.setMerchantId("1222107");       // Merchant ID
+        req.setCurrency("LKR");             // Currency code LKR/USD/GBP/EUR/AUD
+        req.setAmount(totalPrice);             // Final Amount to be charged
+        req.setOrderId(String.valueOf(code));        // Unique Reference ID
+        req.setItemsDescription(event_name);  // Item description title
+        req.setCustom1("This is the custom message 1");
+        req.setCustom2("This is the custom message 2");
+        req.getCustomer().setFirstName(name);
+        req.getCustomer().setLastName(name);
+        req.getCustomer().setEmail(email);
+        req.getCustomer().setPhone("+94771234567");
+        req.getCustomer().getAddress().setAddress("No.1, Galle Road");
+        req.getCustomer().getAddress().setCity("Colombo");
+        req.getCustomer().getAddress().setCountry("Sri Lanka");
+
+//Optional Params
+        req.setNotifyUrl(null);           // Notifiy Url
+        req.getCustomer().getDeliveryAddress().setAddress("No.2, Kandy Road");
+        req.getCustomer().getDeliveryAddress().setCity("Kadawatha");
+        req.getCustomer().getDeliveryAddress().setCountry("Sri Lanka");
+        req.getItems().add(new Item(String.valueOf(code), event_name, Integer.valueOf(typeQty), Double.valueOf(totalPrice)));
+
+        Intent intent = new Intent(getApplicationContext(), PHMainActivity.class);
+        intent.putExtra(PHConstants.INTENT_EXTRA_DATA, req);
+        PHConfigs.setBaseUrl(PHConfigs.SANDBOX_URL);
+        paymentLauncher.launch(intent);
+    }
+
+
 
 
 }
