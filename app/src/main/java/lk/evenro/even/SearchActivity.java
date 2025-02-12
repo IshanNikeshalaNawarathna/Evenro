@@ -3,7 +3,6 @@ package lk.evenro.even;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,14 +23,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import lk.evenro.even.adapter.EventAdapter;
@@ -52,7 +45,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.event_location), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -157,7 +150,9 @@ public class SearchActivity extends AppCompatActivity {
                         Log.i("TEST CODE",category);
                     }
 
-                    if (!category.isEmpty()) {
+                    if (category.isEmpty()) {
+                        loadAllEvents();
+                    }else{
                         LoadingChipCategory(category);
                     }
                 } else {

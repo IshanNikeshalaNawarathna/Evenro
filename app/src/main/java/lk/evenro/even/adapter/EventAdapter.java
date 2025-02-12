@@ -11,6 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +74,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailEventActivity.class);
+                intent.putExtra("event_details", details);
                 v.getContext().startActivity(intent);
             }
         });
