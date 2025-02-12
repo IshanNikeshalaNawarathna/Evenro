@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import lk.evenro.even.model.EventDetails;
 
 public class EventCartActivity extends AppCompatActivity {
-
+    TextView cart_item_total;
 
     private int count = 0;
 
@@ -35,7 +35,8 @@ public class EventCartActivity extends AppCompatActivity {
         TextView cart_item_price = findViewById(R.id.cart_item_price);
         TextView cart_item_new_qty = findViewById(R.id.cart_item_new_qty);
         TextView cart_item_type_qty = findViewById(R.id.cart_item_type_qty);
-        TextView cart_item_total = findViewById(R.id.cart_item_total);
+        cart_item_total = findViewById(R.id.cart_item_total_price);
+
 
         ImageButton increment_button = findViewById(R.id.cart_item_increment_button);
         ImageButton decrement_button = findViewById(R.id.cart_item_decrement_button);
@@ -43,12 +44,16 @@ public class EventCartActivity extends AppCompatActivity {
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("cart_details");
 
 
-        if(details != null){
-            try{
+        if (details != null) {
+            try {
                 String event_name = details.getEventName();
                 String event_category = details.getEventCategory();
                 int event_price = (int) Double.parseDouble(details.getPrices());
                 int event_qty = Integer.valueOf(details.getQty());
+
+                cart_item_title.setText(event_name);
+                cart_item_category.setText(event_category);
+                cart_item_price.setText(String.valueOf(event_price));
 
 
                 increment_button.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +62,9 @@ public class EventCartActivity extends AppCompatActivity {
                         if (count < event_qty) count++;
                         Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
                         cart_item_type_qty.setText(String.valueOf(count));
+                        String typeQty = cart_item_type_qty.getText().toString();
+                        cart_item_new_qty.setText(String.valueOf(typeQty).toString());
+                        TicketPriceCale(typeQty, event_price);
                     }
                 });
 
@@ -67,6 +75,9 @@ public class EventCartActivity extends AppCompatActivity {
                         else count--;
                         Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
                         cart_item_type_qty.setText(String.valueOf(count));
+                        String typeQty = cart_item_type_qty.getText().toString();
+                        cart_item_new_qty.setText(String.valueOf(typeQty).toString());
+                        TicketPriceCale(typeQty, event_price);
                     }
                 });
 
@@ -75,15 +86,15 @@ public class EventCartActivity extends AppCompatActivity {
             }
         }
 
-
-
-
-
-
-
-
-
     }
 
+    private void TicketPriceCale(String qty, int event_price) {
+
+        String newQty = qty;
+        int newQtyInt = Integer.valueOf(newQty);
+        int totalPrice = newQtyInt * event_price;
+
+        cart_item_total.setText(String.valueOf(totalPrice));
+    }
 
 }
