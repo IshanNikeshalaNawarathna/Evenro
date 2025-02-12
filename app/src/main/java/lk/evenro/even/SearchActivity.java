@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.search_item_recycle_view);
-        search_text = findViewById(R.id.search_text);
+        search_text = findViewById(R.id.cart_item_type_qty);
 
         fullEventList = new ArrayList<>();
         eventList = new ArrayList<>();
