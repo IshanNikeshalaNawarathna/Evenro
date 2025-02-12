@@ -42,29 +42,34 @@ public class EventCartActivity extends AppCompatActivity {
 
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("cart_details");
 
+        if (details != null) {
+
+            cart_item_title.setText(details.getEventName());
+            cart_item_category.setText(details.getEventCategory());
 
 
 
-        increment_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int newQty = 10;
-                if(count < newQty) count++;
-                Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
-                cart_item_type_qty.setText(String.valueOf(count));
-            }
-        });
+            increment_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int newQty = 10;
+                    if (count < newQty) count++;
+                    Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
+                    cart_item_type_qty.setText(String.valueOf(count));
+                }
+            });
 
-        decrement_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (count <= 0) count = 0;
-                else count--;
-                Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
-                cart_item_type_qty.setText(String.valueOf(count));
-            }
-        });
+            decrement_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (count <= 0) count = 0;
+                    else count--;
+                    Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
+                    cart_item_type_qty.setText(String.valueOf(count));
+                }
+            });
 
+        }
 
     }
 }
