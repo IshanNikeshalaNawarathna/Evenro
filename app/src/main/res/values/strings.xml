@@ -75,6 +75,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="menu_name">Home</string>
+    <string name="cart_item_total">Total *</string>
 
     <string name="input_plaesholder11">Price *</string>
     <string name="input_plaesholder13">Location *</string>
