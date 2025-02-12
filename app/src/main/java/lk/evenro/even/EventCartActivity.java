@@ -1,6 +1,8 @@
 package lk.evenro.even;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,6 +13,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class EventCartActivity extends AppCompatActivity {
+
+
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +32,32 @@ public class EventCartActivity extends AppCompatActivity {
         TextView cart_item_category = findViewById(R.id.cart_itme_category);
         TextView cart_item_price = findViewById(R.id.cart_item_price);
         TextView cart_item_new_qty = findViewById(R.id.cart_item_new_qty);
+        TextView cart_item_type_qty = findViewById(R.id.cart_item_type_qty);
         TextView cart_item_total = findViewById(R.id.cart_item_total);
 
         ImageButton increment_button = findViewById(R.id.cart_item_increment_button);
         ImageButton decrement_button = findViewById(R.id.cart_item_decrement_button);
+
+        increment_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int newQty = 10;
+                if(count < newQty) count++;
+                Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
+                cart_item_type_qty.setText(String.valueOf(count));
+            }
+        });
+
+        decrement_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (count <= 0) count = 0;
+                else count--;
+                Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
+                cart_item_type_qty.setText(String.valueOf(count));
+            }
+        });
+
 
     }
 }
