@@ -204,12 +204,12 @@
         android:fontFamily="@font/inter_semi_bold"
         android:text="@string/cart_item_total"
         android:textSize="18dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView8"
+        app:layout_constraintEnd_toStartOf="@+id/cart_item_total_price"
         app:layout_constraintStart_toStartOf="@+id/divider9"
         app:layout_constraintTop_toBottomOf="@+id/divider9" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/cart_item_total_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semi_bold"
@@ -217,6 +217,7 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/cart_item_total"
         app:layout_constraintEnd_toEndOf="@+id/divider9"
-        app:layout_constraintTop_toTopOf="@+id/cart_item_total" />
+        app:layout_constraintTop_toTopOf="@+id/cart_item_total"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
