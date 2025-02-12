@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import lk.evenro.even.model.EventDetails;
+
 public class EventCartActivity extends AppCompatActivity {
 
 
@@ -37,6 +39,11 @@ public class EventCartActivity extends AppCompatActivity {
 
         ImageButton increment_button = findViewById(R.id.cart_item_increment_button);
         ImageButton decrement_button = findViewById(R.id.cart_item_decrement_button);
+
+        EventDetails details = (EventDetails) getIntent().getSerializableExtra("cart_details");
+
+
+
 
         increment_button.setOnClickListener(new View.OnClickListener() {
             @Override
