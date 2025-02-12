@@ -41,32 +41,36 @@ public class EventCartActivity extends AppCompatActivity {
         ImageButton decrement_button = findViewById(R.id.cart_item_decrement_button);
 
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("cart_details");
-        if (details != null) {
-            cart_item_title.setText(details.getEventName());
-            cart_item_category.setText(details.getEventCategory());
-            cart_item_price.setText(details.getPrices());
 
-            increment_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int newQty = 10;
-                    if (count < newQty) count++;
-                    Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
-                    cart_item_type_qty.setText(String.valueOf(count));
-                }
-            });
+        String event_name = details.getEventName();
+        String event_category = details.getEventCategory();
+        String event_price = details.getPrices();
+        int event_qty = Integer.valueOf(details.getQty());
 
-            decrement_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (count <= 0) count = 0;
-                    else count--;
-                    Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
-                    cart_item_type_qty.setText(String.valueOf(count));
-                }
-            });
 
-        }
+
+
+
+        increment_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (count < event_qty) count++;
+                Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
+                cart_item_type_qty.setText(String.valueOf(count));
+            }
+        });
+
+        decrement_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (count <= 0) count = 0;
+                else count--;
+                Log.i("TEST CODE", String.valueOf(Integer.valueOf(count)));
+                cart_item_type_qty.setText(String.valueOf(count));
+            }
+        });
 
     }
+
+
 }
