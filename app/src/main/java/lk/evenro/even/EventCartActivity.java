@@ -41,13 +41,10 @@ public class EventCartActivity extends AppCompatActivity {
         ImageButton decrement_button = findViewById(R.id.cart_item_decrement_button);
 
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("cart_details");
-
         if (details != null) {
-
             cart_item_title.setText(details.getEventName());
             cart_item_category.setText(details.getEventCategory());
-
-
+            cart_item_price.setText(details.getPrices());
 
             increment_button.setOnClickListener(new View.OnClickListener() {
                 @Override
