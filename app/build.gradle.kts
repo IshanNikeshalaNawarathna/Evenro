@@ -55,4 +55,10 @@ dependencies {
     implementation ("com.google.android.material:material:1.6.0")
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
     implementation("com.google.firebase:firebase-firestore")
+
+
+    implementation ("com.github.PayHereDevs:payhere-android-sdk:v3.0.17")
+    implementation ("androidx.appcompat:appcompat:1.6.0")
+
+
 }
