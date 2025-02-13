@@ -1,19 +1,33 @@
 package lk.evenro.even;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
+import java.util.Map;
+
 import lk.evenro.even.model.PaymentEventDetails;
 
 public class InvoiceHistoryActivity extends AppCompatActivity {
 
-    private PaymentEventDetails paymentEventDetails;
+
+    private String name = "";
+    private String email = "";
+    Map<String, Object> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,29 +40,51 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
             return insets;
         });
 
-        paymentEventDetails = (PaymentEventDetails) getIntent().getSerializableExtra("payment_details");
+        UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
 
-        if (paymentEventDetails != null) {
-            String eventName = paymentEventDetails.getEvent_name();
-            String eventqty = paymentEventDetails.getQty();
-            String buyerEmail = paymentEventDetails.getBuyer_email();
-            String buyerName = paymentEventDetails.getBuyer_name();
-            String paymentID = paymentEventDetails.getPayment_ID();
-            String paymentDate = paymentEventDetails.getPayment_date();
-            String paymentPrice = paymentEventDetails.getTicket_price();
-            Log.i("TEST CODE", eventName);
-            Log.i("TEST CODE", eventqty);
-            Log.i("TEST CODE", buyerName);
-            Log.i("TEST CODE", buyerEmail);
-            Log.i("TEST CODE", paymentID);
-            Log.i("TEST CODE", paymentDate);
-            Log.i("TEST CODE", paymentPrice);
-        } else {
+                if (cursor.moveToNext()) {
+                    name = cursor.getString(1);
+                    email = cursor.getString(2);
+                    InvoicePaymentLoad(name, email);
+                }
 
-            Log.i("TEST CODE", "NULL DATA");
-
-        }
+            }
+        }).start();
 
 
     }
+
+    private void InvoicePaymentLoad(String name, String email) {
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("invoice").whereEqualTo(
+                "buyer_email", email
+        ).whereEqualTo(
+                "buyer_name", name
+        ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<DocumentSnapshot> documents = task.getResult().getDocuments();
+
+                    for (DocumentSnapshot snapshot : documents) {
+                        data = snapshot.getData();
+                        PaymentEventDetails paymentEventDetails = snapshot.toObject(PaymentEventDetails.class);
+                        Log.i("TEST CODE", paymentEventDetails.getPayment_ID());
+                        Log.i("TEST CODE", paymentEventDetails.getPayment_date());
+                        Log.i("TEST CODE", paymentEventDetails.getEvent_name());
+                        Log.i("TEST CODE", paymentEventDetails.getBuyer_email());
+                        Log.i("TEST CODE", paymentEventDetails.getBuyer_name());
+                        Log.i("TEST CODE", paymentEventDetails.getQty());
+                        Log.i("TEST CODE", paymentEventDetails.getTicket_price());
+                    }
+
+                }
+            }
+        });
+    }
+
 }

@@ -49,8 +49,7 @@ public class EventCartActivity extends AppCompatActivity {
     private String typeQty;
 
     private String date;
-    private String name = "";
-    private String email = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,11 +135,12 @@ public class EventCartActivity extends AppCompatActivity {
                         Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
 
                         if (cursor.moveToNext()) {
-                            name = cursor.getString(1);
-                            email = cursor.getString(2);
+                            String name = cursor.getString(1);
+                            String email = cursor.getString(2);
+                            paymentMethod(name, email);
+                            InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty);
                         }
-                        paymentMethod(name, email);
-                        InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty);
+
                     }
                 }).start();
 
@@ -238,10 +238,6 @@ public class EventCartActivity extends AppCompatActivity {
                 Log.i("Payment Error", e.toString());
             }
         });
-
-        Intent intent = new Intent(getApplicationContext(), InvoiceHistoryActivity.class);
-        intent.putExtra("payment_details", paymentEventDetails);
-        startActivity(intent);
 
     }
 
