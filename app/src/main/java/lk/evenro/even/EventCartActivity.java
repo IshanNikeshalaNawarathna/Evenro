@@ -13,16 +13,23 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lk.evenro.even.model.EventDetails;
+import lk.evenro.even.model.PaymentEventDetails;
 import lk.payhere.androidsdk.PHConfigs;
 import lk.payhere.androidsdk.PHConstants;
 import lk.payhere.androidsdk.PHMainActivity;
@@ -39,26 +46,11 @@ public class EventCartActivity extends AppCompatActivity {
     private String event_name;
     private int code;
 
-    String typeQty;
+    private String typeQty;
 
-
-    private final ActivityResultLauncher<Intent> paymentLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Intent data = result.getData();
-                    if (data.hasExtra(PHConstants.INTENT_EXTRA_DATA)) {
-                        Serializable serializable = data.getSerializableExtra(PHConstants.INTENT_EXTRA_DATA);
-                        if (serializable instanceof PHResponse) {
-                            PHResponse<StatusResponse> response = (PHResponse<StatusResponse>) serializable;
-                            String msg = response.isSuccess() ? "Payment Success" + response.getData() : "Payment Failed" + response;
-                            Log.i("Payment Message", msg);
-                        }
-                    }
-                } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
-                    Log.i("Payment Message", "Payment Cancelled");
-                }
-            }
-    );
+    private String date;
+    private String name = "";
+    private String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,27 +127,49 @@ public class EventCartActivity extends AppCompatActivity {
                 code = (int) (Math.random() * 1000);
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String date = simpleDateFormat.format(new Date());
+                date = simpleDateFormat.format(new Date());
 
                 UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-                        if (cursor.moveToNext()) {
-                            String name = cursor.getString(1);
-                            String email = cursor.getString(2);
 
-                            paymentMethod(name,email);
+                        if (cursor.moveToNext()) {
+                            name = cursor.getString(1);
+                            email = cursor.getString(2);
                         }
+                        paymentMethod(name, email);
+                        InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty);
                     }
                 }).start();
 
             }
         });
-
-
     }
+
+    private final ActivityResultLauncher<Intent> paymentLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Intent data = result.getData();
+                    if (data.hasExtra(PHConstants.INTENT_EXTRA_DATA)) {
+                        Serializable serializable = data.getSerializableExtra(PHConstants.INTENT_EXTRA_DATA);
+                        if (serializable instanceof PHResponse) {
+                            PHResponse<StatusResponse> response = (PHResponse<StatusResponse>) serializable;
+                            if (response.isSuccess()) {
+                                Log.i("Payment Message", "Payment Success");
+
+                            } else {
+                                Log.i("Payment Message", "Payment Failed" + response);
+                            }
+                        }
+
+                    }
+                } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
+                    Log.i("Payment Message", "Payment Cancelled");
+                }
+            }
+    );
 
     private void TicketPriceCale(String qty, int event_price) {
 
@@ -196,7 +210,39 @@ public class EventCartActivity extends AppCompatActivity {
         paymentLauncher.launch(intent);
     }
 
+    private void InvoicePayment(int payment_id, String event_name, String buyer_name, String buyer_email, int ticket_price, String payment_date, String qty) {
 
+        String payment_ID = String.valueOf(payment_id);
+        String ticket_qty = String.valueOf(qty);
+        String event_price = String.valueOf(ticket_price);
 
+        PaymentEventDetails paymentEventDetails = new PaymentEventDetails(
+                payment_ID,
+                ticket_qty,
+                event_name,
+                buyer_name,
+                buyer_email,
+                event_price,
+                payment_date
+        );
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("invoice").add(paymentEventDetails).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.i("Payment Success", documentReference.getId());
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("Payment Error", e.toString());
+            }
+        });
+
+        Intent intent = new Intent(getApplicationContext(), InvoiceHistoryActivity.class);
+        intent.putExtra("payment_details", paymentEventDetails);
+        startActivity(intent);
+
+    }
 
 }
