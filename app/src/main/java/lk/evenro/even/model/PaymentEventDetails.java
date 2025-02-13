@@ -2,17 +2,17 @@ package lk.evenro.even.model;
 
 import java.io.Serializable;
 
-public class PaymentDetails implements Serializable {
+public class PaymentEventDetails implements Serializable {
 
-    private int payment_ID;
-    private int qty;
+    private String payment_ID;
+    private String qty;
     private String event_name;
     private String buyer_name;
     private String buyer_email;
-    private int ticket_price;
+    private String ticket_price;
     private String payment_date;
 
-    public PaymentDetails(int payment_ID, int qty, String event_name, String buyer_name, String buyer_email, int ticket_price, String payment_date) {
+    public PaymentEventDetails(String payment_ID, String qty, String event_name, String buyer_name, String buyer_email, String ticket_price, String payment_date) {
         this.payment_ID = payment_ID;
         this.qty = qty;
         this.event_name = event_name;
@@ -22,23 +22,23 @@ public class PaymentDetails implements Serializable {
         this.payment_date = payment_date;
     }
 
-    public PaymentDetails(){
+    public PaymentEventDetails(){
 
     }
 
-    public int getPayment_ID() {
+    public String getPayment_ID() {
         return payment_ID;
     }
 
-    public void setPayment_ID(int payment_ID) {
+    public void setPayment_ID(String payment_ID) {
         this.payment_ID = payment_ID;
     }
 
-    public int getQty() {
+    public String getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(String qty) {
         this.qty = qty;
     }
 
@@ -66,11 +66,11 @@ public class PaymentDetails implements Serializable {
         this.buyer_email = buyer_email;
     }
 
-    public int getTicket_price() {
+    public String getTicket_price() {
         return ticket_price;
     }
 
-    public void setTicket_price(int ticket_price) {
+    public void setTicket_price(String ticket_price) {
         this.ticket_price = ticket_price;
     }
 
