@@ -49,6 +49,8 @@ public class EventCartActivity extends AppCompatActivity {
     private String typeQty;
 
     private String date;
+    private String event_date;
+    private String event_time;
 
 
     @Override
@@ -83,6 +85,8 @@ public class EventCartActivity extends AppCompatActivity {
                 String event_category = details.getEventCategory();
                 int event_price = (int) Double.parseDouble(details.getPrices());
                 int event_qty = Integer.valueOf(details.getQty());
+                event_date = details.getEventDate();
+                event_time = details.getEventTime();
 
                 cart_item_title.setText(event_name);
                 cart_item_category.setText(event_category);
@@ -138,7 +142,7 @@ public class EventCartActivity extends AppCompatActivity {
                             String name = cursor.getString(1);
                             String email = cursor.getString(2);
                             paymentMethod(name, email);
-                            InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty);
+                            InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty,event_date,event_time);
                         }
 
                     }
@@ -210,7 +214,7 @@ public class EventCartActivity extends AppCompatActivity {
         paymentLauncher.launch(intent);
     }
 
-    private void InvoicePayment(int payment_id, String event_name, String buyer_name, String buyer_email, int ticket_price, String payment_date, String qty) {
+    private void InvoicePayment(int payment_id, String event_name, String buyer_name, String buyer_email, int ticket_price, String payment_date, String qty,String event_date,String event_time) {
 
         String payment_ID = String.valueOf(payment_id);
         String ticket_qty = String.valueOf(qty);
@@ -223,7 +227,9 @@ public class EventCartActivity extends AppCompatActivity {
                 buyer_name,
                 buyer_email,
                 event_price,
-                payment_date
+                payment_date,
+                event_date,
+                event_time
         );
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseFirestore.collection("invoice").add(paymentEventDetails).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

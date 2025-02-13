@@ -82,13 +82,6 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
                         for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
                             PaymentEventDetails paymentEventDetails = snapshot.toObject(PaymentEventDetails.class);
                             if (paymentEventDetails != null) {
-                                Log.i("TEST CODE", paymentEventDetails.getPayment_ID());
-                                Log.i("TEST CODE", paymentEventDetails.getPayment_date());
-                                Log.i("TEST CODE", paymentEventDetails.getEvent_name());
-                                Log.i("TEST CODE", paymentEventDetails.getBuyer_email());
-                                Log.i("TEST CODE", paymentEventDetails.getBuyer_name());
-                                Log.i("TEST CODE", paymentEventDetails.getQty());
-                                Log.i("TEST CODE", paymentEventDetails.getTicket_price());
                                 paymentDetailsList.add(paymentEventDetails);
                             }
                         }

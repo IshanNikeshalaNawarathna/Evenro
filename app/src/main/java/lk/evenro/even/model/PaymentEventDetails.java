@@ -12,7 +12,10 @@ public class PaymentEventDetails implements Serializable {
     private String ticket_price;
     private String payment_date;
 
-    public PaymentEventDetails(String payment_ID, String qty, String event_name, String buyer_name, String buyer_email, String ticket_price, String payment_date) {
+    private String event_date;
+    private String event_time;
+
+    public PaymentEventDetails(String payment_ID, String qty, String event_name, String buyer_name, String buyer_email, String ticket_price, String payment_date, String event_date, String event_time) {
         this.payment_ID = payment_ID;
         this.qty = qty;
         this.event_name = event_name;
@@ -20,6 +23,8 @@ public class PaymentEventDetails implements Serializable {
         this.buyer_email = buyer_email;
         this.ticket_price = ticket_price;
         this.payment_date = payment_date;
+        this.event_date = event_date;
+        this.event_time = event_time;
     }
 
     public PaymentEventDetails(){
@@ -80,5 +85,21 @@ public class PaymentEventDetails implements Serializable {
 
     public void setPayment_date(String payment_date) {
         this.payment_date = payment_date;
+    }
+
+    public String getEvent_date() {
+        return event_date;
+    }
+
+    public void setEvent_date(String event_date) {
+        this.event_date = event_date;
+    }
+
+    public String getEvent_time() {
+        return event_time;
+    }
+
+    public void setEvent_time(String event_time) {
+        this.event_time = event_time;
     }
 }

@@ -97,6 +97,12 @@
     <string name="buying_ticket_view_button">View</string>
     <string name="buying_ticket_title">Purchase Ticket</string>
     <string name="purchase_title">Purchasing History</string>
+    <string name="ticket_date">Date</string>
+    <string name="ticket_time">Time</string>
+    <string name="ticket_value">Value</string>
+    <string name="ticket_sate">Seat</string>
+    <string name="ticket_ticket">Ticket</string>
+    <string name="download_ticket">DOWNLOAD TICKET</string>
 
 
 </resources>
