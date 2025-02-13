@@ -2,6 +2,8 @@ package lk.evenro.even;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
@@ -10,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,17 +21,21 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lk.evenro.even.adapter.EventAdapter;
+import lk.evenro.even.adapter.InvoiceAdapter;
 import lk.evenro.even.model.PaymentEventDetails;
 
 public class InvoiceHistoryActivity extends AppCompatActivity {
 
 
-    private String name = "";
-    private String email = "";
-    Map<String, Object> data;
+    private RecyclerView recyclerView;
+    private List<PaymentEventDetails> paymentDetailsList = new ArrayList<>();
+    private InvoiceAdapter invoiceAdapter;
+    private String name, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,13 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        recyclerView = findViewById(R.id.invoice_history_recyclerView); // Replace with your RecyclerView's ID
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Initialize the adapter with an empty list
+        invoiceAdapter = new InvoiceAdapter((ArrayList<PaymentEventDetails>) paymentDetailsList);
+        recyclerView.setAdapter(invoiceAdapter);
 
         UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
         new Thread(new Runnable() {
@@ -54,37 +69,37 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
 
             }
         }).start();
-
-
     }
-
     private void InvoicePaymentLoad(String name, String email) {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseFirestore.collection("invoice").whereEqualTo(
-                "buyer_email", email
-        ).whereEqualTo(
-                "buyer_name", name
-        ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    List<DocumentSnapshot> documents = task.getResult().getDocuments();
+        firebaseFirestore.collection("invoice")
+                .whereEqualTo("buyer_email", email)
+                .whereEqualTo("buyer_name", name)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        paymentDetailsList.clear(); // Clear the list before adding new data
+                        for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
+                            PaymentEventDetails paymentEventDetails = snapshot.toObject(PaymentEventDetails.class);
+                            if (paymentEventDetails != null) {
+                                Log.i("TEST CODE", paymentEventDetails.getPayment_ID());
+                                Log.i("TEST CODE", paymentEventDetails.getPayment_date());
+                                Log.i("TEST CODE", paymentEventDetails.getEvent_name());
+                                Log.i("TEST CODE", paymentEventDetails.getBuyer_email());
+                                Log.i("TEST CODE", paymentEventDetails.getBuyer_name());
+                                Log.i("TEST CODE", paymentEventDetails.getQty());
+                                Log.i("TEST CODE", paymentEventDetails.getTicket_price());
+                                paymentDetailsList.add(paymentEventDetails);
+                            }
+                        }
 
-                    for (DocumentSnapshot snapshot : documents) {
-                        data = snapshot.getData();
-                        PaymentEventDetails paymentEventDetails = snapshot.toObject(PaymentEventDetails.class);
-                        Log.i("TEST CODE", paymentEventDetails.getPayment_ID());
-                        Log.i("TEST CODE", paymentEventDetails.getPayment_date());
-                        Log.i("TEST CODE", paymentEventDetails.getEvent_name());
-                        Log.i("TEST CODE", paymentEventDetails.getBuyer_email());
-                        Log.i("TEST CODE", paymentEventDetails.getBuyer_name());
-                        Log.i("TEST CODE", paymentEventDetails.getQty());
-                        Log.i("TEST CODE", paymentEventDetails.getTicket_price());
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            invoiceAdapter.notifyDataSetChanged();
+                        });
+                    } else {
+                        Log.e("InvoicePaymentLoad", "Error getting documents: ", task.getException());
                     }
-
-                }
-            }
-        });
+                });
     }
 
 }
