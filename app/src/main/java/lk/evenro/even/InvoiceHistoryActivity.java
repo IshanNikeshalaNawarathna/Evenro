@@ -1,19 +1,41 @@
 package lk.evenro.even;
 
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import lk.evenro.even.adapter.EventAdapter;
+import lk.evenro.even.adapter.InvoiceAdapter;
 import lk.evenro.even.model.PaymentEventDetails;
 
 public class InvoiceHistoryActivity extends AppCompatActivity {
 
-    private PaymentEventDetails paymentEventDetails;
+
+    private RecyclerView recyclerView;
+    private List<PaymentEventDetails> paymentDetailsList = new ArrayList<>();
+    private InvoiceAdapter invoiceAdapter;
+    private String name, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,29 +48,51 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
             return insets;
         });
 
-        paymentEventDetails = (PaymentEventDetails) getIntent().getSerializableExtra("payment_details");
+        recyclerView = findViewById(R.id.invoice_history_recyclerView); // Replace with your RecyclerView's ID
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if (paymentEventDetails != null) {
-            String eventName = paymentEventDetails.getEvent_name();
-            String eventqty = paymentEventDetails.getQty();
-            String buyerEmail = paymentEventDetails.getBuyer_email();
-            String buyerName = paymentEventDetails.getBuyer_name();
-            String paymentID = paymentEventDetails.getPayment_ID();
-            String paymentDate = paymentEventDetails.getPayment_date();
-            String paymentPrice = paymentEventDetails.getTicket_price();
-            Log.i("TEST CODE", eventName);
-            Log.i("TEST CODE", eventqty);
-            Log.i("TEST CODE", buyerName);
-            Log.i("TEST CODE", buyerEmail);
-            Log.i("TEST CODE", paymentID);
-            Log.i("TEST CODE", paymentDate);
-            Log.i("TEST CODE", paymentPrice);
-        } else {
+        // Initialize the adapter with an empty list
+        invoiceAdapter = new InvoiceAdapter((ArrayList<PaymentEventDetails>) paymentDetailsList);
+        recyclerView.setAdapter(invoiceAdapter);
 
-            Log.i("TEST CODE", "NULL DATA");
+        UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
 
-        }
+                if (cursor.moveToNext()) {
+                    name = cursor.getString(1);
+                    email = cursor.getString(2);
+                    InvoicePaymentLoad(name, email);
+                }
 
-
+            }
+        }).start();
     }
+    private void InvoicePaymentLoad(String name, String email) {
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("invoice")
+                .whereEqualTo("buyer_email", email)
+                .whereEqualTo("buyer_name", name)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        paymentDetailsList.clear(); // Clear the list before adding new data
+                        for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
+                            PaymentEventDetails paymentEventDetails = snapshot.toObject(PaymentEventDetails.class);
+                            if (paymentEventDetails != null) {
+                                paymentDetailsList.add(paymentEventDetails);
+                            }
+                        }
+
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            invoiceAdapter.notifyDataSetChanged();
+                        });
+                    } else {
+                        Log.e("InvoicePaymentLoad", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
 }

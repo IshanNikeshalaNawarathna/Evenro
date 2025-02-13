@@ -16,11 +16,17 @@
         android:theme="@style/Theme.Evenro"
         tools:targetApi="31">
         <activity
-            android:name=".InvoiceHistoryActivity"
+            android:name=".TicketViewActivity"
             android:exported="false" />
         <activity
-            android:name=".PaymentActivity"
-            android:exported="false" />
+            android:name=".InvoiceHistoryActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".NavigationHomeActivity"
             android:exported="true"
