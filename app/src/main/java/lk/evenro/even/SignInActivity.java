@@ -14,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -61,13 +59,11 @@ public class SignInActivity extends AppCompatActivity {
                                         public void run() {
                                             email.setText("");
                                             password.setText("");
-                                            NavController navController = Navigation.findNavController(SignInActivity.this, R.id.nav_host_fragment_content_navigation_home);
-
-                                            // Navigate to HomeFragment (Make sure it's in nav_graph.xml)
-                                            navController.navigate(R.id.nav_home);
+                                            Intent intent = new Intent(SignInActivity.this, DashboradMain.class);
+                                            startActivity(intent);
                                         }
                                     });
-                                }else{
+                                } else {
                                     Log.i("SIGN UP", "Invalid user credential");
                                 }
 
@@ -84,7 +80,7 @@ public class SignInActivity extends AppCompatActivity {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),SignUpActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intent);
             }
         });
