@@ -39,7 +39,6 @@ public class SearchActivity extends AppCompatActivity {
     EditText search_text;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +125,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-
     private void FilterChip() {
         Chip music_chip = findViewById(R.id.chip_music);
         Chip art_chip = findViewById(R.id.chip_art);
@@ -141,18 +139,18 @@ public class SearchActivity extends AppCompatActivity {
                     int chipId = buttonView.getId();
                     if (chipId == R.id.chip_music) {
                         category = "Music";
-                        Log.i("TEST CODE",category);
+                        Log.i("TEST CODE", category);
                     } else if (chipId == R.id.chip_art) {
                         category = "Art";
-                        Log.i("TEST CODE",category);
+                        Log.i("TEST CODE", category);
                     } else if (chipId == R.id.chip_sport) {
                         category = "Sport";
-                        Log.i("TEST CODE",category);
+                        Log.i("TEST CODE", category);
                     }
 
                     if (category.isEmpty()) {
                         loadAllEvents();
-                    }else{
+                    } else {
                         LoadingChipCategory(category);
                     }
                 } else {
@@ -192,6 +190,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private void loadEventDetailsObject(DocumentSnapshot document) {
+        String eventID = document.getId();
         data = document.getData();
         String eventName = (String) data.get("event_name");
         String eventDescription = (String) data.get("event_description");
@@ -203,7 +202,9 @@ public class SearchActivity extends AppCompatActivity {
         String eventLocation = (String) data.get("event_location");
         String eventQty = (String) data.get("qty");
 
-        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName);
+        Log.i("EVENT CODE TEST", eventID);
+
+        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName, eventID);
         fullEventList.add(details);
     }
 

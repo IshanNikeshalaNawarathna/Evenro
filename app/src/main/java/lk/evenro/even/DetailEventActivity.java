@@ -2,6 +2,7 @@ package lk.evenro.even;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +45,9 @@ public class DetailEventActivity extends AppCompatActivity {
             event_location.setText(details.getEventLocations());
             event_price.setText(details.getPrices());
             event_organizer_name.setText(details.getOrganizerName());
+
+            Log.i("EVENT CODE TESTS", details.getEventID());
+
         }
 
         Button buy_ticket_button = findViewById(R.id.buy_ticket_button);
