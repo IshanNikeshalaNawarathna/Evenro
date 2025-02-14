@@ -80,6 +80,7 @@
     <string name="input_plaesholder11">Price *</string>
     <string name="input_plaesholder13">Location *</string>
     <string name="input_plaesholder12">Quantity *</string>
+    <string name="input_plaesholder14">Mobile Number *</string>
 
     <string name="menu_account">My Profile</string>
     <string name="menu_calender">Calender</string>
