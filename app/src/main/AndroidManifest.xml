@@ -16,16 +16,26 @@
         android:theme="@style/Theme.Evenro"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".DashboradMain"
+            android:exported="false"
+            android:label="@string/title_activity_dashborad_main"
+            android:theme="@style/Theme.Evenro.NoActionBar" />
+        <activity
             android:name=".TicketViewActivity"
             android:exported="false" />
         <activity
             android:name=".InvoiceHistoryActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".NavigationHomeActivity"
@@ -50,17 +60,6 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".EventUpdateActivity"
-            android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
             android:name=".EventAddActivity"
             android:exported="true">
 
@@ -74,11 +73,13 @@
         <activity
             android:name=".SearchActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".OrganizerProfileActivity"
@@ -126,17 +127,6 @@
         </activity>
         <activity
             android:name=".DetailEventActivity"
-            android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
-            android:name=".TestActivity"
             android:exported="true">
 
             <!-- <intent-filter> -->

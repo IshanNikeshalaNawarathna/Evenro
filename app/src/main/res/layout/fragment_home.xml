@@ -61,7 +61,6 @@
                         app:layout_constraintStart_toEndOf="@+id/profile_image"
                         app:layout_constraintTop_toBottomOf="@+id/textView58" />
 
-
                     <EditText
                         android:id="@+id/cart_item_type_qty"
                         android:layout_width="0dp"
@@ -133,7 +132,6 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textView60"
                         app:layout_constraintEnd_toEndOf="@+id/imageView31"
                         app:layout_constraintTop_toTopOf="@+id/textView60" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
@@ -182,8 +180,6 @@
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp" />
-
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
