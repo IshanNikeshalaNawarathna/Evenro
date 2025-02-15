@@ -201,10 +201,12 @@ public class SearchActivity extends AppCompatActivity {
         String eventOrganizerName = (String) data.get("Organizer_name");
         String eventLocation = (String) data.get("event_location");
         String eventQty = (String) data.get("qty");
+        String eventMobile = (String) data.get("mobile_number");
+        String eventImage = (String) data.get("event_image");
 
         Log.i("EVENT CODE TEST", eventID);
 
-        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName, eventID);
+        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName, eventID,eventMobile,eventImage);
         fullEventList.add(details);
     }
 

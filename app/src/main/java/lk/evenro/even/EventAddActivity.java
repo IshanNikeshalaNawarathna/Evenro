@@ -2,6 +2,7 @@ package lk.evenro.even;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -27,6 +29,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.cloudinary.android.MediaManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,7 +38,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import lk.evenro.even.model.CloudinaryHelper;
 import lk.evenro.even.model.SpinnerItem;
 
 public class EventAddActivity extends AppCompatActivity {
@@ -51,14 +56,25 @@ public class EventAddActivity extends AppCompatActivity {
     private EditText event_add_mobile_number;
     private Spinner spinner;
     String categ;
-    String imageUrl;
-    private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+
+    private ImageView imageView;
+    private Uri imageUri;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_event_add);
+        Map config = new HashMap();
+        config.put("cloud_name", "dzqpctth7");
+
+        try {
+            MediaManager.get();
+        } catch (IllegalStateException e) {
+            MediaManager.init(getApplicationContext(), config);
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.event_location), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -83,25 +99,30 @@ public class EventAddActivity extends AppCompatActivity {
             }
         });
 
-        ImageView imageView = findViewById(R.id.event_img_view);
-        pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-            if (uri != null) {
-                imageView.setImageURI(uri);
-                imageUrl = uri.toString();
-                Log.i("ABC", imageUrl);
-            } else {
-                Log.d("PhotoPicker", "No media selected");
-            }
-        });
-        ImageButton selectImge = findViewById(R.id.image_select_button);
-        selectImge.setOnClickListener(new View.OnClickListener() {
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(),
+                        new ActivityResultCallback<Uri>() {
+                            @Override
+                            public void onActivityResult(Uri uri) {
+                                if (uri != null) {
+                                    imageUri = uri;
+                                    imageView.setImageURI(uri);
+                                }
+                            }
+                        });
+
+        imageView = findViewById(R.id.event_img_view);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
+
+
             }
         });
+
 
         spinner = findViewById(R.id.event_category_item);
 
@@ -141,6 +162,7 @@ public class EventAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
                 new Thread(new Runnable() {
                     @Override
@@ -159,12 +181,11 @@ public class EventAddActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void addEvent(String name) {
-        if (imageUrl == null) {
-            Log.i("EVENT ADD", "Select an Image");
-        } else if (event_name.getText().toString().trim().isEmpty()) {
+        if (event_name.getText().toString().trim().isEmpty()) {
             Log.i("EVENT ADD", "Type an Event name");
         } else if (event_add_mobile_number.getText().toString().trim().isEmpty()) {
             Log.i("EVENT ADD", "Type a Mobile Number");
@@ -195,27 +216,31 @@ public class EventAddActivity extends AppCompatActivity {
             String eventmobileNumber = event_add_mobile_number.getText().toString().trim();
 
 
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            CloudinaryHelper.uploadImage(imageUri, null, new CloudinaryHelper.OnUploadCompleteListener() {
+                @Override
+                public void onUploadComplete(String url) {
 
-            HashMap<String, Object> event_data = new HashMap<>();
-            event_data.put("event_name", eventName);
-            event_data.put("organizer_name", name);
-            event_data.put("qty", eventQty);
-            event_data.put("event_date", eventDate);
-            event_data.put("event_time", eventTime);
-            event_data.put("price", "Rs." + eventPrice + ".00");
-            event_data.put("event_category", eventCategory);
-            event_data.put("event_location", eventLocation);
-            event_data.put("event_description", eventDescription);
-            event_data.put("mobile_number", eventmobileNumber);
+                    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
+                    HashMap<String, Object> event_data = new HashMap<>();
+                    event_data.put("event_name", eventName);
+                    event_data.put("organizer_name", name);
+                    event_data.put("qty", eventQty);
+                    event_data.put("event_date", eventDate);
+                    event_data.put("event_time", eventTime);
+                    event_data.put("price", eventPrice + ".00");
+                    event_data.put("event_category", eventCategory);
+                    event_data.put("event_location", eventLocation);
+                    event_data.put("event_description", eventDescription);
+                    event_data.put("mobile_number", eventmobileNumber);
+                    event_data.put("event_image",url);
 
             firebaseFirestore.collection("event").add(event_data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     Log.i("EVENT ADD", documentReference.getId());
-                    String id = documentReference.getId();
-                    profileImageUpload(id);
+                    Log.i("EVENT ADD", "Success Add Event");
+
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -224,20 +249,28 @@ public class EventAddActivity extends AppCompatActivity {
                 }
             });
 
-            event_name.setText("");
-            event_date.setText("");
-            event_time.setText("");
-            event_qty.setText("");
-            event_price.setText("");
-            event_location.setText("");
-            event_description.setText("");
-            spinner.setSelection(0);
+                }
+            });
+
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    event_name.setText("");
+                    event_date.setText("");
+                    event_time.setText("");
+                    event_qty.setText("");
+                    event_price.setText("");
+                    event_location.setText("");
+                    event_description.setText("");
+                    spinner.setSelection(0);
+                    event_add_mobile_number.setText("");
+                    imageView.setImageResource(R.drawable.add_photo_alternate);
+                }
+            });
         }
     }
 
-    private void profileImageUpload(String ID) {
-
-    }
 
 }
 

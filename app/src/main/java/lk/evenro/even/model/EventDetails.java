@@ -11,18 +11,18 @@ public class EventDetails implements Serializable {
     private String prices;
     private String eventCategory;
     private String qty;
-
     private String eventDate;
     private String eventTime;
     private String organizerName;
     private String eventID;
-
+    private String mobileNumber;
+    private String imageUri;
 
 
     public EventDetails() {
     }
 
-    public EventDetails(String eventName, String eventLocations, String eventDescriptions, String prices, String eventCategory, String qty, String eventDate, String eventTime, String organizerName, String eventID) {
+    public EventDetails(String eventName, String eventLocations, String eventDescriptions, String prices, String eventCategory, String qty, String eventDate, String eventTime, String organizerName, String eventID, String mobileNumber, String imageUri) {
         this.eventName = eventName;
         this.eventLocations = eventLocations;
         this.eventDescriptions = eventDescriptions;
@@ -33,6 +33,8 @@ public class EventDetails implements Serializable {
         this.eventTime = eventTime;
         this.organizerName = organizerName;
         this.eventID = eventID;
+        this.mobileNumber = mobileNumber;
+        this.imageUri = imageUri;
     }
 
     public String getEventName() {
@@ -113,5 +115,21 @@ public class EventDetails implements Serializable {
 
     public void setEventID(String eventID) {
         this.eventID = eventID;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 }

@@ -1,6 +1,7 @@
 package lk.evenro.even.adapter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
+import com.bumptech.glide.Glide;
 import java.util.ArrayList;
-import java.util.List;
 
 import lk.evenro.even.DetailEventActivity;
 import lk.evenro.even.R;
@@ -32,6 +29,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         TextView event_item_price;
         TextView event_item_location;
         TextView event_item_button;
+        ImageView event_item_image;
+
 
 
         public EventViewHolder(@NonNull View itemView) {
@@ -42,6 +41,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             event_item_date = itemView.findViewById(R.id.event_item_date);
             event_item_location = itemView.findViewById(R.id.event_item_location);
             event_item_button = itemView.findViewById(R.id.event_item_button);
+            event_item_image = itemView.findViewById(R.id.profile_image);
 
         }
     }
@@ -70,6 +70,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.event_item_date.setText(details.getEventDate());
         holder.event_item_price.setText(details.getPrices());
         holder.event_item_location.setText(details.getEventLocations());
+        Glide.with(holder.event_item_image.getContext())
+                .load(Uri.parse(details.getImageUri()))
+                .into(holder.event_item_image);
         holder.event_item_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
