@@ -1,5 +1,7 @@
 package lk.evenro.even.model;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class EventDetails implements Serializable {

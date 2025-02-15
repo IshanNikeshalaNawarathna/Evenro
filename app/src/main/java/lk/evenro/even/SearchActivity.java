@@ -198,7 +198,7 @@ public class SearchActivity extends AppCompatActivity {
         String eventTime = (String) data.get("event_time");
         String eventPrice = (String) data.get("price");
         String eventCategory = (String) data.get("event_category");
-        String eventOrganizerName = (String) data.get("Organizer_name");
+        String eventOrganizerName = (String) data.get("organizer_name");
         String eventLocation = (String) data.get("event_location");
         String eventQty = (String) data.get("qty");
         String eventMobile = (String) data.get("mobile_number");
