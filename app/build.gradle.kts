@@ -50,7 +50,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation ("com.google.code.gson:gson:2.11.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.android.material:material:1.6.0")
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
@@ -60,5 +60,7 @@ dependencies {
     implementation ("com.github.PayHereDevs:payhere-android-sdk:v3.0.17")
     implementation ("androidx.appcompat:appcompat:1.6.0")
 
-
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.cloudinary:cloudinary-android:3.0.2")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

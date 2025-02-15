@@ -1,10 +1,13 @@
 package lk.evenro.even;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -12,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.bumptech.glide.Glide;
 
 import lk.evenro.even.model.EventDetails;
 
@@ -34,8 +39,11 @@ public class DetailEventActivity extends AppCompatActivity {
         TextView event_description = findViewById(R.id.event_description);
         TextView event_organizer_name = findViewById(R.id.organize_name);
         TextView event_date = findViewById(R.id.event_date);
+        ImageView event_image = findViewById(R.id.event_detail_image);
 
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("event_details");
+
+
 
         if (details != null) {
             event_date.setText(details.getEventDate());
@@ -44,6 +52,13 @@ public class DetailEventActivity extends AppCompatActivity {
             event_location.setText(details.getEventLocations());
             event_price.setText(details.getPrices());
             event_organizer_name.setText(details.getOrganizerName());
+
+            Glide.with(this)
+                    .load(Uri.parse(details.getImageUri()))
+                    .into(event_image);
+
+            Log.i("EVENT CODE TESTS", event_organizer_name.getText().toString());
+
         }
 
         Button buy_ticket_button = findViewById(R.id.buy_ticket_button);

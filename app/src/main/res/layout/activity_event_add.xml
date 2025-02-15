@@ -11,9 +11,9 @@
         android:id="@+id/textView48"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/inter_semi_bold"
         android:gravity="center"
         android:text="@string/add_event_title"
@@ -23,27 +23,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageButton
-        android:id="@+id/image_select_button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="#FCF5FD"
-        app:layout_constraintBottom_toBottomOf="@+id/event_img_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/event_img_view"
-        app:layout_constraintTop_toTopOf="@+id/event_img_view"
-        app:srcCompat="@drawable/baseline_add" />
-
     <View
         android:id="@+id/divider8"
         android:layout_width="0dp"
         android:layout_height="2dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="@+id/image_select_button"
-        app:layout_constraintStart_toStartOf="@+id/event_img_view"
+        app:layout_constraintEnd_toEndOf="@+id/textView48"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_img_view" />
 
     <TextView
@@ -60,9 +48,9 @@
         android:id="@+id/add_event_name"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/custome_input"
         android:backgroundTint="@color/back_button"
         android:ems="10"
@@ -72,7 +60,7 @@
         android:paddingEnd="5dp"
         android:state_enabled="false"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_event_mobile_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
@@ -123,7 +111,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#FCF5FD"
         app:layout_constraintBottom_toBottomOf="@+id/add_event_date"
-        app:layout_constraintEnd_toEndOf="@+id/add_event_name"
+        app:layout_constraintEnd_toEndOf="@+id/add_event_mobile_number"
         app:layout_constraintTop_toTopOf="@+id/add_event_date"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/baseline_calendar" />
@@ -255,9 +243,30 @@
         android:layout_width="190dp"
         android:layout_height="90dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView48"
         app:layout_constraintTop_toBottomOf="@+id/textView48"
         app:srcCompat="@drawable/add_photo_alternate" />
+
+    <EditText
+        android:id="@+id/add_event_mobile_number"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custome_input"
+        android:backgroundTint="@color/back_button"
+        android:ems="10"
+        android:hint="@string/input_plaesholder14"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
+        android:state_enabled="false"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_event_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/add_event_name"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

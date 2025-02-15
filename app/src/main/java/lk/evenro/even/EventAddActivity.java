@@ -1,6 +1,8 @@
 package lk.evenro.even;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -26,7 +29,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-
+import com.cloudinary.android.MediaManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,21 +38,43 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import lk.evenro.even.model.CloudinaryHelper;
 import lk.evenro.even.model.SpinnerItem;
 
 public class EventAddActivity extends AppCompatActivity {
 
     TextView category;
+    private EditText event_name;
+    private EditText event_time;
+    private EditText event_date;
+    private EditText event_price;
+    private EditText event_qty;
+    private EditText event_location;
+    private EditText event_description;
+    private EditText event_add_mobile_number;
+    private Spinner spinner;
     String categ;
-    String imageUrl;
-    private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+
+    private ImageView imageView;
+    private Uri imageUri;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_event_add);
+        Map config = new HashMap();
+        config.put("cloud_name", "dzqpctth7");
+
+        try {
+            MediaManager.get();
+        } catch (IllegalStateException e) {
+            MediaManager.init(getApplicationContext(), config);
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.event_location), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -60,7 +85,7 @@ public class EventAddActivity extends AppCompatActivity {
         date_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetFragment  bottomSheetFragment = new BottomSheetFragment();
+                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
             }
         });
@@ -73,27 +98,33 @@ public class EventAddActivity extends AppCompatActivity {
                 timeBottomSheetFragment.show(getSupportFragmentManager(), timeBottomSheetFragment.getTag());
             }
         });
-        ImageView imageView = findViewById(R.id.event_img_view);
-        pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-            if (uri != null) {
-                imageView.setImageURI(uri);
-                imageUrl = uri.toString();
-                Log.i("ABC", imageUrl);
-            } else {
-                Log.d("PhotoPicker", "No media selected");
-            }
-        });
-        ImageButton selectImge = findViewById(R.id.image_select_button);
-        selectImge.setOnClickListener(new View.OnClickListener() {
+
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(),
+                        new ActivityResultCallback<Uri>() {
+                            @Override
+                            public void onActivityResult(Uri uri) {
+                                if (uri != null) {
+                                    imageUri = uri;
+                                    imageView.setImageURI(uri);
+                                }
+                            }
+                        });
+
+        imageView = findViewById(R.id.event_img_view);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
+
+
             }
         });
 
-        Spinner spinner = findViewById(R.id.event_category_item);
+
+        spinner = findViewById(R.id.event_category_item);
 
         ArrayList<SpinnerItem> spinnerItems = new ArrayList<>();
         spinnerItems.add(new SpinnerItem(R.drawable.arrow_drop_down, "Select"));
@@ -117,75 +148,114 @@ public class EventAddActivity extends AppCompatActivity {
         });
 
         Button add_event_button = findViewById(R.id.event_add_button);
-        EditText event_name = findViewById(R.id.add_event_name);
-        EditText event_time = findViewById(R.id.add_event_time);
-        EditText event_date = findViewById(R.id.add_event_date);
-        EditText event_price = findViewById(R.id.add_event_price);
-        EditText event_qty = findViewById(R.id.add_event_qty);
-        EditText event_location = findViewById(R.id.add_event_location);
-        EditText event_description = findViewById(R.id.add_event_description);
+        event_name = findViewById(R.id.add_event_name);
+        event_time = findViewById(R.id.add_event_time);
+        event_date = findViewById(R.id.add_event_date);
+        event_price = findViewById(R.id.add_event_price);
+        event_qty = findViewById(R.id.add_event_qty);
+        event_location = findViewById(R.id.add_event_location);
+        event_description = findViewById(R.id.add_event_description);
+        event_add_mobile_number = findViewById(R.id.add_event_mobile_number);
 
 
         add_event_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (imageUrl == null) {
-                    Log.i("EVENT ADD", "Select an Image");
-                } else if (event_name.getText().toString().trim().isEmpty()) {
-                    Log.i("EVENT ADD", "Type an Event name");
-                } else if (event_time.getText().toString().trim().isEmpty()) {
-                    Log.i("EVENT ADD", "Choose your Time");
-                } else if (event_date.getText().toString().trim().isEmpty()) {
-                    Log.i("EVENT ADD", "Choose your Date");
-                } else if (event_price.getText().toString().trim().isEmpty()) {
-                    Log.i("EVENT ADD", "Type a Ticket Price");
-                } else if (event_qty.getText().toString().trim().isEmpty()) {
-                    Log.i("EVENT ADD", "Type a Ticket Quantity");
-                } else if (spinner.getSelectedItem() == null) {
-                    Log.i("EVENT ADD", "Select an Event Category");
-                } else if (event_location.getText().toString().trim().isEmpty()) {
-                    Log.i("EVENT ADD", "Type a Location");
-                } else if (event_description.getText().toString().trim().isEmpty()) {
-                    Log.i("EVENT ADD", "Type an Event Description");
-                } else {
 
-                    String eventName = event_name.getText().toString().trim();
-                    String eventTime = event_time.getText().toString().trim();
-                    String eventDate = event_date.getText().toString().trim();
-                    String eventPrice = event_price.getText().toString().trim();
-                    String eventQty = event_qty.getText().toString().trim();
-                    String eventCategory = String.valueOf(categ);
-                    String eventLocation = event_location.getText().toString().trim();
-                    String eventDescription = event_description.getText().toString().trim();
 
+                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+
+                        if (cursor.moveToNext()) {
+                            String name = cursor.getString(1);
+                            Log.i("TEST CODE GET THE ORGANIZER NAME", name);
+                            addEvent(name);
+                        }
+                    }
+                }).start();
+
+
+            }
+        });
+
+
+    }
+
+    private void addEvent(String name) {
+        if (event_name.getText().toString().trim().isEmpty()) {
+            Log.i("EVENT ADD", "Type an Event name");
+        } else if (event_add_mobile_number.getText().toString().trim().isEmpty()) {
+            Log.i("EVENT ADD", "Type a Mobile Number");
+        } else if (event_time.getText().toString().trim().isEmpty()) {
+            Log.i("EVENT ADD", "Choose your Time");
+        } else if (event_date.getText().toString().trim().isEmpty()) {
+            Log.i("EVENT ADD", "Choose your Date");
+        } else if (event_price.getText().toString().trim().isEmpty()) {
+            Log.i("EVENT ADD", "Type a Ticket Price");
+        } else if (event_qty.getText().toString().trim().isEmpty()) {
+            Log.i("EVENT ADD", "Type a Ticket Quantity");
+        } else if (spinner.getSelectedItem() == null) {
+            Log.i("EVENT ADD", "Select an Event Category");
+        } else if (event_location.getText().toString().trim().isEmpty()) {
+            Log.i("EVENT ADD", "Type a Location");
+        } else if (event_description.getText().toString().trim().isEmpty()) {
+            Log.i("EVENT ADD", "Type an Event Description");
+        } else {
+
+            String eventName = event_name.getText().toString().trim();
+            String eventTime = event_time.getText().toString().trim();
+            String eventDate = event_date.getText().toString().trim();
+            String eventPrice = event_price.getText().toString().trim();
+            String eventQty = event_qty.getText().toString().trim();
+            String eventCategory = String.valueOf(categ);
+            String eventLocation = event_location.getText().toString().trim();
+            String eventDescription = event_description.getText().toString().trim();
+            String eventmobileNumber = event_add_mobile_number.getText().toString().trim();
+
+
+            CloudinaryHelper.uploadImage(imageUri, null, new CloudinaryHelper.OnUploadCompleteListener() {
+                @Override
+                public void onUploadComplete(String url) {
 
                     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
                     HashMap<String, Object> event_data = new HashMap<>();
                     event_data.put("event_name", eventName);
-                    event_data.put("organizer_name", "Ishan Nikeshala Nawarathna");
+                    event_data.put("organizer_name", name);
                     event_data.put("qty", eventQty);
                     event_data.put("event_date", eventDate);
                     event_data.put("event_time", eventTime);
-                    event_data.put("price", "Rs." + eventPrice + ".00");
+                    event_data.put("price", eventPrice + ".00");
                     event_data.put("event_category", eventCategory);
                     event_data.put("event_location", eventLocation);
                     event_data.put("event_description", eventDescription);
-                    event_data.put("event_image", imageUrl);
+                    event_data.put("mobile_number", eventmobileNumber);
+                    event_data.put("event_image",url);
 
-                    firebaseFirestore.collection("event").add(event_data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.i("EVENT ADD", documentReference.getId());
+            firebaseFirestore.collection("event").add(event_data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Log.i("EVENT ADD", documentReference.getId());
+                    Log.i("EVENT ADD", "Success Add Event");
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.i("EVENT ADD", e.toString());
-                        }
-                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.i("EVENT ADD", e.toString());
+                }
+            });
 
+                }
+            });
+
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
                     event_name.setText("");
                     event_date.setText("");
                     event_time.setText("");
@@ -194,11 +264,13 @@ public class EventAddActivity extends AppCompatActivity {
                     event_location.setText("");
                     event_description.setText("");
                     spinner.setSelection(0);
+                    event_add_mobile_number.setText("");
+                    imageView.setImageResource(R.drawable.add_photo_alternate);
                 }
-            }
-        });
-
+            });
+        }
     }
+
 
 }
 

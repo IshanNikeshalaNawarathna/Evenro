@@ -14,8 +14,9 @@ public class PaymentEventDetails implements Serializable {
 
     private String event_date;
     private String event_time;
+    private String eventID;
 
-    public PaymentEventDetails(String payment_ID, String qty, String event_name, String buyer_name, String buyer_email, String ticket_price, String payment_date, String event_date, String event_time) {
+    public PaymentEventDetails(String payment_ID, String qty, String event_name, String buyer_name, String buyer_email, String ticket_price, String payment_date, String event_date, String event_time, String eventID) {
         this.payment_ID = payment_ID;
         this.qty = qty;
         this.event_name = event_name;
@@ -25,6 +26,7 @@ public class PaymentEventDetails implements Serializable {
         this.payment_date = payment_date;
         this.event_date = event_date;
         this.event_time = event_time;
+        this.eventID = eventID;
     }
 
     public PaymentEventDetails(){
@@ -101,5 +103,13 @@ public class PaymentEventDetails implements Serializable {
 
     public void setEvent_time(String event_time) {
         this.event_time = event_time;
+    }
+
+    public String getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(String eventID) {
+        this.eventID = eventID;
     }
 }
