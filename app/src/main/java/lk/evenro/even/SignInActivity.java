@@ -10,12 +10,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.api.LogDescriptor;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import lk.evenro.even.model.UserDetails;
+
 public class SignInActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,36 +53,29 @@ public class SignInActivity extends AppCompatActivity {
                 } else if (password.getText().toString().isEmpty()) {
                     Log.i("Sign In", "Invalid Password");
                 } else {
-                    UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
 
-                            Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+                    String userEmail = email.getText().toString();
+                    String userPassword = password.getText().toString();
 
-                            while (cursor.moveToNext()) {
-                                String resultEmail = cursor.getString(2);
-                                String resultPassword = cursor.getString(4);
-                                Log.i("SIGN UP", resultEmail);
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-                                if (resultEmail.equals(email.getText().toString()) && resultPassword.equals(password.getText().toString())) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            email.setText("");
-                                            password.setText("");
-                                            Intent intent = new Intent(SignInActivity.this, DashboradMain.class);
-                                            startActivity(intent);
-                                        }
-                                    });
-                                } else {
-                                    Log.i("SIGN UP", "Invalid user credential");
+                    mAuth.signInWithEmailAndPassword(userEmail, userPassword)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        Log.i("Loging Success",user.getEmail());
+
+                                        Intent intent = new Intent(SignInActivity.this,DashboradMain.class);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }else{
+                                        Log.i("Loging Error",task.getException().getMessage());
+                                    }
                                 }
-
-                            }
-                            cursor.close();
-                        }
-                    }).start();
+                            });
                 }
             }
 
