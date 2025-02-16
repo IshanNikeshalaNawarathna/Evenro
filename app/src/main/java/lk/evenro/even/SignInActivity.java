@@ -15,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import lk.evenro.even.model.UserDetails;
+
 public class SignInActivity extends AppCompatActivity {
 
     @Override
@@ -51,6 +53,7 @@ public class SignInActivity extends AppCompatActivity {
                             while (cursor.moveToNext()) {
                                 String resultEmail = cursor.getString(2);
                                 String resultPassword = cursor.getString(4);
+                                String resultName = cursor.getString(1);
                                 Log.i("SIGN UP", resultEmail);
 
                                 if (resultEmail.equals(email.getText().toString()) && resultPassword.equals(password.getText().toString())) {
@@ -60,6 +63,11 @@ public class SignInActivity extends AppCompatActivity {
                                             email.setText("");
                                             password.setText("");
                                             Intent intent = new Intent(SignInActivity.this, DashboradMain.class);
+                                            UserDetails user = new UserDetails(
+                                                    resultEmail,
+                                                    resultName
+                                            );
+                                            intent.putExtra("user_details",user);
                                             startActivity(intent);
                                         }
                                     });

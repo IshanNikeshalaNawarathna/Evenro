@@ -60,6 +60,7 @@
     <string name="input_plaesholder7">Type your Event Descriptions *</string>
     <string name="add_event_publish_button">PUBLISH EVENT</string>
     <string name="event_cart_title">Ticket</string>
+    <string name="event_detail_view_location_button">View Location</string>
     <string name="event_cart_gty">Seat</string>
     <string name="event_cart_price">Ticket Price</string>
     <string name="event_cart_num_qty">5</string>
@@ -109,6 +110,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="home_main_title">Experience Events Like Never Before.</string>
 
 
 </resources>
