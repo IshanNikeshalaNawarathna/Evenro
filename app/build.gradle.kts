@@ -57,9 +57,12 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.android.gms:play-services-maps:19.0.0")
 
+    implementation ("com.google.firebase:firebase-auth:22.1.1")
+    implementation ("com.google.android.gms:play-services-auth:20.6.0")
+
 
     implementation ("com.github.PayHereDevs:payhere-android-sdk:v3.0.17")
-    implementation ("androidx.appcompat:appcompat:1.6.0")
+
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.cloudinary:cloudinary-android:3.0.2")

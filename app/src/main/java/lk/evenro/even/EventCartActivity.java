@@ -136,21 +136,21 @@ public class EventCartActivity extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 date = simpleDateFormat.format(new Date());
 
-                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-
-                        if (cursor.moveToNext()) {
-                            String name = cursor.getString(1);
-                            String email = cursor.getString(2);
-                            paymentMethod(name, email);
-                            InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty, event_date, event_time, eventID);
-                        }
-
-                    }
-                }).start();
+//                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+//
+//                        if (cursor.moveToNext()) {
+//                            String name = cursor.getString(1);
+//                            String email = cursor.getString(2);
+//                            paymentMethod(name, email);
+//                            InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty, event_date, event_time, eventID);
+//                        }
+//
+//                    }
+//                }).start();
 
             }
         });

@@ -61,6 +61,7 @@
     <string name="add_event_publish_button">PUBLISH EVENT</string>
     <string name="event_cart_title">Ticket</string>
     <string name="event_detail_view_location_button">View Location</string>
+    <string name="add_locations">Choose Location</string>
     <string name="event_cart_gty">Seat</string>
     <string name="event_cart_price">Ticket Price</string>
     <string name="event_cart_num_qty">5</string>
@@ -79,7 +80,6 @@
     <string name="cart_item_total">Total *</string>
 
     <string name="input_plaesholder11">Price *</string>
-    <string name="input_plaesholder13">Location *</string>
     <string name="input_plaesholder12">Quantity *</string>
     <string name="input_plaesholder14">Mobile Number *</string>
 
