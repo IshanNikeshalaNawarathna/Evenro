@@ -85,7 +85,7 @@
 
     <string name="menu_account">My Profile</string>
     <string name="menu_calender">Calender</string>
-    <string name="menu_setting">Setting</string>
+    <string name="menu_setting">Purchasing History</string>
     <string name="menu_sign_out">Sign Out</string>
     <string name="welcome_home_title">Welcome!</string>
     <string name="welcome_home_view_all">View all</string>
@@ -106,11 +106,14 @@
     <string name="ticket_ticket">Ticket</string>
     <string name="download_ticket">DOWNLOAD TICKET</string>
     <string name="title_activity_dashborad_main">DashboradMain</string>
+    <string name="custome_loacation_spinner">Select Location</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_ticket">Add Ticket</string>
     <string name="home_main_title">Experience Events Like Never Before.</string>
+    <string name="profile_icon">I</string>
 
 
 </resources>

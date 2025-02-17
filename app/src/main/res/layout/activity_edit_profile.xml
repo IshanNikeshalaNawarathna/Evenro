@@ -35,13 +35,14 @@
         app:layout_constraintTop_toBottomOf="@+id/frameLayout16" />
 
     <EditText
-        android:id="@+id/editTextText1"
+        android:id="@+id/user_name"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/custome_input"
+        android:backgroundTint="@color/back_button"
         android:ems="15"
         android:fontFamily="@font/inter_regular"
         android:hint="@string/user_profile_name"
@@ -55,13 +56,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/user_email"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/custome_input"
+        android:backgroundTint="@color/back_button"
         android:ems="15"
         android:fontFamily="@font/inter_regular"
         android:hint="@string/user_profile_name_edit2"
@@ -75,12 +77,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/user_mobile"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/custome_input"
+        android:backgroundTint="@color/back_button"
         android:ems="15"
         android:fontFamily="@font/inter_regular"
         android:hint="@string/user_profile_name_edit1"
@@ -92,44 +95,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView35"
         app:layout_constraintTop_toBottomOf="@+id/textView35" />
-
-    <EditText
-        android:id="@+id/editTextText4"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/custome_input"
-        android:ems="15"
-        android:fontFamily="@font/inter_regular"
-        android:hint="@string/user_profile_name_edit3"
-        android:inputType="text|textEmailAddress"
-        android:paddingStart="15dp"
-        android:paddingEnd="5dp"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView37" />
-
-    <EditText
-        android:id="@+id/editTextText5"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/custome_input"
-        android:ems="15"
-        android:fontFamily="@font/inter_regular"
-        android:hint="@string/user_profile_name_edit3"
-        android:inputType="text|textEmailAddress"
-        android:paddingStart="15dp"
-        android:paddingEnd="5dp"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton9"
-        app:layout_constraintStart_toStartOf="@+id/textView38"
-        app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
     <FrameLayout
         android:id="@+id/frameLayout16"
@@ -144,8 +109,17 @@
             android:id="@+id/profile_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/profile"
+            android:src="@drawable/shape_curicle"
             app:civ_border_color="#FF000000" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_semi_bold"
+            android:text="@string/profile_icon"
+            android:textSize="24sp" />
 
     </FrameLayout>
 
@@ -171,7 +145,7 @@
             android:backgroundTint="@color/main_color">
 
             <ImageButton
-                android:id="@+id/imageButton14"
+                android:id="@+id/user_image_select_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#F56B10"
@@ -187,8 +161,8 @@
         android:fontFamily="@font/inter_medium"
         android:text="@string/user_profile_edit_mobile"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/editTextText1"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText1" />
+        app:layout_constraintStart_toStartOf="@+id/user_name"
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
     <TextView
         android:id="@+id/textView36"
@@ -196,57 +170,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/user_profile_edit_email"
-        app:layout_constraintStart_toStartOf="@+id/editTextText2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
-
-    <TextView
-        android:id="@+id/textView37"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="@string/user_profile_edit_address"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/editTextText3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
-
-    <TextView
-        android:id="@+id/textView38"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="@string/user_profile_edit_dob"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/editTextText4"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
-
-    <ImageButton
-        android:id="@+id/imageButton9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#FCF5FD"
-        android:tint="@color/main_color"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextText5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextText5"
-        app:srcCompat="@drawable/baseline_calendar" />
+        app:layout_constraintStart_toStartOf="@+id/user_mobile"
+        app:layout_constraintTop_toBottomOf="@+id/user_mobile" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/save_profile_button"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/button_color"
         android:fontFamily="@font/inter_semi_bold"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:text="@string/user_profile_edit_button"
-        android:textSize="13sp"
-        app:iconPadding="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton9"
-        app:layout_constraintStart_toStartOf="@+id/editTextText5"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText5" />
+        app:layout_constraintEnd_toEndOf="@+id/user_email"
+        app:layout_constraintStart_toStartOf="@+id/user_email"
+        app:layout_constraintTop_toBottomOf="@+id/user_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

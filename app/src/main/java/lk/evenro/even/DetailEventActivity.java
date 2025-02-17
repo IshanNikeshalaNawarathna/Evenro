@@ -1,6 +1,7 @@
 package lk.evenro.even;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,8 @@ public class DetailEventActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
 
         TextView event_title = findViewById(R.id.event_title);
         TextView event_price = findViewById(R.id.event_price);

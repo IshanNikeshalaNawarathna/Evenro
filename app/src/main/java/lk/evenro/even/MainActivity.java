@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
                         Intent intent = new Intent(MainActivity.this, DashboradMain.class);

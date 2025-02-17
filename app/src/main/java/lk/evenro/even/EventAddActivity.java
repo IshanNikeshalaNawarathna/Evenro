@@ -41,25 +41,20 @@ import java.util.List;
 import java.util.Map;
 
 import lk.evenro.even.model.CloudinaryHelper;
+import lk.evenro.even.model.Location;
 import lk.evenro.even.model.SpinnerItem;
 
 public class EventAddActivity extends AppCompatActivity {
 
-    TextView category;
-    private EditText event_name;
-    private EditText event_time;
-    private EditText event_date;
-    private EditText event_price;
-    private EditText event_qty;
-    private EditText event_location;
-    private EditText event_description;
-    private EditText event_add_mobile_number;
-    private Spinner spinner;
-    String categ;
+    TextView category,location;
 
+
+    private EditText event_add_mobile_number, event_name, event_time, event_date, event_price, event_qty, event_description;
+    private Spinner spinner, location_spinner;
+    String categ;
+    String loca;
     private ImageView imageView;
     private Uri imageUri;
-
 
 
     @Override
@@ -122,6 +117,32 @@ public class EventAddActivity extends AppCompatActivity {
 
             }
         });
+        location_spinner = findViewById(R.id.location_spinner);
+        ArrayList<Location> locations = new ArrayList<>();
+        locations.add(new Location("Select Location", "0"));
+        locations.add(new Location("Nelum Pokuna Theatre", "6.9131,79.8607"));
+        locations.add(new Location("BMICH", "6.9013, 79.8612"));
+        locations.add(new Location("Lotus Tower", "6.9279,79.8554"));
+        locations.add(new Location("One Galle Face Mall", "6.9275,79.8432"));
+        locations.add(new Location("Galle Face Green", " 6.9271,79.8420"));
+        locations.add(new Location("Colombo City Centre", "6.9204,79.8577"));
+
+        LocationAdapter locationAdapter = new LocationAdapter(getApplicationContext(), R.layout.custome_spinner_location_item, locations);
+        location_spinner.setAdapter(locationAdapter);
+
+        location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Location selectedLocation = (Location) parent.getItemAtPosition(position);
+                loca = selectedLocation.getLatlng();
+                Log.i("TEST CODE",loca);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
 
 
         spinner = findViewById(R.id.event_category_item);
@@ -138,8 +159,9 @@ public class EventAddActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                category = view.findViewById(R.id.spinner_item_text);
+                category = view.findViewById(R.id.spinner_items_text);
                 categ = (String) category.getText();
+                Log.i("TEST CODE",categ);
             }
 
             @Override
@@ -153,7 +175,6 @@ public class EventAddActivity extends AppCompatActivity {
         event_date = findViewById(R.id.add_event_date);
         event_price = findViewById(R.id.add_event_price);
         event_qty = findViewById(R.id.add_event_qty);
-        event_location = findViewById(R.id.add_event_location);
         event_description = findViewById(R.id.add_event_description);
         event_add_mobile_number = findViewById(R.id.add_event_mobile_number);
 
@@ -199,8 +220,6 @@ public class EventAddActivity extends AppCompatActivity {
             Log.i("EVENT ADD", "Type a Ticket Quantity");
         } else if (spinner.getSelectedItem() == null) {
             Log.i("EVENT ADD", "Select an Event Category");
-        } else if (event_location.getText().toString().trim().isEmpty()) {
-            Log.i("EVENT ADD", "Type a Location");
         } else if (event_description.getText().toString().trim().isEmpty()) {
             Log.i("EVENT ADD", "Type an Event Description");
         } else {
@@ -211,7 +230,7 @@ public class EventAddActivity extends AppCompatActivity {
             String eventPrice = event_price.getText().toString().trim();
             String eventQty = event_qty.getText().toString().trim();
             String eventCategory = String.valueOf(categ);
-            String eventLocation = event_location.getText().toString().trim();
+            String eventLocation = loca;
             String eventDescription = event_description.getText().toString().trim();
             String eventmobileNumber = event_add_mobile_number.getText().toString().trim();
 
@@ -233,21 +252,21 @@ public class EventAddActivity extends AppCompatActivity {
                     event_data.put("event_location", eventLocation);
                     event_data.put("event_description", eventDescription);
                     event_data.put("mobile_number", eventmobileNumber);
-                    event_data.put("event_image",url);
+                    event_data.put("event_image", url);
 
-            firebaseFirestore.collection("event").add(event_data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    Log.i("EVENT ADD", documentReference.getId());
-                    Log.i("EVENT ADD", "Success Add Event");
+                    firebaseFirestore.collection("event").add(event_data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.i("EVENT ADD", documentReference.getId());
+                            Log.i("EVENT ADD", "Success Add Event");
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.i("EVENT ADD", e.toString());
-                }
-            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.i("EVENT ADD", e.toString());
+                        }
+                    });
 
                 }
             });
@@ -261,7 +280,7 @@ public class EventAddActivity extends AppCompatActivity {
                     event_time.setText("");
                     event_qty.setText("");
                     event_price.setText("");
-                    event_location.setText("");
+//                    event_location.setText("");
                     event_description.setText("");
                     spinner.setSelection(0);
                     event_add_mobile_number.setText("");
@@ -290,7 +309,7 @@ class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(layout, parent, false);
         ImageView imageView = view.findViewById(R.id.spinner_image);
-        TextView textView = view.findViewById(R.id.spinner_item_text);
+        TextView textView = view.findViewById(R.id.spinner_items_text);
 
         SpinnerItem spinnerItem = spinnerItems.get(position);
         imageView.setImageResource(spinnerItem.getItemResourceId());
@@ -304,4 +323,34 @@ class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
         return getDropDownView(position, convertView, parent);
     }
 }
+
+class LocationAdapter extends ArrayAdapter<Location> {
+
+    List<Location> spinnerItems;
+    int layout;
+
+    public LocationAdapter(@NonNull Context context, int resource, @NonNull List<Location> objects) {
+        super(context, resource, objects);
+        spinnerItems = objects;
+        layout = resource;
+    }
+
+    @Override
+    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(layout, parent, false);
+        TextView textView = view.findViewById(R.id.spinner_items_text);
+        Location spinnerItem = spinnerItems.get(position);
+        textView.setText(spinnerItem.getName());
+        return view;
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        return getDropDownView(position, convertView, parent);
+    }
+
+}
+
 

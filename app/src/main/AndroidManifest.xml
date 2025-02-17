@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="lk.evenro.even">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MANAGE_DEVICE_POLICY_MICROPHONE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_DEVICE_POLICY_MICROPHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Evenro"
         tools:targetApi="31">
-
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
         <activity
             android:name=".DashboradMain"
             android:exported="false"
@@ -26,27 +30,17 @@
         <activity
             android:name=".TicketViewActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
 
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
         <activity
             android:name=".InvoiceHistoryActivity"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-
-        <activity
-            android:name=".EventCartActivity"
             android:exported="true">
 
             <!-- <intent-filter> -->
@@ -55,100 +49,71 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
+            android:name=".EventCartActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
             android:name=".EventAddActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".SearchActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+
         </activity>
         <activity
             android:name=".OrganizerProfileActivity"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".EditProfileActivity"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".UserProfileActivity"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".UpcomingEventActivity"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".DetailEventActivity"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".SignUpActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".SignInActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDu8CVZhWC035J0nA2WA4hQLo88jV4c0Ro" />
-
     </application>
 
 </manifest>
