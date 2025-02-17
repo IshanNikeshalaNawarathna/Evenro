@@ -30,7 +30,7 @@ import lk.evenro.even.databinding.FragmentHomeBinding;
 import lk.evenro.even.model.EventDetails;
 
 public class HomeFragment extends Fragment {
-    RecyclerView categoryRecyclerView,musicRecyclerView;
+    RecyclerView categoryRecyclerView, musicRecyclerView;
     private FragmentHomeBinding binding;
     ArrayList<EventDetails> fullEventList;
     ArrayList<EventDetails> fullEventLists;
@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
     private List<EventDetails> eventDetail = new ArrayList<>();
     Map<String, Object> data;
     private FirebaseAuth mAuth;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -48,7 +49,11 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         TextView user_email_home = view.findViewById(R.id.user_email_home);
-        String user_email = user.getEmail();
+
+        TextView icon = view.findViewById(R.id.icon_images_homes);
+        String email = user.getEmail();
+        char firstCharUpper = Character.toUpperCase(email.charAt(0));
+        icon.setText(String.valueOf(firstCharUpper));
         user_email_home.setText(user.getEmail());
 
 
@@ -56,8 +61,6 @@ public class HomeFragment extends Fragment {
         fullEventList = new ArrayList<>();
         fullEventLists = new ArrayList<>();
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-
 
 
         firebaseFirestore.collection("event")
@@ -87,7 +90,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
         ImageView search_button = view.findViewById(R.id.search_image_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +102,7 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
     private void updateRecyclerView(ArrayList<EventDetails> list) {
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         categoryRecyclerView.setAdapter(new EventAdapter(list));
@@ -123,10 +126,9 @@ public class HomeFragment extends Fragment {
 
         Log.i("EVENT CODE TEST", eventID);
 
-        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName, eventID,eventMobile,eventImage);
+        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName, eventID, eventMobile, eventImage);
         fullEventList.add(details);
     }
-
 
 
     @Override
