@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         TextView user_email_home = view.findViewById(R.id.user_email_home);
+        String user_email = user.getEmail();
         user_email_home.setText(user.getEmail());
 
 

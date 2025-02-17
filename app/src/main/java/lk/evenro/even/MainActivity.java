@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         firebaseAuth = FirebaseAuth.getInstance();
-//        Thread thread = new Thread() {
-//            @Override
-//            public void run() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
                         bar.setVisibility(View.VISIBLE);
                     }
                 });
-//                try {
-//                    Thread.sleep(2000);
+                try {
+                    Thread.sleep(1000);
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
                         Intent intent = new Intent(MainActivity.this, DashboradMain.class);
@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
 
                     }
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        };
-//        thread.start();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        thread.start();
 
 
     }
