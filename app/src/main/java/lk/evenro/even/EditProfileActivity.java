@@ -5,27 +5,42 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
+import com.cloudinary.android.MediaManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import lk.evenro.even.model.CloudinaryHelper;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     EditText userName, userEmail, userMobile;
-    String usersEmail;
+    String usersEmails;
+    private Uri imageUri;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,54 +52,90 @@ public class EditProfileActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        userEmail = findViewById(R.id.user_email);
+        userName = findViewById(R.id.user_name);
+        userMobile = findViewById(R.id.user_mobile);
+        Button saveButton = findViewById(R.id.save_profile_button);
+        mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            usersEmail = user.getEmail();
-            Log.i("TEST CODE", usersEmail);
+            usersEmails = user.getEmail();
+            Log.i("TEST CODE", usersEmails);
+            userEmail.setText(usersEmails);
+            userEmail.setEnabled(false);
         }
 
-        Button saveButton = findViewById(R.id.save_profile_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String[] selectionArgs = {usersEmail};
-                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, selectionArgs, null, null, null);
-                        if (cursor.moveToNext()) {
-                            String email = cursor.getString(2);
-                            String name = cursor.getString(1);
-                            String mobile = cursor.getString(3);
-                            Log.i("SIGN UP", email);
-//                            userName.setText(name);
-//                            userEmail.setText(email);
-//                            userMobile.setText(mobile);
-                        }
 
-//                        else {
-//                            String name = userName.getText().toString().trim();
-//                            String email = userEmail.getText().toString().trim();
-//                            String mobile = userMobile.getText().toString().trim();
-//
-//                            SQLiteDatabase database = userData.getWritableDatabase();
-//                            ContentValues contentValues = new ContentValues();
-//                            contentValues.put("name", name);
-//                            contentValues.put("email", email);
-//                            contentValues.put("mobile", mobile);
-//
-//                            long id = database.insert("user", null, contentValues);
-//                            Log.i("SIGN UP", String.valueOf(id));
-//                        }
+
+        UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+
+        SQLiteDatabase db = userData.getReadableDatabase();
+
+        // Query database for existing user
+        String[] selectionArgs = {usersEmails};
+        Cursor cursor = db.query("user", null, "email=?", selectionArgs, null, null, null);
+
+        if (cursor.moveToNext()) {
+            String searchEmail = cursor.getString(2);
+            String searchName = cursor.getString(1);
+            String searchMobile = cursor.getString(3);
+
+            userName.setText(searchName);
+            userMobile.setText(searchMobile);
+            userEmail.setText(searchEmail);
+
+            userName.setEnabled(false);
+            userMobile.setEnabled(false);
+            userEmail.setEnabled(false);
+
+        } else {
+
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userName.getText().toString().isEmpty()) {
+                        Log.i("Edit Profile", "Type your name");
+                    } else if (userMobile.getText().toString().isEmpty()) {
+                        Log.i("Edit Profile", "Type your Mobile");
+                    } else {
+
+                        CloudinaryHelper.uploadImage(imageUri, null, new CloudinaryHelper.OnUploadCompleteListener() {
+                            @Override
+                            public void onUploadComplete(String url) {
+                            }
+                        });
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                SQLiteDatabase database = userData.getWritableDatabase();
+
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("name", userName.getText().toString());
+                                contentValues.put("email", userEmail.getText().toString());
+                                contentValues.put("mobile", userMobile.getText().toString());
+
+                                long id = database.insert("user", null, contentValues);
+
+                                Log.i("SIGN UP", String.valueOf(id));
+                                userName.setText("");
+                                userMobile.setText("");
+                                userEmail.setText("");
+
+                            }
+                        }).start();
+
                     }
-                }).start();
-            }
-        });
 
+                }
+            });
 
+        }
     }
+
+
+
+
 }
 
 class UserDataBase extends SQLiteOpenHelper {
@@ -96,11 +147,11 @@ class UserDataBase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) { // CALL THE ON TIME
         db.execSQL("CREATE TABLE user (\n" +
-                "    id        INTEGER PRIMARY KEY\n" +
-                "                      NOT NULL,\n" +
-                "    name      TEXT    NOT NULL,\n" +
-                "    email     TEXT    NOT NULL,\n" +
-                "    mobile    TEXT\n" +
+                "    id     INTEGER PRIMARY KEY\n" +
+                "                   NOT NULL,\n" +
+                "    name   TEXT,\n" +
+                "    email  TEXT,\n" +
+                "    mobile TEXT\n" +
                 ");");
     }
 

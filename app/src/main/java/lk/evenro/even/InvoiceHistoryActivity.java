@@ -55,20 +55,20 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
         invoiceAdapter = new InvoiceAdapter((ArrayList<PaymentEventDetails>) paymentDetailsList);
         recyclerView.setAdapter(invoiceAdapter);
 
-//        UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-//
-//                if (cursor.moveToNext()) {
-//                    name = cursor.getString(1);
-//                    email = cursor.getString(2);
-//                    InvoicePaymentLoad(name, email);
-//                }
-//
-//            }
-//        }).start();
+        UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+
+                if (cursor.moveToNext()) {
+                    name = cursor.getString(1);
+                    email = cursor.getString(2);
+                    InvoicePaymentLoad(name, email);
+                }
+
+            }
+        }).start();
     }
     private void InvoicePaymentLoad(String name, String email) {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
