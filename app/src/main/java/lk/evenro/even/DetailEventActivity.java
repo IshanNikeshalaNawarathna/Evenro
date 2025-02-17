@@ -34,7 +34,7 @@ public class DetailEventActivity extends AppCompatActivity {
             return insets;
         });
 
-     
+
 
         TextView event_title = findViewById(R.id.event_title);
         TextView event_price = findViewById(R.id.event_price);

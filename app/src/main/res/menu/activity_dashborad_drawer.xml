@@ -13,12 +13,12 @@
             android:title="@string/menu_calender" />
         <item
             android:id="@+id/invoiceHistoryActivity"
-            android:icon="@drawable/settings_icon"
+            android:icon="@drawable/baseline_beenhere"
             android:title="@string/menu_setting" />
         <item
             android:id="@+id/eventAddActivity"
-            android:icon="@drawable/settings_icon"
-            android:title="@string/menu_setting" />
+            android:icon="@drawable/add_to_photos"
+            android:title="@string/menu_ticket" />
         <item
             android:id="@+id/nav_sign_out"
             android:icon="@drawable/logout"
