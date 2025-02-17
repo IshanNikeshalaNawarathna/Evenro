@@ -1,7 +1,5 @@
 package lk.evenro.even.ui.home;
 
-import static android.content.Intent.getIntent;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,14 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,12 +26,9 @@ import java.util.List;
 import lk.evenro.even.R;
 import lk.evenro.even.SearchActivity;
 import lk.evenro.even.adapter.EventAdapter;
-import lk.evenro.even.adapter.InvoiceAdapter;
 import lk.evenro.even.adapter.PopularAdapter;
 import lk.evenro.even.databinding.FragmentHomeBinding;
 import lk.evenro.even.model.EventDetails;
-import lk.evenro.even.model.PaymentEventDetails;
-import lk.evenro.even.model.UserDetails;
 
 public class HomeFragment extends Fragment {
 
@@ -49,20 +42,7 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-//        Intent userDetail = getActivity().getIntent();
-//        UserDetails user = (UserDetails) userDetail.getSerializableExtra("user_details");
-//
-//        if (user != null) {
-
+        View view = binding.getRoot();
 
         recyclerView = view.findViewById(R.id.popular_event_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -150,7 +130,11 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        return view;
     }
+
+
 
     @Override
     public void onDestroyView() {

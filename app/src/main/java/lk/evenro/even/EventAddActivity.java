@@ -1,6 +1,7 @@
 package lk.evenro.even;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -183,19 +184,19 @@ public class EventAddActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-//                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-//
-//                        if (cursor.moveToNext()) {
-//                            String name = cursor.getString(1);
-//                            Log.i("TEST CODE GET THE ORGANIZER NAME", name);
-//                            addEvent(name);
-//                        }
-//                    }
-//                }).start();
+                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+
+                        if (cursor.moveToNext()) {
+                            String name = cursor.getString(1);
+                            Log.i("TEST CODE GET THE ORGANIZER NAME", name);
+                            addEvent(name);
+                        }
+                    }
+                }).start();
 
 
             }

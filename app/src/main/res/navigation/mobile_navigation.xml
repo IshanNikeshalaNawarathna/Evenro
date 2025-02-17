@@ -10,24 +10,20 @@
         android:name="lk.evenro.even.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    <activity
+        android:id="@+id/invoiceHistoryActivity"
+        android:name="lk.evenro.even.InvoiceHistoryActivity"
+        android:label="activity_invoice_history"
+        tools:layout="@layout/activity_invoice_history" />
+    <activity
+        android:id="@+id/editProfileActivity"
+        android:name="lk.evenro.even.EditProfileActivity"
+        android:label="activity_edit_profile"
+        tools:layout="@layout/activity_edit_profile" />
+    <activity
+        android:id="@+id/eventAddActivity"
+        android:name="lk.evenro.even.EventAddActivity"
+        android:label="activity_event_add"
+        tools:layout="@layout/activity_event_add" />
 
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="lk.evenro.even.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" >
-        <action
-            android:id="@+id/action_nav_gallery_to_nav_home"
-            app:destination="@id/nav_home" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="lk.evenro.even.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" >
-        <action
-            android:id="@+id/action_nav_slideshow_to_nav_home"
-            app:destination="@id/nav_home" />
-    </fragment>
 </navigation>
