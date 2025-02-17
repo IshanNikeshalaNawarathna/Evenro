@@ -106,6 +106,7 @@
     <string name="ticket_ticket">Ticket</string>
     <string name="download_ticket">DOWNLOAD TICKET</string>
     <string name="title_activity_dashborad_main">DashboradMain</string>
+    <string name="custome_loacation_spinner">Select Location</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
