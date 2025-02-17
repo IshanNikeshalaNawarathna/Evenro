@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -36,12 +38,19 @@ public class HomeFragment extends Fragment {
 
     private List<EventDetails> eventDetail = new ArrayList<>();
     Map<String, Object> data;
-
+    private FirebaseAuth mAuth;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        TextView user_email_home = view.findViewById(R.id.user_email_home);
+        user_email_home.setText(user.getEmail());
+
+
         categoryRecyclerView = view.findViewById(R.id.event_category_recycler_view);
         fullEventList = new ArrayList<>();
         fullEventLists = new ArrayList<>();
