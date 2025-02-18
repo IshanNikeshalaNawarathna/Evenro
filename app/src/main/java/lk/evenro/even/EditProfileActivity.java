@@ -25,8 +25,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import lk.evenro.even.model.CloudinaryHelper;
-
 public class EditProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -66,42 +64,38 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
         UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase db = userData.getReadableDatabase();
 
-        SQLiteDatabase db = userData.getReadableDatabase();
+                // Query database for existing user
+                String[] selectionArgs = {usersEmails};
+                Cursor cursor = db.query("user", null, "email=?", selectionArgs, null, null, null);
 
-        // Query database for existing user
-        String[] selectionArgs = {usersEmails};
-        Cursor cursor = db.query("user", null, "email=?", selectionArgs, null, null, null);
+                if (cursor.moveToNext()) {
+                    String searchEmail = cursor.getString(2);
+                    String searchName = cursor.getString(1);
+                    String searchMobile = cursor.getString(3);
+                    Toast.makeText(getApplicationContext(), searchName, Toast.LENGTH_SHORT).show();
+                    userName.setText(searchName);
+                    userMobile.setText(searchMobile);
+                    userEmail.setText(searchEmail);
 
-        if (cursor.moveToNext()) {
-            String searchEmail = cursor.getString(2);
-            String searchName = cursor.getString(1);
-            String searchMobile = cursor.getString(3);
+                    userName.setEnabled(false);
+                    userMobile.setEnabled(false);
+                    userEmail.setEnabled(false);
 
-            userName.setText(searchName);
-            userMobile.setText(searchMobile);
-            userEmail.setText(searchEmail);
+                } else {
 
-            userName.setEnabled(false);
-            userMobile.setEnabled(false);
-            userEmail.setEnabled(false);
 
-        } else {
-
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
                     if (userName.getText().toString().isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Type your Full Name", Toast.LENGTH_SHORT).show();
                     } else if (userMobile.getText().toString().isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Type your Mobile", Toast.LENGTH_SHORT).show();
                     } else {
 
-                        CloudinaryHelper.uploadImage(imageUri, null, new CloudinaryHelper.OnUploadCompleteListener() {
-                            @Override
-                            public void onUploadComplete(String url) {
-                            }
-                        });
+
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -125,10 +119,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     }
 
-                }
-            });
 
-        }
+                }
+
+            }
+        });
+        //
     }
 
 
