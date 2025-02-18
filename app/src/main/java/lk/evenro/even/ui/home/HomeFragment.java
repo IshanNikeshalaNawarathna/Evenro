@@ -67,10 +67,27 @@ public class HomeFragment extends Fragment {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        eventDetail.clear(); // Clear the list before adding new data
+                        eventDetail.clear();
                         for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
                             Log.i("Event details", snapshot.getData().toString());
-                            loadEventDetailsObject(snapshot);
+                            String eventID = snapshot.getId();
+                            data = snapshot.getData();
+                            String eventName = (String) data.get("event_name");
+                            String eventDescription = (String) data.get("event_description");
+                            String eventDate = (String) data.get("event_date");
+                            String eventTime = (String) data.get("event_time");
+                            String eventPrice = (String) data.get("price");
+                            String eventCategory = (String) data.get("event_category");
+                            String eventOrganizerName = (String) data.get("organizer_name");
+                            String eventLocation = (String) data.get("event_location");
+                            String eventQty = (String) data.get("qty");
+                            String eventMobile = (String) data.get("mobile_number");
+                            String eventImage = (String) data.get("event_image");
+
+                            Log.i("EVENT CODE TEST", eventID);
+
+                            details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName, eventID, eventMobile, eventImage);
+                            fullEventList.add(details);
                         }
                         updateRecyclerView(fullEventList);
 
@@ -109,26 +126,9 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void loadEventDetailsObject(DocumentSnapshot document) {
-        String eventID = document.getId();
-        data = document.getData();
-        String eventName = (String) data.get("event_name");
-        String eventDescription = (String) data.get("event_description");
-        String eventDate = (String) data.get("event_date");
-        String eventTime = (String) data.get("event_time");
-        String eventPrice = (String) data.get("price");
-        String eventCategory = (String) data.get("event_category");
-        String eventOrganizerName = (String) data.get("organizer_name");
-        String eventLocation = (String) data.get("event_location");
-        String eventQty = (String) data.get("qty");
-        String eventMobile = (String) data.get("mobile_number");
-        String eventImage = (String) data.get("event_image");
-
-        Log.i("EVENT CODE TEST", eventID);
-
-        details = new EventDetails(eventName, eventLocation, eventDescription, eventPrice, eventCategory, eventQty, eventDate, eventTime, eventOrganizerName, eventID, eventMobile, eventImage);
-        fullEventList.add(details);
-    }
+//    private void loadEventDetailsObject(DocumentSnapshot document) {
+//
+//    }
 
 
     @Override

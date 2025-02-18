@@ -1,13 +1,16 @@
 package lk.evenro.even;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -33,6 +36,8 @@ public class DetailEventActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     private String locationName;
+
+    private ImageButton call_button, message_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,76 @@ public class DetailEventActivity extends AppCompatActivity {
         TextView event_date = findViewById(R.id.event_date);
         ImageView event_image = findViewById(R.id.event_detail_image);
 
+        call_button = findViewById(R.id.call_button);
+        message_button = findViewById(R.id.message_button);
+        call_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+
+                        if (cursor.moveToNext()) {
+                            String mobile = cursor.getString(3);
+                            if (mobile != null) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(Intent.ACTION_SENDTO);
+                                        Uri uri = Uri.parse("smsto:" + mobile);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+                            }
+                            Log.i("TEST CODE GET THE ORGANIZER NAME", mobile);
+                        }
+                    }
+                }).start();
+
+            }
+        });
+
+        call_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+
+                        if (cursor.moveToNext()) {
+                            String mobile = cursor.getString(3);
+                            if (mobile != null) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                                        Uri uri = Uri.parse("tel:" + mobile);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+                            }
+                            Log.i("TEST CODE GET THE ORGANIZER NAME", mobile);
+                        }
+                    }
+                }).start();
+
+            }
+        });
+
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("event_details");
 
         String latlng = details.getEventLocations();
@@ -74,7 +149,7 @@ public class DetailEventActivity extends AppCompatActivity {
                             List<DocumentSnapshot> documentSnapshots = task.getResult().getDocuments();
                             if (!documentSnapshots.isEmpty()) {
                                 DocumentSnapshot documentSnapshot = documentSnapshots.get(0);
-                                locationName=documentSnapshot.getString("locationLatlng");
+                                locationName = documentSnapshot.getString("locationLatlng");
                             }
                         }
                     }
@@ -99,7 +174,7 @@ public class DetailEventActivity extends AppCompatActivity {
         event_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),GoogleMapActivity.class);
+                Intent intent = new Intent(getApplicationContext(), GoogleMapActivity.class);
                 intent.putExtra("location", locationName);
                 startActivity(intent);
 
@@ -117,4 +192,6 @@ public class DetailEventActivity extends AppCompatActivity {
         });
 
     }
+
+
 }
