@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import lk.evenro.even.DetailEventActivity;
+import lk.evenro.even.GoogleMapActivity;
 import lk.evenro.even.R;
 import lk.evenro.even.model.EventDetails;
 

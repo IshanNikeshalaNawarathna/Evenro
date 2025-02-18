@@ -30,10 +30,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.cloudinary.android.MediaManager;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,13 +45,14 @@ import java.util.List;
 import java.util.Map;
 
 import lk.evenro.even.model.CloudinaryHelper;
+import lk.evenro.even.model.EventDetails;
 import lk.evenro.even.model.Location;
 import lk.evenro.even.model.SpinnerItem;
 
 public class EventAddActivity extends AppCompatActivity {
 
-    TextView category,location;
-
+    TextView category, location;
+    private FirebaseFirestore firebaseFirestore;
 
     private EditText event_add_mobile_number, event_name, event_time, event_date, event_price, event_qty, event_description;
     private Spinner spinner, location_spinner;
@@ -55,7 +60,10 @@ public class EventAddActivity extends AppCompatActivity {
     String loca;
     private ImageView imageView;
     private Uri imageUri;
+    private ArrayList<Location> locations = new ArrayList<>();
+    Map<String, Object> data;
 
+    private Location selectedLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,7 @@ public class EventAddActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         ImageButton date_image_button = findViewById(R.id.date_add_bottom_sheet_button);
         date_image_button.setOnClickListener(new View.OnClickListener() {
@@ -118,31 +127,40 @@ public class EventAddActivity extends AppCompatActivity {
             }
         });
         location_spinner = findViewById(R.id.location_spinner);
-        ArrayList<Location> locations = new ArrayList<>();
         locations.add(new Location("Select Location", "0"));
-        locations.add(new Location("Nelum Pokuna Theatre", "6.9131,79.8607"));
-        locations.add(new Location("BMICH", "6.9013, 79.8612"));
-        locations.add(new Location("Lotus Tower", "6.9279,79.8554"));
-        locations.add(new Location("One Galle Face Mall", "6.9275,79.8432"));
-        locations.add(new Location("Galle Face Green", " 6.9271,79.8420"));
-        locations.add(new Location("Colombo City Centre", "6.9204,79.8577"));
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("locations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    locations.clear();
+
+                    for (DocumentSnapshot document : task.getResult()) {
+                        loadLocations(document);
+                    }
+
+                }
+            }
+        });
 
         LocationAdapter locationAdapter = new LocationAdapter(getApplicationContext(), R.layout.custome_spinner_location_item, locations);
         location_spinner.setAdapter(locationAdapter);
 
+
+
         location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Location selectedLocation = (Location) parent.getItemAtPosition(position);
-                loca = selectedLocation.getLatlng();
-                Log.i("TEST CODE",loca);
+                selectedLocation =(Location) parent.getItemAtPosition(position);
+
+                loca = selectedLocation.getName();
+                Log.i("TEST CODE", loca);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
 
 
         spinner = findViewById(R.id.event_category_item);
@@ -161,7 +179,7 @@ public class EventAddActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 category = view.findViewById(R.id.spinner_items_text);
                 categ = (String) category.getText();
-                Log.i("TEST CODE",categ);
+                Log.i("TEST CODE", categ);
             }
 
             @Override
@@ -205,6 +223,19 @@ public class EventAddActivity extends AppCompatActivity {
 
     }
 
+    private void loadLocations(DocumentSnapshot document) {
+        String eventID = document.getId();
+        data = document.getData();
+        String locationName = (String) data.get("locationName");
+        String locationLatlng = (String) data.get("locationLatlng");
+
+
+        Log.i("EVENT CODE TEST", eventID);
+
+        selectedLocation = new Location(locationName, locationLatlng);
+        locations.add(selectedLocation);
+    }
+
     private void addEvent(String name) {
         if (event_name.getText().toString().trim().isEmpty()) {
             Log.i("EVENT ADD", "Type an Event name");
@@ -239,8 +270,7 @@ public class EventAddActivity extends AppCompatActivity {
                 @Override
                 public void onUploadComplete(String url) {
 
-                    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
+                    firebaseFirestore = FirebaseFirestore.getInstance();
                     HashMap<String, Object> event_data = new HashMap<>();
                     event_data.put("event_name", eventName);
                     event_data.put("organizer_name", name);

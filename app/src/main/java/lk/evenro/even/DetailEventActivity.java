@@ -1,31 +1,39 @@
 package lk.evenro.even;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 import lk.evenro.even.model.EventDetails;
 
 public class DetailEventActivity extends AppCompatActivity {
-
+    private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
+    private String locationName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +53,6 @@ public class DetailEventActivity extends AppCompatActivity {
         icon.setText(String.valueOf(firstCharUpper));
 
 
-
         TextView event_title = findViewById(R.id.event_title);
         TextView event_price = findViewById(R.id.event_price);
         TextView event_location = findViewById(R.id.event_locations);
@@ -56,7 +63,22 @@ public class DetailEventActivity extends AppCompatActivity {
 
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("event_details");
 
-
+        String latlng = details.getEventLocations();
+        Log.i("TEST CODES", latlng);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("locations").whereEqualTo("locationName", latlng)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<DocumentSnapshot> documentSnapshots = task.getResult().getDocuments();
+                            if (!documentSnapshots.isEmpty()) {
+                                DocumentSnapshot documentSnapshot = documentSnapshots.get(0);
+                                locationName=documentSnapshot.getString("locationLatlng");
+                            }
+                        }
+                    }
+                });
 
         if (details != null) {
             event_date.setText(details.getEventDate());
@@ -74,12 +96,22 @@ public class DetailEventActivity extends AppCompatActivity {
 
         }
 
+        event_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),GoogleMapActivity.class);
+                intent.putExtra("location", locationName);
+                startActivity(intent);
+
+            }
+        });
+
         Button buy_ticket_button = findViewById(R.id.buy_ticket_button);
         buy_ticket_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),EventCartActivity.class);
-                intent.putExtra("cart_details",details);
+                Intent intent = new Intent(getApplicationContext(), EventCartActivity.class);
+                intent.putExtra("cart_details", details);
                 startActivity(intent);
             }
         });
