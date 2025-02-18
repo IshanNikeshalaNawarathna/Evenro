@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultCallback;
@@ -59,6 +60,11 @@ public class EditProfileActivity extends AppCompatActivity {
         Button saveButton = findViewById(R.id.save_profile_button);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+
+        TextView icon = findViewById(R.id.user_email_edit);
+        String email = user.getEmail();
+        char firstCharUpper = Character.toUpperCase(email.charAt(0));
+        icon.setText(String.valueOf(firstCharUpper));
         if (user != null) {
             usersEmails = user.getEmail();
             Log.i("TEST CODE", usersEmails);
