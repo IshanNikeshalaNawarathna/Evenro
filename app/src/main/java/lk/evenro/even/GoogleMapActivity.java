@@ -63,7 +63,7 @@ public class GoogleMapActivity extends AppCompatActivity {
 
                 MarkerOptions markerOptions = new MarkerOptions()
                         .position(latLng)
-                        .title("Event Location")  // Set the title
+                        .title("Event Location")
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)); // Default red marker, change if needed
 
                 googleMap.addMarker(markerOptions);

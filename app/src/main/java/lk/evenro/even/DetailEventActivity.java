@@ -193,12 +193,5 @@ public class DetailEventActivity extends AppCompatActivity {
 
     }
 
-    private void CallToOrganizer(String mobile) {
-
-    }
-
-    private void MsgToOrganizer(String mobile) {
-
-    }
 
 }

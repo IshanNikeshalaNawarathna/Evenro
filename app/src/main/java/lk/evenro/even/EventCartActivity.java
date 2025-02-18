@@ -44,16 +44,10 @@ public class EventCartActivity extends AppCompatActivity {
     TextView cart_item_total;
     private int totalPrice;
     private int count = 0;
-    private String event_name;
     private int code;
-
-    private String typeQty;
-
-    private String date;
-    private String event_date;
-    private String event_time;
-    private String eventID;
+    private String date,event_date,event_time,eventID,typeQty,event_name,userEmail,userName;
     private int event_qty;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,9 +140,11 @@ public class EventCartActivity extends AppCompatActivity {
                         if (cursor.moveToNext()) {
                             String name = cursor.getString(1);
                             String email = cursor.getString(2);
+                            userEmail = email;
+                            userName = name;
                             if (name != null && email != null) {
+                                Log.i("CODE TEST new", email+" "+name);
                                 paymentMethod(name, email);
-                                InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty, event_date, event_time, eventID);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
                             }
@@ -172,6 +168,7 @@ public class EventCartActivity extends AppCompatActivity {
                             if (response.isSuccess()) {
                                 Log.i("Payment Message", "Payment Success");
                                 Toast.makeText(getApplicationContext(), "Payment Success", Toast.LENGTH_SHORT).show();
+                                InvoicePayment(code, event_name, userName, userEmail, totalPrice, date, typeQty, event_date, event_time, eventID);
                             } else {
                                 Log.i("Payment Message", "Payment Failed" + response);
                                 Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_SHORT).show();
