@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultCallback;
@@ -45,7 +46,6 @@ import java.util.List;
 import java.util.Map;
 
 import lk.evenro.even.model.CloudinaryHelper;
-import lk.evenro.even.model.EventDetails;
 import lk.evenro.even.model.Location;
 import lk.evenro.even.model.SpinnerItem;
 
@@ -147,11 +147,10 @@ public class EventAddActivity extends AppCompatActivity {
         location_spinner.setAdapter(locationAdapter);
 
 
-
         location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedLocation =(Location) parent.getItemAtPosition(position);
+                selectedLocation = (Location) parent.getItemAtPosition(position);
 
                 loca = selectedLocation.getName();
                 Log.i("TEST CODE", loca);
@@ -210,8 +209,12 @@ public class EventAddActivity extends AppCompatActivity {
 
                         if (cursor.moveToNext()) {
                             String name = cursor.getString(1);
+                            if (name != null) {
+                                addEvent(name);
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+                            }
                             Log.i("TEST CODE GET THE ORGANIZER NAME", name);
-                            addEvent(name);
                         }
                     }
                 }).start();
@@ -238,20 +241,30 @@ public class EventAddActivity extends AppCompatActivity {
 
     private void addEvent(String name) {
         if (event_name.getText().toString().trim().isEmpty()) {
-            Log.i("EVENT ADD", "Type an Event name");
+            Toast.makeText(getApplicationContext(), "Enter a Event Name", Toast.LENGTH_SHORT).show();
         } else if (event_add_mobile_number.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Enter your Mobile Number", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Type a Mobile Number");
         } else if (event_time.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Choose a Event Time", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Choose your Time");
         } else if (event_date.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Choose a Event Date", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Choose your Date");
         } else if (event_price.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Type Your Ticket Price", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Type a Ticket Price");
         } else if (event_qty.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Type Your Ticket Quantity", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Type a Ticket Quantity");
         } else if (spinner.getSelectedItem() == null) {
+            Toast.makeText(getApplicationContext(), "Select an Event Category", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Select an Event Category");
-        } else if (event_description.getText().toString().trim().isEmpty()) {
+        }else if (location_spinner.getSelectedItem() == null) {
+            Toast.makeText(getApplicationContext(), "Select an Event Location", Toast.LENGTH_SHORT).show();
+            Log.i("EVENT ADD", "Select an Event Category");
+        }  else if (event_description.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Type an Event Description", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Type an Event Description");
         } else {
 
@@ -289,11 +302,12 @@ public class EventAddActivity extends AppCompatActivity {
                         public void onSuccess(DocumentReference documentReference) {
                             Log.i("EVENT ADD", documentReference.getId());
                             Log.i("EVENT ADD", "Success Add Event");
-
+                            Toast.makeText(getApplicationContext(), "Success Full Add Event", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error"+e.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.i("EVENT ADD", e.toString());
                         }
                     });
@@ -310,7 +324,7 @@ public class EventAddActivity extends AppCompatActivity {
                     event_time.setText("");
                     event_qty.setText("");
                     event_price.setText("");
-//                    event_location.setText("");
+                    location_spinner.setSelection(0);
                     event_description.setText("");
                     spinner.setSelection(0);
                     event_add_mobile_number.setText("");

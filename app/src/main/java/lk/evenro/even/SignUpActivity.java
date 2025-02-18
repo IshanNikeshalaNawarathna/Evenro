@@ -50,15 +50,15 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (email.getText().toString().isEmpty()) {
-                    Log.i("SIGN UP", "Enter you Email");
+                    Toast.makeText(getApplicationContext(), "Type your Email", Toast.LENGTH_SHORT).show();
                 } else if (!Validation.isEmailValid(email.getText().toString())) {
-                    Log.i("SIGN UP", "Invalid you Email");
+                    Toast.makeText(getApplicationContext(), "Invalid Email Address", Toast.LENGTH_SHORT).show();
                 } else if (password.getText().toString().isEmpty()) {
-                    Log.i("SIGN UP", "Enter you password");
+                    Toast.makeText(getApplicationContext(), "Type your Password", Toast.LENGTH_SHORT).show();
                 } else if (!Validation.isPasswordValid(password.getText().toString())) {
-                    Log.i("SIGN UP", "Invalid you password");
+                    Toast.makeText(getApplicationContext(), "Invalid Password", Toast.LENGTH_SHORT).show();
                 } else if (password.getText().toString().matches(confrom_password.getText().toString())) {
-                    Log.i("SIGN UP", "This not match");
+                    Toast.makeText(getApplicationContext(), "Password is not match", Toast.LENGTH_SHORT).show();
                 } else {
 
                     String userEmail = email.getText().toString();
@@ -80,6 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         finish();
 
                                     }else{
+                                        Toast.makeText(getApplicationContext(), "Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         Log.i("Loging Error",task.getException().getMessage());
                                     }
                                 }
@@ -101,28 +102,3 @@ public class SignUpActivity extends AppCompatActivity {
     }
 }
 
-//class UserDataBase extends SQLiteOpenHelper {
-//
-//    public UserDataBase(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-//        super(context, name, factory, version);
-//    }
-//
-//    @Override
-//    public void onCreate(SQLiteDatabase db) {
-//        db.execSQL("CREATE TABLE user (\n" +
-//                "    id           INTEGER PRIMARY KEY\n" +
-//                "                         NOT NULL,\n" +
-//                "    name         TEXT    NOT NULL,\n" +
-//                "    email        TEXT    NOT NULL,\n" +
-//                "    mobile       TEXT,\n" +
-//                "    password     TEXT    NOT NULL,\n" +
-//                "    gender       TEXT,\n" +
-//                "    verification TEXT\n" +
-//                ");");
-//    }
-//
-//    @Override
-//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//
-//    }
-//}

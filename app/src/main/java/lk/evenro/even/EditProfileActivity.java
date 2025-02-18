@@ -13,25 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.bumptech.glide.Glide;
-import com.cloudinary.android.MediaManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import lk.evenro.even.model.CloudinaryHelper;
 
@@ -73,7 +65,6 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
 
-
         UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
 
         SQLiteDatabase db = userData.getReadableDatabase();
@@ -101,9 +92,9 @@ public class EditProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (userName.getText().toString().isEmpty()) {
-                        Log.i("Edit Profile", "Type your name");
+                        Toast.makeText(getApplicationContext(), "Type your Full Name", Toast.LENGTH_SHORT).show();
                     } else if (userMobile.getText().toString().isEmpty()) {
-                        Log.i("Edit Profile", "Type your Mobile");
+                        Toast.makeText(getApplicationContext(), "Type your Mobile", Toast.LENGTH_SHORT).show();
                     } else {
 
                         CloudinaryHelper.uploadImage(imageUri, null, new CloudinaryHelper.OnUploadCompleteListener() {
@@ -122,6 +113,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 contentValues.put("mobile", userMobile.getText().toString());
 
                                 long id = database.insert("user", null, contentValues);
+                                Toast.makeText(getApplicationContext(), "Save Credential", Toast.LENGTH_SHORT).show();
 
                                 Log.i("SIGN UP", String.valueOf(id));
                                 userName.setText("");
@@ -138,8 +130,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         }
     }
-
-
 
 
 }

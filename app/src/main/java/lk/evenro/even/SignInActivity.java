@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -49,9 +50,9 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (email.getText().toString().isEmpty()) {
-                    Log.i("Sign In", "Invalid Email");
+                    Toast.makeText(getApplicationContext(), "Type your Email", Toast.LENGTH_SHORT).show();
                 } else if (password.getText().toString().isEmpty()) {
-                    Log.i("Sign In", "Invalid Password");
+                    Toast.makeText(getApplicationContext(), "Type your Password", Toast.LENGTH_SHORT).show();
                 } else {
 
                     String userEmail = email.getText().toString();
@@ -66,6 +67,7 @@ public class SignInActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         Log.i("Loging Success",user.getEmail());
+                                        Toast.makeText(getApplicationContext(), "Success Login", Toast.LENGTH_SHORT).show();
 
                                         Intent intent = new Intent(SignInActivity.this,DashboradMain.class);
                                         startActivity(intent);
@@ -73,6 +75,7 @@ public class SignInActivity extends AppCompatActivity {
 
                                     }else{
                                         Log.i("Loging Error",task.getException().getMessage());
+                                        Toast.makeText(getApplicationContext(), "Success Login"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

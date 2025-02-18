@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -136,21 +137,25 @@ public class EventCartActivity extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 date = simpleDateFormat.format(new Date());
 
-//                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-//
-//                        if (cursor.moveToNext()) {
-//                            String name = cursor.getString(1);
-//                            String email = cursor.getString(2);
-//                            paymentMethod(name, email);
-//                            InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty, event_date, event_time, eventID);
-//                        }
-//
-//                    }
-//                }).start();
+                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+
+                        if (cursor.moveToNext()) {
+                            String name = cursor.getString(1);
+                            String email = cursor.getString(2);
+                            if (name != null && email != null) {
+                                paymentMethod(name, email);
+                                InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty, event_date, event_time, eventID);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                }).start();
 
             }
         });
@@ -166,15 +171,17 @@ public class EventCartActivity extends AppCompatActivity {
                             PHResponse<StatusResponse> response = (PHResponse<StatusResponse>) serializable;
                             if (response.isSuccess()) {
                                 Log.i("Payment Message", "Payment Success");
-
+                                Toast.makeText(getApplicationContext(), "Payment Success", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.i("Payment Message", "Payment Failed" + response);
+                                Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                     }
                 } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                     Log.i("Payment Message", "Payment Cancelled");
+                    Toast.makeText(getApplicationContext(), "Payment Cancelled", Toast.LENGTH_SHORT).show();
                 }
             }
     );
@@ -243,12 +250,16 @@ public class EventCartActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.i("Payment Success", documentReference.getId());
+                        Toast.makeText(getApplicationContext(), "Payment Success", Toast.LENGTH_SHORT).show();
+
                         qtyUpdate(ticket_qty);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.i("Payment Error", e.toString());
+                        Toast.makeText(getApplicationContext(), "Payment Error"+e.toString(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -261,14 +272,14 @@ public class EventCartActivity extends AppCompatActivity {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseFirestore.collection("event").document(eventID).update("qty", newEventQty)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.i("Event Update Success", "Update Success");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.i("Event Update Success", "Update Success");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.i("Event Update Error", "Update Error"+e.toString());
+                        Log.i("Event Update Error", "Update Error" + e.toString());
                     }
                 });
 
