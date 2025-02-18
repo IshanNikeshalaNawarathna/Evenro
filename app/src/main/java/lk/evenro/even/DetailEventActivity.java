@@ -37,7 +37,7 @@ public class DetailEventActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String locationName;
 
-    private ImageButton call_button,message_button;
+    private ImageButton call_button, message_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,25 +57,6 @@ public class DetailEventActivity extends AppCompatActivity {
         char firstCharUpper = Character.toUpperCase(email.charAt(0));
         icon.setText(String.valueOf(firstCharUpper));
 
-        UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-
-                if (cursor.moveToNext()) {
-                    String mobile = cursor.getString(3);
-                    if (mobile != null) {
-                        CallToOrganizer(mobile);
-                        MsgToOrganizer(mobile);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
-                    }
-                    Log.i("TEST CODE GET THE ORGANIZER NAME", mobile);
-                }
-            }
-        }).start();
-
 
         TextView event_title = findViewById(R.id.event_title);
         TextView event_price = findViewById(R.id.event_price);
@@ -87,7 +68,73 @@ public class DetailEventActivity extends AppCompatActivity {
 
         call_button = findViewById(R.id.call_button);
         message_button = findViewById(R.id.message_button);
+        call_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+
+                        if (cursor.moveToNext()) {
+                            String mobile = cursor.getString(3);
+                            if (mobile != null) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(Intent.ACTION_SENDTO);
+                                        Uri uri = Uri.parse("smsto:" + mobile);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+                            }
+                            Log.i("TEST CODE GET THE ORGANIZER NAME", mobile);
+                        }
+                    }
+                }).start();
+
+            }
+        });
+
+        call_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
+
+                        if (cursor.moveToNext()) {
+                            String mobile = cursor.getString(3);
+                            if (mobile != null) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                                        Uri uri = Uri.parse("tel:" + mobile);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+                            }
+                            Log.i("TEST CODE GET THE ORGANIZER NAME", mobile);
+                        }
+                    }
+                }).start();
+
+            }
+        });
 
         EventDetails details = (EventDetails) getIntent().getSerializableExtra("event_details");
 
@@ -147,26 +194,11 @@ public class DetailEventActivity extends AppCompatActivity {
     }
 
     private void CallToOrganizer(String mobile) {
-        call_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri uri = Uri.parse("tel:" + mobile);
-                intent.setData(uri);
-                startActivity(intent);
-            }
-        });
+
     }
+
     private void MsgToOrganizer(String mobile) {
-        call_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                Uri uri = Uri.parse("tel:" + mobile);
-                intent.setData(uri);
-                startActivity(intent);
-            }
-        });
+
     }
 
 }
