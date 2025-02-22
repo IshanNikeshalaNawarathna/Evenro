@@ -199,7 +199,7 @@
         app:srcCompat="@drawable/barpreview" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/ticket_download"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
