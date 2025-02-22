@@ -78,7 +78,7 @@ public class EventAddActivity extends AppCompatActivity {
         } catch (IllegalStateException e) {
             MediaManager.init(getApplicationContext(), config);
         }
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.event_location), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.add_view), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
