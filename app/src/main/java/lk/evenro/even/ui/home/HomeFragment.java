@@ -28,7 +28,6 @@ import lk.evenro.even.SearchActivity;
 import lk.evenro.even.adapter.EventAdapter;
 import lk.evenro.even.databinding.FragmentHomeBinding;
 import lk.evenro.even.model.EventDetails;
-import lk.evenro.even.model.SensorHelper;
 
 public class HomeFragment extends Fragment {
     RecyclerView categoryRecyclerView, musicRecyclerView;
@@ -40,7 +39,7 @@ public class HomeFragment extends Fragment {
     private List<EventDetails> eventDetail = new ArrayList<>();
     Map<String, Object> data;
     private FirebaseAuth mAuth;
-    private SensorHelper sensorHelper;
+  
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
