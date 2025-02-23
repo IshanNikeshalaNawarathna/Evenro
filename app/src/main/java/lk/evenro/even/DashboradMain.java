@@ -45,7 +45,7 @@ public class DashboradMain extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_dashborad_main);
         // NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        // Initialize SensorHelper
+
 
 
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
