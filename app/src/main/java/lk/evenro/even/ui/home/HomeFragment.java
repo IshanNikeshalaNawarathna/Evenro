@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
     private List<EventDetails> eventDetail = new ArrayList<>();
     Map<String, Object> data;
     private FirebaseAuth mAuth;
-  
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
