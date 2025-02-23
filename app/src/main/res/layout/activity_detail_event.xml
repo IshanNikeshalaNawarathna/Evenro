@@ -118,7 +118,7 @@
         app:layout_constraintTop_toBottomOf="@+id/divider3">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
+            android:id="@+id/profile_images"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:src="@drawable/shape_curicle"
