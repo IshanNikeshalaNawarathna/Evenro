@@ -16,20 +16,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import lk.evenro.even.model.UserDetails;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     EditText userName, userEmail, userMobile;
-    String usersEmails;
+    String usersEmails, userIDs;
     private Uri imageUri;
     private ImageView imageView;
 
@@ -57,11 +64,11 @@ public class EditProfileActivity extends AppCompatActivity {
         icon.setText(String.valueOf(firstCharUpper));
         if (user != null) {
             usersEmails = user.getEmail();
+            userIDs = user.getUid();
             Log.i("TEST CODE", usersEmails);
             userEmail.setText(usersEmails);
             userEmail.setEnabled(false);
         }
-
 
         UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +76,6 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SQLiteDatabase db = userData.getReadableDatabase();
 
-                // Query database for existing user
                 String[] selectionArgs = {usersEmails};
                 Cursor cursor = db.query("user", null, "email=?", selectionArgs, null, null, null);
 
@@ -95,6 +101,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Type your Mobile", Toast.LENGTH_SHORT).show();
                     } else {
 
+                        UserSave();
 
                         new Thread(new Runnable() {
                             @Override
@@ -104,7 +111,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 ContentValues contentValues = new ContentValues();
                                 contentValues.put("name", userName.getText().toString());
                                 contentValues.put("email", userEmail.getText().toString());
-                                contentValues.put("mobile", userMobile.getText().toString());
+                                contentValues.put("mobile", userEmail.getText().toString());
 
                                 long id = database.insert("user", null, contentValues);
                                 Toast.makeText(getApplicationContext(), "Save Credential", Toast.LENGTH_SHORT).show();
@@ -123,8 +130,41 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
 
             }
+
+
         });
-        //
+
+    }
+
+    private void UserSave() {
+
+        String uName = userName.getText().toString();
+        String uEmail = userEmail.getText().toString();
+        String uMobile = userMobile.getText().toString();
+        String uID = userIDs;
+
+        UserDetails details = new UserDetails(
+                uName,
+                uEmail,
+                uMobile,
+                uID
+        );
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("users").add(details).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            public void onSuccess(DocumentReference documentReference) {
+                Log.i("EVENT ADD", documentReference.getId());
+                Log.i("EVENT ADD", "Success Add Event");
+                Toast.makeText(getApplicationContext(), "Success Full Add Event", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.i("EVENT ADD", e.toString());
+            }
+        });
+
     }
 
 
