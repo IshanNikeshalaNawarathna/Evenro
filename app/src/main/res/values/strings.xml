@@ -114,6 +114,9 @@
     <string name="menu_ticket">Add Ticket</string>
     <string name="home_main_title">Experience Events Like Never Before.</string>
     <string name="profile_icon">N</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="delete_wishlist">DELETE WISHLIST</string>
+    <string name="event_oragnozer">Event Oragnozer</string>
 
 
 </resources>

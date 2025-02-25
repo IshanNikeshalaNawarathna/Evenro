@@ -1,6 +1,8 @@
 package lk.evenro.even;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -65,6 +68,7 @@ public class DetailEventActivity extends AppCompatActivity {
         TextView event_organizer_name = findViewById(R.id.organize_name);
         TextView event_date = findViewById(R.id.event_date);
         ImageView event_image = findViewById(R.id.event_detail_image);
+        ImageView wishlist_save_button = findViewById(R.id.wishlist_save_button);
 
         call_button = findViewById(R.id.call_button);
         message_button = findViewById(R.id.message_button);
@@ -188,6 +192,38 @@ public class DetailEventActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), EventCartActivity.class);
                 intent.putExtra("cart_details", details);
                 startActivity(intent);
+            }
+        });
+
+        wishlist_save_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EventDetails eventDetails = new EventDetails();
+                eventDetails.setEventName(details.getEventName());
+                eventDetails.setEventLocations(details.getEventLocations());
+                eventDetails.setEventDescriptions(details.getEventDescriptions());
+                eventDetails.setPrices(details.getPrices());
+                eventDetails.setEventCategory(details.getEventCategory());
+                eventDetails.setQty(details.getQty());
+                eventDetails.setEventDate(details.getEventDate());
+                eventDetails.setEventTime(details.getEventTime());
+                eventDetails.setOrganizerName(details.getOrganizerName());
+                eventDetails.setEventID(details.getEventID());
+                eventDetails.setMobileNumber(details.getMobileNumber());
+                eventDetails.setImageUri(details.getImageUri());
+
+                Gson gson = new Gson();
+                String wishlistData = gson.toJson(eventDetails);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("wishlist_data", wishlistData);
+                editor.apply();
+
+                Intent intent = new Intent(getApplicationContext(), WishlistActivity.class);
+                startActivity(intent);
+
             }
         });
 
