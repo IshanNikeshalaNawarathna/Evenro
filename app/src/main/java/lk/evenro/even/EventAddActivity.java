@@ -1,6 +1,8 @@
 package lk.evenro.even;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lk.evenro.even.model.AirplaneModeBroadcastReceiver;
 import lk.evenro.even.model.CloudinaryHelper;
 import lk.evenro.even.model.Location;
 import lk.evenro.even.model.SpinnerItem;
@@ -62,6 +65,8 @@ public class EventAddActivity extends AppCompatActivity {
     private Uri imageUri;
     private ArrayList<Location> locations = new ArrayList<>();
     Map<String, Object> data;
+
+    private AirplaneModeBroadcastReceiver broadcastReceiver;
 
     private Location selectedLocation;
 
@@ -211,7 +216,7 @@ public class EventAddActivity extends AppCompatActivity {
                             String name = cursor.getString(1);
                             if (name != null) {
                                 addEvent(name);
-                            }else{
+                            } else {
                                 Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
                             }
                             Log.i("TEST CODE GET THE ORGANIZER NAME", name);
@@ -260,10 +265,10 @@ public class EventAddActivity extends AppCompatActivity {
         } else if (spinner.getSelectedItem() == null) {
             Toast.makeText(getApplicationContext(), "Select an Event Category", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Select an Event Category");
-        }else if (location_spinner.getSelectedItem() == null) {
+        } else if (location_spinner.getSelectedItem() == null) {
             Toast.makeText(getApplicationContext(), "Select an Event Location", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Select an Event Category");
-        }  else if (event_description.getText().toString().trim().isEmpty()) {
+        } else if (event_description.getText().toString().trim().isEmpty()) {
             Toast.makeText(getApplicationContext(), "Type an Event Description", Toast.LENGTH_SHORT).show();
             Log.i("EVENT ADD", "Type an Event Description");
         } else {
@@ -307,7 +312,7 @@ public class EventAddActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Error"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.i("EVENT ADD", e.toString());
                         }
                     });
@@ -334,7 +339,20 @@ public class EventAddActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        broadcastReceiver = new AirplaneModeBroadcastReceiver();
+        IntentFilter filter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+        registerReceiver(broadcastReceiver, filter);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+
+    }
 }
 
 class SpinnerAdapter extends ArrayAdapter<SpinnerItem> {
