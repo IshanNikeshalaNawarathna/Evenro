@@ -42,7 +42,7 @@
                 android:layout_marginStart="30dp">
 
                 <ImageView
-                    android:id="@+id/imageView49"
+                    android:id="@+id/wishlist_call_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tint="@color/main_color"
@@ -64,7 +64,7 @@
                 android:layout_marginStart="40dp">
 
                 <ImageView
-                    android:id="@+id/deraction"
+                    android:id="@+id/wishllist_location_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tint="@color/derection_color"
@@ -86,7 +86,7 @@
                 android:layout_marginStart="40dp">
 
                 <ImageView
-                    android:id="@+id/tickets"
+                    android:id="@+id/wishlist_ticket_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tint="@color/review_star_color"

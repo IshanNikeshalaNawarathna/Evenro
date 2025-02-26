@@ -181,7 +181,6 @@ public class DetailEventActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), GoogleMapActivity.class);
                 intent.putExtra("location", locationName);
                 startActivity(intent);
-
             }
         });
 
