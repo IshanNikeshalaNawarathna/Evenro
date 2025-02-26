@@ -108,7 +108,7 @@
 
     <ImageButton
         android:id="@+id/date_add_bottom_sheet_button"
-        android:layout_width="18dp"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#FCF5FD"
         app:layout_constraintBottom_toBottomOf="@+id/add_event_date"
@@ -140,7 +140,7 @@
 
     <ImageButton
         android:id="@+id/time_bottom_sheet_button"
-        android:layout_width="18dp"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:backgroundTint="#FCF5FD"

@@ -39,6 +39,14 @@ public class WishlistActivity extends AppCompatActivity {
             return insets;
         });
 
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         event_name = findViewById(R.id.wishlist_event_titale);
         event_date = findViewById(R.id.wishlist_event_date);
         event_location = findViewById(R.id.wishlist_event_location);
@@ -77,8 +85,6 @@ public class WishlistActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
     }
 }
