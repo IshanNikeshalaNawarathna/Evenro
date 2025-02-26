@@ -64,7 +64,7 @@ public class DetailEventActivity extends AppCompatActivity {
         TextView event_title = findViewById(R.id.event_title);
         TextView event_price = findViewById(R.id.event_price);
         TextView event_location = findViewById(R.id.event_locations);
-        TextView event_description = findViewById(R.id.event_description);
+        TextView event_description = findViewById(R.id.wishlist_event_description);
         TextView event_organizer_name = findViewById(R.id.organize_name);
         TextView event_date = findViewById(R.id.event_date);
         ImageView event_image = findViewById(R.id.event_detail_image);

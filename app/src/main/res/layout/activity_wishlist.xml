@@ -109,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/inter_semi_bold"
         android:text="TextView"
         android:textSize="20sp"
@@ -133,7 +133,7 @@
         android:id="@+id/imageView51"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="@+id/wishlist_event_titale"
         app:layout_constraintTop_toBottomOf="@+id/wishlist_event_titale"
         app:srcCompat="@drawable/baseline_location" />
@@ -178,19 +178,18 @@
         android:id="@+id/profile_images"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         android:src="@drawable/shape_curicle"
         app:civ_border_color="#FF000000"
-        app:layout_constraintStart_toStartOf="@+id/imageView51"
-        app:layout_constraintTop_toBottomOf="@+id/wishlist_event_location" />
+        app:layout_constraintStart_toStartOf="@+id/divider11"
+        app:layout_constraintTop_toBottomOf="@+id/divider11" />
 
     <FrameLayout
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_images"
         app:layout_constraintEnd_toEndOf="@+id/profile_images"
-        app:layout_constraintStart_toStartOf="@+id/profile_images"
-        app:layout_constraintTop_toTopOf="@+id/profile_images">
+        app:layout_constraintStart_toStartOf="@+id/profile_images">
 
         <TextView
             android:id="@+id/wishlist_organizer_img"
@@ -226,19 +225,21 @@
     <Button
         android:id="@+id/wishlist_cart_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/button_color"
         android:text="@string/add_to_cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/wishlist_event_description"
-        app:layout_constraintStart_toEndOf="@+id/wishlist_delete_button" />
+        app:layout_constraintStart_toEndOf="@+id/wishlist_delete_button"
+        app:layout_constraintTop_toBottomOf="@+id/wishlist_event_description" />
 
     <ImageButton
         android:id="@+id/wishlist_delete_button"
-        android:layout_width="38dp"
-        android:layout_height="46dp"
+        android:layout_width="37dp"
+        android:layout_height="40dp"
         android:backgroundTint="@color/back_button"
         android:tint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/wishlist_cart_button"
@@ -250,13 +251,24 @@
     <TextView
         android:id="@+id/wishlist_event_description"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/wishlist_cart_button"
-        app:layout_constraintEnd_toEndOf="@+id/wishlist_event_date"
-        app:layout_constraintStart_toStartOf="@+id/profile_images"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/event_details_event_descriptions"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_images" />
+
+    <View
+        android:id="@+id/divider11"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="15dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/wishlist_event_date"
+        app:layout_constraintStart_toStartOf="@+id/imageView51"
+        app:layout_constraintTop_toBottomOf="@+id/wishlist_event_location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

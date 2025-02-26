@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Evenro"
         tools:targetApi="31">
         <activity
+            android:name=".EmaityActivity"
+            android:exported="false" />
+        <activity
             android:name=".WishlistActivity"
             android:exported="false" />
         <activity
