@@ -17,7 +17,7 @@
         android:layout_height="73dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
+            android:id="@+id/profile_images"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/shape_curicle"

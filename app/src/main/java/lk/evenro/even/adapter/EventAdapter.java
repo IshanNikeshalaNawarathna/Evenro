@@ -2,7 +2,6 @@ package lk.evenro.even.adapter;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import lk.evenro.even.DetailEventActivity;
-import lk.evenro.even.GoogleMapActivity;
 import lk.evenro.even.R;
 import lk.evenro.even.model.EventDetails;
 

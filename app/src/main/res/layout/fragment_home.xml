@@ -26,7 +26,7 @@
                     android:layout_height="match_parent">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_image"
+                        android:id="@+id/profile_images"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_marginStart="16dp"
@@ -44,8 +44,8 @@
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/welcome_home_title"
                         android:textColor="@color/gray_color"
-                        app:layout_constraintStart_toEndOf="@+id/profile_image"
-                        app:layout_constraintTop_toTopOf="@+id/profile_image" />
+                        app:layout_constraintStart_toEndOf="@+id/profile_images"
+                        app:layout_constraintTop_toTopOf="@+id/profile_images" />
 
                     <TextView
                         android:id="@+id/user_email_home"
@@ -57,8 +57,8 @@
                         android:text="@string/user_profile_name"
                         android:textColor="@color/white"
                         android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
-                        app:layout_constraintStart_toEndOf="@+id/profile_image"
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_images"
+                        app:layout_constraintStart_toEndOf="@+id/profile_images"
                         app:layout_constraintTop_toBottomOf="@+id/textView58" />
 
                     <TextView
@@ -109,7 +109,7 @@
                         android:textColor="@color/back_button"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="@+id/search_image_button"
-                        app:layout_constraintStart_toStartOf="@+id/profile_image"
+                        app:layout_constraintStart_toStartOf="@+id/profile_images"
                         app:layout_constraintTop_toBottomOf="@+id/user_email_home" />
 
                     <TextView
@@ -120,10 +120,10 @@
                         android:gravity="center"
                         android:text="@string/profile_icon"
                         android:textSize="34sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
-                        app:layout_constraintEnd_toEndOf="@+id/profile_image"
-                        app:layout_constraintStart_toStartOf="@+id/profile_image"
-                        app:layout_constraintTop_toTopOf="@+id/profile_image" />
+                        app:layout_constraintBottom_toBottomOf="@+id/profile_images"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_images"
+                        app:layout_constraintStart_toStartOf="@+id/profile_images"
+                        app:layout_constraintTop_toTopOf="@+id/profile_images" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>

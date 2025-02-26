@@ -1,20 +1,22 @@
 package lk.evenro.even.adapter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
-import lk.evenro.even.DetailEventActivity;
 import lk.evenro.even.R;
 import lk.evenro.even.TicketViewActivity;
-import lk.evenro.even.model.EventDetails;
 import lk.evenro.even.model.PaymentEventDetails;
 
 public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.EventViewHolder> {
@@ -27,6 +29,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.EventVie
         TextView purchase_ticket_qty;
         TextView purchase_ticket_price;
         TextView purchase_ticket_view_button;
+        ImageView profile_image;
 
 
         public EventViewHolder(@NonNull View itemView) {
@@ -37,13 +40,14 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.EventVie
             purchase_ticket_qty = itemView.findViewById(R.id.ticket_qty);
             purchase_ticket_price = itemView.findViewById(R.id.buying_ticket_price);
             purchase_ticket_view_button = itemView.findViewById(R.id.ticket_view_button);
+            profile_image = itemView.findViewById(R.id.profile_images);
 
         }
     }
 
     ArrayList<PaymentEventDetails> paymentEventDetails;
 
-    public InvoiceAdapter( ArrayList<PaymentEventDetails> paymentEventDetails) {
+    public InvoiceAdapter(ArrayList<PaymentEventDetails> paymentEventDetails) {
         this.paymentEventDetails = paymentEventDetails;
     }
 
@@ -73,6 +77,9 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.EventVie
                 v.getContext().startActivity(intent);
             }
         });
+        Glide.with(holder.profile_image.getContext())
+                .load(Uri.parse(details.getImages()))
+                .into(holder.profile_image);
 
     }
 

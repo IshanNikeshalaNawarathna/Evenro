@@ -45,7 +45,7 @@ public class EventCartActivity extends AppCompatActivity {
     private int totalPrice;
     private int count = 0;
     private int code;
-    private String date,event_date,event_time,eventID,typeQty,event_name,userEmail,userName;
+    private String date, event_date, event_time, eventID, typeQty, event_name, userEmail, userName,eventImage;
     private int event_qty;
 
 
@@ -84,6 +84,7 @@ public class EventCartActivity extends AppCompatActivity {
                 event_date = details.getEventDate();
                 event_time = details.getEventTime();
                 eventID = details.getEventID();
+                eventImage = details.getImageUri();
 
 
                 cart_item_title.setText(event_name);
@@ -143,10 +144,9 @@ public class EventCartActivity extends AppCompatActivity {
                             userEmail = email;
                             userName = name;
                             if (name != null && email != null) {
-                                Log.i("CODE TEST new", email+" "+name);
+                                Log.i("CODE TEST new", email + " " + name);
                                 paymentMethod(name, email);
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+                                uploadInvoice();
                             }
                         }
 
@@ -168,7 +168,6 @@ public class EventCartActivity extends AppCompatActivity {
                             if (response.isSuccess()) {
                                 Log.i("Payment Message", "Payment Success");
                                 Toast.makeText(getApplicationContext(), "Payment Success", Toast.LENGTH_SHORT).show();
-                                InvoicePayment(code, event_name, userName, userEmail, totalPrice, date, typeQty, event_date, event_time, eventID);
                             } else {
                                 Log.i("Payment Message", "Payment Failed" + response);
                                 Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_SHORT).show();
@@ -182,6 +181,23 @@ public class EventCartActivity extends AppCompatActivity {
                 }
             }
     );
+
+    private void uploadInvoice() {
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(6000);
+                            InvoicePayment(code, event_name, userName, userEmail, totalPrice, date, typeQty, event_date, event_time, eventID,eventImage);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }
+        ).start();
+    }
 
     private void TicketPriceCale(String qty, int event_price) {
 
@@ -222,7 +238,7 @@ public class EventCartActivity extends AppCompatActivity {
         paymentLauncher.launch(intent);
     }
 
-    private void InvoicePayment(int payment_id, String event_name, String buyer_name, String buyer_email, int ticket_price, String payment_date, String qty, String event_date, String event_time, String eventID) {
+    private void InvoicePayment(int payment_id, String event_name, String buyer_name, String buyer_email, int ticket_price, String payment_date, String qty, String event_date, String event_time, String eventID,String eventImage) {
 
         String payment_ID = String.valueOf(payment_id);
         String ticket_qty = String.valueOf(qty);
@@ -238,7 +254,9 @@ public class EventCartActivity extends AppCompatActivity {
                 payment_date,
                 event_date,
                 event_time,
-                eventID
+                eventID,
+                eventImage
+
 
         );
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -255,7 +273,7 @@ public class EventCartActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.i("Payment Error", e.toString());
-                        Toast.makeText(getApplicationContext(), "Payment Error"+e.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Payment Error" + e.toString(), Toast.LENGTH_SHORT).show();
 
                     }
                 });

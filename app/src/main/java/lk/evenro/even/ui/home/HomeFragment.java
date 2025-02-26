@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class HomeFragment extends Fragment {
     Map<String, Object> data;
     private FirebaseAuth mAuth;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -48,6 +50,7 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         TextView user_email_home = view.findViewById(R.id.user_email_home);
 
         TextView icon = view.findViewById(R.id.icon_images_homes);
@@ -64,6 +67,7 @@ public class HomeFragment extends Fragment {
 
 
         firebaseFirestore.collection("event")
+                .orderBy("event_date", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -120,15 +124,12 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+
     private void updateRecyclerView(ArrayList<EventDetails> list) {
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         categoryRecyclerView.setAdapter(new EventAdapter(list));
     }
 
-
-//    private void loadEventDetailsObject(DocumentSnapshot document) {
-//
-//    }
 
 
     @Override

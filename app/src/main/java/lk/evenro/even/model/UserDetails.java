@@ -4,16 +4,34 @@ import java.io.Serializable;
 
 public class UserDetails implements Serializable {
 
-    private String email;
+    private String name,mobile,email,userID;
 
-    private String name;
+
 
     public UserDetails() {
     }
 
-    public UserDetails(String email, String name) {
-        this.email = email;
+    public UserDetails(String name, String mobile, String email, String userID) {
         this.name = name;
+        this.mobile = mobile;
+        this.email = email;
+        this.userID = userID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getEmail() {
@@ -24,11 +42,11 @@ public class UserDetails implements Serializable {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }
