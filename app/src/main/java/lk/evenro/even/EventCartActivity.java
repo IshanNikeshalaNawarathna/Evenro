@@ -1,7 +1,9 @@
 package lk.evenro.even;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -31,6 +34,7 @@ import java.util.Date;
 
 import lk.evenro.even.model.EventDetails;
 import lk.evenro.even.model.PaymentEventDetails;
+import lk.evenro.even.model.UserDetails;
 import lk.payhere.androidsdk.PHConfigs;
 import lk.payhere.androidsdk.PHConstants;
 import lk.payhere.androidsdk.PHMainActivity;
@@ -45,8 +49,9 @@ public class EventCartActivity extends AppCompatActivity {
     private int totalPrice;
     private int count = 0;
     private int code;
-    private String date, event_date, event_time, eventID, typeQty, event_name, userEmail, userName,eventImage;
+    private String date, event_date, event_time, eventID, typeQty, event_name,name,email,eventImage;
     private int event_qty;
+
 
 
     @Override
@@ -131,30 +136,32 @@ public class EventCartActivity extends AppCompatActivity {
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 date = simpleDateFormat.format(new Date());
-
-                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-
-                        if (cursor.moveToNext()) {
-                            String name = cursor.getString(1);
-                            String email = cursor.getString(2);
-                            userEmail = email;
-                            userName = name;
-                            if (name != null && email != null) {
-                                Log.i("CODE TEST new", email + " " + name);
-                                paymentMethod(name, email);
-                                uploadInvoice();
-                            }
-                        }
-
-                    }
-                }).start();
-
+                paymentMethod();
+                uploadInvoice();
             }
         });
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
+        String uData = sharedPreferences.getString("userData", null);
+
+        Gson gson = new Gson();
+        UserDetails user = gson.fromJson(uData, UserDetails.class);
+
+        if (user != null) {
+            name = user.getName();
+            email = user.getEmail();
+        } else {
+            Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     private final ActivityResultLauncher<Intent> paymentLauncher = registerForActivityResult(
@@ -189,7 +196,7 @@ public class EventCartActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             Thread.sleep(6000);
-                            InvoicePayment(code, event_name, userName, userEmail, totalPrice, date, typeQty, event_date, event_time, eventID,eventImage);
+                            InvoicePayment(code, event_name, name,email, totalPrice, date, typeQty, event_date, event_time, eventID,eventImage);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -208,7 +215,7 @@ public class EventCartActivity extends AppCompatActivity {
         cart_item_total.setText(String.valueOf(totalPrice));
     }
 
-    private void paymentMethod(String name, String email) {
+    private void paymentMethod() {
         InitRequest req = new InitRequest();
         req.setMerchantId("1222107");       // Merchant ID
         req.setCurrency("LKR");             // Currency code LKR/USD/GBP/EUR/AUD

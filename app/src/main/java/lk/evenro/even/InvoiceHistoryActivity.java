@@ -1,10 +1,13 @@
 package lk.evenro.even;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,7 @@ import java.util.Map;
 import lk.evenro.even.adapter.EventAdapter;
 import lk.evenro.even.adapter.InvoiceAdapter;
 import lk.evenro.even.model.PaymentEventDetails;
+import lk.evenro.even.model.UserDetails;
 
 public class InvoiceHistoryActivity extends AppCompatActivity {
 
@@ -35,7 +40,7 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<PaymentEventDetails> paymentDetailsList = new ArrayList<>();
     private InvoiceAdapter invoiceAdapter;
-    private String name, email;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,14 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
             return insets;
         });
 
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         recyclerView = findViewById(R.id.invoice_history_recyclerView); // Replace with your RecyclerView's ID
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -55,22 +68,31 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
         invoiceAdapter = new InvoiceAdapter((ArrayList<PaymentEventDetails>) paymentDetailsList);
         recyclerView.setAdapter(invoiceAdapter);
 
-        UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
 
-                if (cursor.moveToNext()) {
-                    name = cursor.getString(1);
-                    email = cursor.getString(2);
-                    InvoicePaymentLoad(name, email);
-                }
 
-            }
-        }).start();
+        SharedPreferences sharedPreferences = getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
+        String uData = sharedPreferences.getString("userData", null);
+
+        Gson gson = new Gson();
+        UserDetails user = gson.fromJson(uData, UserDetails.class);
+
+        if (user != null) {
+             String nameUser = user.getName();
+            String emailUser = user.getEmail();
+            InvoicePaymentLoad(nameUser,emailUser);
+
+
+            Log.e("test code email",nameUser+emailUser);
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
+
     private void InvoicePaymentLoad(String name, String email) {
+        Log.e("test code email",name+email);
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseFirestore.collection("invoice")
                 .whereEqualTo("buyer_email", email)
@@ -83,6 +105,7 @@ public class InvoiceHistoryActivity extends AppCompatActivity {
                             PaymentEventDetails paymentEventDetails = snapshot.toObject(PaymentEventDetails.class);
                             if (paymentEventDetails != null) {
                                 paymentDetailsList.add(paymentEventDetails);
+                                Log.d("InvoicePaymentLoad", "PaymentEventDetails: " + paymentEventDetails.toString());
                             }
                         }
 
