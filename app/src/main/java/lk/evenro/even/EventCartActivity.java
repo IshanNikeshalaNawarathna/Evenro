@@ -1,7 +1,9 @@
 package lk.evenro.even;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -31,6 +34,7 @@ import java.util.Date;
 
 import lk.evenro.even.model.EventDetails;
 import lk.evenro.even.model.PaymentEventDetails;
+import lk.evenro.even.model.UserDetails;
 import lk.payhere.androidsdk.PHConfigs;
 import lk.payhere.androidsdk.PHConstants;
 import lk.payhere.androidsdk.PHMainActivity;
@@ -47,6 +51,7 @@ public class EventCartActivity extends AppCompatActivity {
     private int code;
     private String date, event_date, event_time, eventID, typeQty, event_name, userEmail, userName,eventImage;
     private int event_qty;
+    private String nameUser,emailUser;
 
 
     @Override
@@ -131,30 +136,33 @@ public class EventCartActivity extends AppCompatActivity {
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 date = simpleDateFormat.format(new Date());
-
-                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-
-                        if (cursor.moveToNext()) {
-                            String name = cursor.getString(1);
-                            String email = cursor.getString(2);
-                            userEmail = email;
-                            userName = name;
-                            if (name != null && email != null) {
-                                Log.i("CODE TEST new", email + " " + name);
-                                paymentMethod(name, email);
-                                uploadInvoice();
-                            }
-                        }
-
-                    }
-                }).start();
+                paymentMethod(nameUser, emailUser);
+                uploadInvoice();
 
             }
         });
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
+        String uData = sharedPreferences.getString("userData", null);
+
+        Gson gson = new Gson();
+        UserDetails user = gson.fromJson(uData, UserDetails.class);
+
+        if (user != null) {
+            nameUser = user.getName();
+            emailUser = user.getEmail();
+        } else {
+            Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     private final ActivityResultLauncher<Intent> paymentLauncher = registerForActivityResult(
