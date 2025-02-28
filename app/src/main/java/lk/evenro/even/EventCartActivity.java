@@ -49,9 +49,9 @@ public class EventCartActivity extends AppCompatActivity {
     private int totalPrice;
     private int count = 0;
     private int code;
-    private String date, event_date, event_time, eventID, typeQty, event_name, userEmail, userName,eventImage;
+    private String date, event_date, event_time, eventID, typeQty, event_name,name,email,eventImage;
     private int event_qty;
-    private String nameUser,emailUser;
+
 
 
     @Override
@@ -136,9 +136,8 @@ public class EventCartActivity extends AppCompatActivity {
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 date = simpleDateFormat.format(new Date());
-                paymentMethod(nameUser, emailUser);
+                paymentMethod();
                 uploadInvoice();
-
             }
         });
 
@@ -156,8 +155,8 @@ public class EventCartActivity extends AppCompatActivity {
         UserDetails user = gson.fromJson(uData, UserDetails.class);
 
         if (user != null) {
-            nameUser = user.getName();
-            emailUser = user.getEmail();
+            name = user.getName();
+            email = user.getEmail();
         } else {
             Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
         }
@@ -197,7 +196,7 @@ public class EventCartActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             Thread.sleep(6000);
-                            InvoicePayment(code, event_name, userName, userEmail, totalPrice, date, typeQty, event_date, event_time, eventID,eventImage);
+                            InvoicePayment(code, event_name, name,email, totalPrice, date, typeQty, event_date, event_time, eventID,eventImage);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
@@ -216,7 +215,7 @@ public class EventCartActivity extends AppCompatActivity {
         cart_item_total.setText(String.valueOf(totalPrice));
     }
 
-    private void paymentMethod(String name, String email) {
+    private void paymentMethod() {
         InitRequest req = new InitRequest();
         req.setMerchantId("1222107");       // Merchant ID
         req.setCurrency("LKR");             // Currency code LKR/USD/GBP/EUR/AUD
