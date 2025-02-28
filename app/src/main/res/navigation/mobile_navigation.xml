@@ -25,5 +25,10 @@
         android:name="lk.evenro.even.EventAddActivity"
         android:label="activity_event_add"
         tools:layout="@layout/activity_event_add" />
+    <activity
+        android:id="@+id/myTicketActivity"
+        android:name="lk.evenro.even.MyTicketActivity"
+        android:label="activity_my_ticket"
+        tools:layout="@layout/activity_my_ticket" />
 
 </navigation>

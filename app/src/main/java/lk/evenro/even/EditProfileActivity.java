@@ -1,10 +1,7 @@
 package lk.evenro.even;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import lk.evenro.even.model.UserDetails;
 
@@ -39,6 +36,9 @@ public class EditProfileActivity extends AppCompatActivity {
     String usersEmails, userIDs;
     private Uri imageUri;
     private ImageView imageView;
+
+    private  SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,11 @@ public class EditProfileActivity extends AppCompatActivity {
             return insets;
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         userEmail = findViewById(R.id.user_email);
         userName = findViewById(R.id.user_name);
         userMobile = findViewById(R.id.user_mobile);
@@ -69,63 +74,44 @@ public class EditProfileActivity extends AppCompatActivity {
             userEmail.setText(usersEmails);
             userEmail.setEnabled(false);
         }
-
-        UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase db = userData.getReadableDatabase();
 
-                String[] selectionArgs = {usersEmails};
-                Cursor cursor = db.query("user", null, "email=?", selectionArgs, null, null, null);
+                sharedPreferences = getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
+                String uData = sharedPreferences.getString("userData", null);
 
-                if (cursor.moveToNext()) {
-                    String searchEmail = cursor.getString(2);
-                    String searchName = cursor.getString(1);
-                    String searchMobile = cursor.getString(3);
-                    Toast.makeText(getApplicationContext(), searchName, Toast.LENGTH_SHORT).show();
-                    userName.setText(searchName);
-                    userMobile.setText(searchMobile);
-                    userEmail.setText(searchEmail);
+                Gson gson = new Gson();
+                UserDetails userDetails = gson.fromJson(uData, UserDetails.class);
 
-                    userName.setEnabled(false);
-                    userMobile.setEnabled(false);
-                    userEmail.setEnabled(false);
+                if(userDetails !=null){
+                    userName.setText(userDetails.getName());
+                    userMobile.setText(userDetails.getMobile());
+                    userEmail.setText(userDetails.getEmail());
+                }else{
 
-                } else {
+                    if(userName.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Enter Your Name", Toast.LENGTH_SHORT).show();
+                    }else if(userMobile.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Enter Your Mobile Number", Toast.LENGTH_SHORT).show();
+                    }else{
+                        UserDetails  user = new UserDetails(
+                                userName.getText().toString(),
+                                userMobile.getText().toString(),
+                                userEmail.getText().toString(),
+                                userIDs
+                        );
+                        Gson userGson = new Gson();
+                        String userDate = userGson.toJson(user);
 
-
-                    if (userName.getText().toString().isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Type your Full Name", Toast.LENGTH_SHORT).show();
-                    } else if (userMobile.getText().toString().isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Type your Mobile", Toast.LENGTH_SHORT).show();
-                    } else {
+                        sharedPreferences= getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userData", userDate);
+                        editor.apply();
 
                         UserSave();
 
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                SQLiteDatabase database = userData.getWritableDatabase();
-
-                                ContentValues contentValues = new ContentValues();
-                                contentValues.put("name", userName.getText().toString());
-                                contentValues.put("email", userEmail.getText().toString());
-                                contentValues.put("mobile", userEmail.getText().toString());
-
-                                long id = database.insert("user", null, contentValues);
-                                Toast.makeText(getApplicationContext(), "Save Credential", Toast.LENGTH_SHORT).show();
-
-                                Log.i("SIGN UP", String.valueOf(id));
-                                userName.setText("");
-                                userMobile.setText("");
-                                userEmail.setText("");
-
-                            }
-                        }).start();
-
                     }
-
 
                 }
 
@@ -138,16 +124,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void UserSave() {
 
-        String uName = userName.getText().toString();
-        String uEmail = userEmail.getText().toString();
-        String uMobile = userMobile.getText().toString();
-        String uID = userIDs;
-
         UserDetails details = new UserDetails(
-                uName,
-                uEmail,
-                uMobile,
-                uID
+                userName.getText().toString(),
+                userMobile.getText().toString(),
+                userEmail.getText().toString(),
+                userIDs
         );
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -155,7 +136,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onSuccess(DocumentReference documentReference) {
                 Log.i("EVENT ADD", documentReference.getId());
                 Log.i("EVENT ADD", "Success Add Event");
-                Toast.makeText(getApplicationContext(), "Success Full Add Event", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Success Full Add to Credential", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -170,27 +151,5 @@ public class EditProfileActivity extends AppCompatActivity {
 
 }
 
-class UserDataBase extends SQLiteOpenHelper {
-
-    public UserDataBase(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) { // CALL THE ON TIME
-        db.execSQL("CREATE TABLE user (\n" +
-                "    id     INTEGER PRIMARY KEY\n" +
-                "                   NOT NULL,\n" +
-                "    name   TEXT,\n" +
-                "    email  TEXT,\n" +
-                "    mobile TEXT\n" +
-                ");");
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { // VERSION CHANGE IF THIS METHODE CALL
-
-    }
-}
 
 

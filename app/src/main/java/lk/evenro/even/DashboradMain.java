@@ -50,7 +50,7 @@ private boolean isFlip;
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.editProfileActivity, R.id.invoiceHistoryActivity, R.id.eventAddActivity)
+                R.id.nav_home, R.id.editProfileActivity, R.id.invoiceHistoryActivity, R.id.eventAddActivity,R.id.myTicketActivity)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_dashborad_main);

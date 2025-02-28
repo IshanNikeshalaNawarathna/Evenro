@@ -119,6 +119,13 @@
     <string name="event_oragnozer">Event Oragnozer</string>
     <string name="wishlist">Wishlist</string>
     <string name="add_to_wishlist">ADD TO WISHLIST</string>
+    <string name="my_event">My Event</string>
+    <string name="edite_event">Edite Event</string>
+    <string name="price">Price</string>
+    <string name="quantity">Quantity</string>
+    <string name="update_event">Update Event</string>
+    <string name="upgrate_event">UPGRATE EVENT</string>
+
 
 
 </resources>
