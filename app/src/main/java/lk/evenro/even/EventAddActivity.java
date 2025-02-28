@@ -3,7 +3,7 @@ package lk.evenro.even;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +41,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +52,7 @@ import lk.evenro.even.model.AirplaneModeBroadcastReceiver;
 import lk.evenro.even.model.CloudinaryHelper;
 import lk.evenro.even.model.Location;
 import lk.evenro.even.model.SpinnerItem;
+import lk.evenro.even.model.UserDetails;
 
 public class EventAddActivity extends AppCompatActivity {
 
@@ -65,9 +67,8 @@ public class EventAddActivity extends AppCompatActivity {
     private Uri imageUri;
     private ArrayList<Location> locations = new ArrayList<>();
     Map<String, Object> data;
-
     private AirplaneModeBroadcastReceiver broadcastReceiver;
-
+    private String userName;
     private Location selectedLocation;
 
     @Override
@@ -204,27 +205,7 @@ public class EventAddActivity extends AppCompatActivity {
         add_event_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                UserDataBase userData = new UserDataBase(getApplicationContext(), "evenro.dp", null, 1);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cursor cursor = userData.getReadableDatabase().query("user", null, null, null, null, null, null);
-
-                        if (cursor.moveToNext()) {
-                            String name = cursor.getString(1);
-                            if (name != null) {
-                                addEvent(name);
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
-                            }
-                            Log.i("TEST CODE GET THE ORGANIZER NAME", name);
-                        }
-                    }
-                }).start();
-
-
+                addEvent(userName);
             }
         });
 
@@ -345,6 +326,19 @@ public class EventAddActivity extends AppCompatActivity {
         broadcastReceiver = new AirplaneModeBroadcastReceiver();
         IntentFilter filter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);
         registerReceiver(broadcastReceiver, filter);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
+        String uData = sharedPreferences.getString("userData", null);
+
+        Gson gson = new Gson();
+        UserDetails userDetails = gson.fromJson(uData, UserDetails.class);
+
+        if (userDetails != null) {
+            userName = userDetails.getName();
+        } else {
+            Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
