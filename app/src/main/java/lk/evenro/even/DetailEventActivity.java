@@ -178,14 +178,9 @@ public class DetailEventActivity extends AppCompatActivity {
                         ContentValues contentValues = new ContentValues();
                         contentValues.put("eventID",details.getEventID());
                         contentValues.put("eventName",details.getEventName());
-                        contentValues.put("eventDescription",details.getEventDescriptions());
-                        contentValues.put("eventCategory",details.getEventCategory());
                         contentValues.put("eventLoaction",details.getEventLocations());
                         contentValues.put("eventPrice",details.getPrices());
                         contentValues.put("eventDate",details.getEventDate());
-                        contentValues.put("eventTime",details.getEventTime());
-                        contentValues.put("eventOrganizerName",details.getOrganizerName());
-                        contentValues.put("eventMobileNumber",details.getMobileNumber());
                         contentValues.put("eventImageUri",details.getImageUri());
 
                         long id = database.insert("wishlist",null,contentValues);
@@ -213,14 +208,9 @@ class Wishlist extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE wishlist (\n" +
                 "    eventID            TEXT PRIMARY KEY,\n" +
                 "    eventName          TEXT NOT NULL,\n" +
-                "    eventDescription   TEXT NOT NULL,\n" +
-                "    eventCategory      TEXT NOT NULL,\n" +
                 "    eventLoaction      TEXT NOT NULL,\n" +
                 "    eventPrice         TEXT NOT NULL,\n" +
                 "    eventDate          TEXT NOT NULL,\n" +
-                "    eventTime          TEXT NOT NULL,\n" +
-                "    eventOrganizerName TEXT NOT NULL,\n" +
-                "    eventMobileNumber  TEXT NOT NULL,\n" +
                 "    eventImageUri      TEXT NOT NULL\n" +
                 ");");
     }

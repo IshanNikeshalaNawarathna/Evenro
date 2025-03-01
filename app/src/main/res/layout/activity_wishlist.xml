@@ -5,270 +5,35 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    tools:context=".WishlistActivity">
+>
 
-    <ImageView
-        android:id="@+id/wishlist_image"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/imgs" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="275dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/view_item_shep"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/wishlist_image">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <FrameLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="30dp">
-
-                <ImageView
-                    android:id="@+id/wishlist_call_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tint="@color/main_color"
-                    app:srcCompat="@drawable/shape_curicle" />
-
-                <ImageView
-                    android:id="@+id/imageView50"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:tint="@color/back_button"
-                    app:srcCompat="@drawable/baseline_call" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp">
-
-                <ImageView
-                    android:id="@+id/wishllist_location_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tint="@color/derection_color"
-                    app:srcCompat="@drawable/shape_curicle" />
-
-                <ImageView
-                    android:id="@+id/derectionImg"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:tint="@color/back_button"
-                    app:srcCompat="@drawable/baseline_location" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp">
-
-                <ImageView
-                    android:id="@+id/wishlist_ticket_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tint="@color/review_star_color"
-                    app:srcCompat="@drawable/shape_curicle" />
-
-                <ImageView
-                    android:id="@+id/ticketImg"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:tint="@color/back_button"
-                    app:srcCompat="@drawable/tickets" />
-            </FrameLayout>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/wishlist_event_titale"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView45"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/inter_semi_bold"
-        android:text="TextView"
+        android:gravity="center"
+        android:text="@string/witchlist"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-    <TextView
-        android:id="@+id/wishlist_event_ticket_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="TextView"
-        android:textColor="@color/main_color_sub"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/wishlist_event_titale"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/wishlist_event_titale" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView51"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        app:layout_constraintStart_toStartOf="@+id/wishlist_event_titale"
-        app:layout_constraintTop_toBottomOf="@+id/wishlist_event_titale"
-        app:srcCompat="@drawable/baseline_location" />
-
-    <TextView
-        android:id="@+id/wishlist_event_location"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="TextView"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView51"
-        app:layout_constraintStart_toEndOf="@+id/imageView51"
-        app:layout_constraintTop_toTopOf="@+id/imageView51" />
-
-    <ImageView
-        android:id="@+id/imageView52"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/wishlist_event_location"
-        app:layout_constraintStart_toEndOf="@+id/wishlist_event_location"
-        app:layout_constraintTop_toTopOf="@+id/wishlist_event_location"
-        app:srcCompat="@drawable/baseline_calendar" />
-
-    <TextView
-        android:id="@+id/wishlist_event_date"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/witchlist_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="TextView"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView52"
-        app:layout_constraintEnd_toEndOf="@+id/wishlist_event_ticket_price"
-        app:layout_constraintStart_toEndOf="@+id/imageView52"
-        app:layout_constraintTop_toTopOf="@+id/imageView52" />
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_images"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/shape_curicle"
-        app:civ_border_color="#FF000000"
-        app:layout_constraintStart_toStartOf="@+id/divider11"
-        app:layout_constraintTop_toBottomOf="@+id/divider11" />
-
-    <FrameLayout
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_images"
-        app:layout_constraintEnd_toEndOf="@+id/profile_images"
-        app:layout_constraintStart_toStartOf="@+id/profile_images">
-
-        <TextView
-            android:id="@+id/wishlist_organizer_img"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/inter_semi_bold"
-            android:gravity="center"
-            android:text="TextView" />
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/wishlist_oragnaizer_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter_semi_bold"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/profile_images"
-        app:layout_constraintTop_toTopOf="@+id/profile_images" />
-
-    <TextView
-        android:id="@+id/textView56"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/event_oragnozer"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_images"
-        app:layout_constraintStart_toEndOf="@+id/profile_images" />
-
-    <Button
-        android:id="@+id/wishlist_cart_button"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="@color/button_color"
-        android:text="@string/add_to_cart"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/wishlist_event_description"
-        app:layout_constraintStart_toEndOf="@+id/wishlist_delete_button"
-        app:layout_constraintTop_toBottomOf="@+id/wishlist_event_description" />
-
-    <ImageButton
-        android:id="@+id/wishlist_delete_button"
-        android:layout_width="37dp"
-        android:layout_height="40dp"
-        android:backgroundTint="@color/back_button"
-        android:tint="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/wishlist_cart_button"
-        app:layout_constraintStart_toStartOf="@+id/wishlist_event_description"
-        app:layout_constraintTop_toTopOf="@+id/wishlist_cart_button"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/delete" />
-
-    <TextView
-        android:id="@+id/wishlist_event_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="25dp"
-        android:text="@string/event_details_event_descriptions"
-        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_images" />
-
-    <View
-        android:id="@+id/divider11"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="15dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="@+id/wishlist_event_date"
-        app:layout_constraintStart_toStartOf="@+id/imageView51"
-        app:layout_constraintTop_toBottomOf="@+id/wishlist_event_location" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView45"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
