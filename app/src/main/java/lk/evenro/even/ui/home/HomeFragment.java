@@ -45,22 +45,27 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        return view;
+    }
 
-        TextView user_email_home = view.findViewById(R.id.user_email_home);
+    @Override
+    public void onStart() {
+        super.onStart();
 
-        TextView icon = view.findViewById(R.id.icon_images_homes);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        TextView user_email_home = getView().findViewById(R.id.user_email_home);
+
+        TextView icon = getView().findViewById(R.id.icon_images_homes);
         String email = user.getEmail();
         char firstCharUpper = Character.toUpperCase(email.charAt(0));
         icon.setText(String.valueOf(firstCharUpper));
         user_email_home.setText(user.getEmail());
 
 
-        categoryRecyclerView = view.findViewById(R.id.event_category_recycler_view);
+        categoryRecyclerView = getView().findViewById(R.id.event_category_recycler_view);
         fullEventList = new ArrayList<>();
         fullEventLists = new ArrayList<>();
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -101,7 +106,7 @@ public class HomeFragment extends Fragment {
                 });
 
 
-        TextView popluar_event_all_button = view.findViewById(R.id.popular_event_view_all_button);
+        TextView popluar_event_all_button = getView().findViewById(R.id.popular_event_view_all_button);
         popluar_event_all_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +116,7 @@ public class HomeFragment extends Fragment {
         });
 
 
-        ImageView search_button = view.findViewById(R.id.search_image_button);
+        ImageView search_button = getView().findViewById(R.id.search_image_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,9 +126,7 @@ public class HomeFragment extends Fragment {
         });
 
 
-        return view;
     }
-
 
     private void updateRecyclerView(ArrayList<EventDetails> list) {
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
