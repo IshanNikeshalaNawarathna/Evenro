@@ -5,8 +5,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import lk.evenro.even.R;
 
@@ -42,6 +47,45 @@ public class CustomAlert {
 
     public interface DatePickerListener {
         void onDateSelected(String selectedDate);
+    }
+
+    public static void showTimePickerDialog(Context context, TimePickerListener listener) {
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogView = inflater.inflate(R.layout.time_picker, null);
+
+        TimePicker timePicker = dialogView.findViewById(R.id.time_picker);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(dialogView);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        timePicker.setHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+        timePicker.setMinute(Calendar.getInstance().get(Calendar.MINUTE));
+
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                String timeFormat = "hh:mm a";
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+
+                SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.getDefault());
+                String selectedTime = sdf.format(calendar.getTime());
+
+                listener.onTimeSelected(selectedTime);
+
+
+                timePicker.invalidate();
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+    public interface TimePickerListener {
+        void onTimeSelected(String selectedTime);
     }
 
 }

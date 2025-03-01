@@ -1,7 +1,10 @@
 package lk.evenro.even.adapter;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +65,7 @@ public class MyTicketAdapter extends RecyclerView.Adapter<MyTicketAdapter.EventV
     public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.event_itme, parent, false);
+        View view = inflater.inflate(R.layout.my_ticket_item, parent, false);
         EventViewHolder holder = new EventViewHolder(view);
         return holder;
     }
@@ -74,6 +77,7 @@ public class MyTicketAdapter extends RecyclerView.Adapter<MyTicketAdapter.EventV
         holder.edite_event_item_title.setText(details.getEventName());
         holder.edite_event_item_date.setText(details.getEventDate());
         holder.edite_event_item_price.setText(details.getPrices());
+        holder.edite_quntity.setText(details.getQty());
         holder.edite_event_item_location.setText(details.getEventLocations());
         Glide.with(holder.edite_profile_image.getContext())
                 .load(Uri.parse(details.getImageUri()))
@@ -81,9 +85,18 @@ public class MyTicketAdapter extends RecyclerView.Adapter<MyTicketAdapter.EventV
         holder.edite_event_item_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventUpdateFragment eventUpdateFragment = new EventUpdateFragment();
-                FragmentManager fragmentManager = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
-                eventUpdateFragment.show(fragmentManager, eventUpdateFragment.getTag());
+                Context context = v.getContext();
+                while (context instanceof ContextWrapper) {
+                    if (context instanceof AppCompatActivity) {
+                        AppCompatActivity activity = (AppCompatActivity) context;
+                        EventUpdateFragment eventUpdateFragment = new EventUpdateFragment();
+                        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                        eventUpdateFragment.show(fragmentManager, eventUpdateFragment.getTag());
+                        return;
+                    }
+                    context = ((ContextWrapper) context).getBaseContext();
+                }
+                Log.e("Fragment Error", "Could not find AppCompatActivity context.");
             }
         });
 
