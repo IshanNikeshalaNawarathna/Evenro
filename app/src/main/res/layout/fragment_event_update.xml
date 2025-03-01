@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edite_event_name"
+        android:id="@+id/edite_event_date"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="25dp"
@@ -36,7 +36,7 @@
         android:paddingEnd="5dp"
         android:state_enabled="false"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView23"
+        app:layout_constraintEnd_toStartOf="@+id/pick_date_button"
         app:layout_constraintStart_toStartOf="@+id/textView22"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
@@ -71,13 +71,13 @@
         app:layout_constraintTop_toBottomOf="@+id/edite_event_time" />
 
     <ImageView
-        android:id="@+id/imageView23"
+        android:id="@+id/pick_date_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/baseline_calendar"
-        app:layout_constraintBottom_toBottomOf="@+id/edite_event_name"
+        app:layout_constraintBottom_toBottomOf="@+id/edite_event_date"
         app:layout_constraintEnd_toEndOf="@+id/textView22"
-        app:layout_constraintTop_toTopOf="@+id/edite_event_name" />
+        app:layout_constraintTop_toTopOf="@+id/edite_event_date" />
 
     <EditText
         android:id="@+id/edite_event_qty"
@@ -95,8 +95,8 @@
         android:state_enabled="false"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView24"
-        app:layout_constraintStart_toStartOf="@+id/edite_event_name"
-        app:layout_constraintTop_toBottomOf="@+id/edite_event_name" />
+        app:layout_constraintStart_toStartOf="@+id/edite_event_date"
+        app:layout_constraintTop_toBottomOf="@+id/edite_event_date" />
 
     <ImageView
         android:id="@+id/imageView24"
@@ -105,7 +105,7 @@
         android:src="@drawable/baseline_access_time"
         android:tint="@color/main_color"
         app:layout_constraintBottom_toBottomOf="@+id/edite_event_qty"
-        app:layout_constraintEnd_toEndOf="@+id/imageView23"
+        app:layout_constraintEnd_toEndOf="@+id/pick_date_button"
         app:layout_constraintTop_toTopOf="@+id/edite_event_qty" />
 
     <Button
