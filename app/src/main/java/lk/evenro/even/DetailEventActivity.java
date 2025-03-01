@@ -1,8 +1,11 @@
 package lk.evenro.even;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -164,28 +168,30 @@ public class DetailEventActivity extends AppCompatActivity {
         wishlist_save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Wishlist wishlistData = new Wishlist(getApplicationContext(), "evenro.dp", null, 1);
 
-                EventDetails eventDetails = new EventDetails();
-                eventDetails.setEventName(details.getEventName());
-                eventDetails.setEventLocations(details.getEventLocations());
-                eventDetails.setEventDescriptions(details.getEventDescriptions());
-                eventDetails.setPrices(details.getPrices());
-                eventDetails.setEventCategory(details.getEventCategory());
-                eventDetails.setQty(details.getQty());
-                eventDetails.setEventDate(details.getEventDate());
-                eventDetails.setEventTime(details.getEventTime());
-                eventDetails.setOrganizerName(details.getOrganizerName());
-                eventDetails.setEventID(details.getEventID());
-                eventDetails.setMobileNumber(details.getMobileNumber());
-                eventDetails.setImageUri(details.getImageUri());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SQLiteDatabase database = wishlistData.getWritableDatabase();
 
-                Gson gson = new Gson();
-                String wishlistData = gson.toJson(eventDetails);
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("eventID",details.getEventID());
+                        contentValues.put("eventName",details.getEventName());
+                        contentValues.put("eventDescription",details.getEventDescriptions());
+                        contentValues.put("eventCategory",details.getEventCategory());
+                        contentValues.put("eventLoaction",details.getEventLocations());
+                        contentValues.put("eventPrice",details.getPrices());
+                        contentValues.put("eventDate",details.getEventDate());
+                        contentValues.put("eventTime",details.getEventTime());
+                        contentValues.put("eventOrganizerName",details.getOrganizerName());
+                        contentValues.put("eventMobileNumber",details.getMobileNumber());
+                        contentValues.put("eventImageUri",details.getImageUri());
 
-                SharedPreferences sharedPreferences = getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("wishlist_data", wishlistData);
-                editor.apply();
+                        long id = database.insert("wishlist",null,contentValues);
+                        Log.i("Watchlist Data",String.valueOf(id));
+                    }
+                }).start();
 
                 Intent intent = new Intent(getApplicationContext(), WishlistActivity.class);
                 startActivity(intent);
@@ -195,4 +201,32 @@ public class DetailEventActivity extends AppCompatActivity {
 
     }
 
+}
+class Wishlist extends SQLiteOpenHelper {
+
+    public Wishlist(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE wishlist (\n" +
+                "    eventID            TEXT PRIMARY KEY,\n" +
+                "    eventName          TEXT NOT NULL,\n" +
+                "    eventDescription   TEXT NOT NULL,\n" +
+                "    eventCategory      TEXT NOT NULL,\n" +
+                "    eventLoaction      TEXT NOT NULL,\n" +
+                "    eventPrice         TEXT NOT NULL,\n" +
+                "    eventDate          TEXT NOT NULL,\n" +
+                "    eventTime          TEXT NOT NULL,\n" +
+                "    eventOrganizerName TEXT NOT NULL,\n" +
+                "    eventMobileNumber  TEXT NOT NULL,\n" +
+                "    eventImageUri      TEXT NOT NULL\n" +
+                ");");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
 }
