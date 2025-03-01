@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +91,9 @@ public class MyTicketAdapter extends RecyclerView.Adapter<MyTicketAdapter.EventV
                     if (context instanceof AppCompatActivity) {
                         AppCompatActivity activity = (AppCompatActivity) context;
                         EventUpdateFragment eventUpdateFragment = new EventUpdateFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("eventId", details.getEventID());
+                        eventUpdateFragment.setArguments(bundle);
                         FragmentManager fragmentManager = activity.getSupportFragmentManager();
                         eventUpdateFragment.show(fragmentManager, eventUpdateFragment.getTag());
                         return;
