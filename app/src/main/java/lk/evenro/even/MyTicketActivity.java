@@ -1,5 +1,6 @@
 package lk.evenro.even;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -108,8 +109,15 @@ public class MyTicketActivity extends AppCompatActivity {
 
     }
     private void updateRecyclerView(ArrayList<EventDetails> list) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new MyTicketAdapter(list));
+
+        if(list.isEmpty()){
+            Intent intent = new Intent(MyTicketActivity.this,AddActivity.class);
+            startActivity(intent);
+        }else{
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+            recyclerView.setAdapter(new MyTicketAdapter(list));
+        }
+
     }
     private EventDetails allData(DocumentSnapshot document) {
         String eventID = document.getId();

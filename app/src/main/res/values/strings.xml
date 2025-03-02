@@ -126,6 +126,7 @@
     <string name="update_event">Update Event</string>
     <string name="upgrate_event">UPGRATE EVENT</string>
     <string name="witchlist">Witchlist</string>
+    <string name="add_event">ADD EVENT</string>
 
 
 </resources>

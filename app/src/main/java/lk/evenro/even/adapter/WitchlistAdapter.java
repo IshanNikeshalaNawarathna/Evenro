@@ -1,5 +1,6 @@
 package lk.evenro.even.adapter;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -16,8 +17,10 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import lk.evenro.even.EmaityActivity;
 import lk.evenro.even.R;
 
+import lk.evenro.even.WishlistActivity;
 import lk.evenro.even.model.Watchlist;
 import lk.evenro.even.model.Wishlist;
 
@@ -93,6 +96,13 @@ public class WitchlistAdapter extends RecyclerView.Adapter<WitchlistAdapter.Witc
             watchlists.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, watchlists.size());
+
+            if (watchlists.isEmpty()) {
+                Intent intent = new Intent(view.getContext(), WishlistActivity.class);
+                view.getContext().startActivity(intent);
+            }
+
+
         }
     }
 
