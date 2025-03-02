@@ -24,6 +24,7 @@ import lk.evenro.even.adapter.MyTicketAdapter;
 import lk.evenro.even.adapter.WitchlistAdapter;
 import lk.evenro.even.model.EventDetails;
 import lk.evenro.even.model.Watchlist;
+import lk.evenro.even.model.Wishlist;
 
 public class WishlistActivity extends AppCompatActivity {
 
@@ -49,6 +50,7 @@ public class WishlistActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         fullEventList = new ArrayList<>();
+
         Wishlist wishlistData = new Wishlist(getApplicationContext(), "evenro.dp", null, 1);
 
         new Thread(new Runnable() {

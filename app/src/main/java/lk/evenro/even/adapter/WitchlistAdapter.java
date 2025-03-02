@@ -1,5 +1,7 @@
 package lk.evenro.even.adapter;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import lk.evenro.even.R;
+
 import lk.evenro.even.model.Watchlist;
+import lk.evenro.even.model.Wishlist;
+
 
 public class WitchlistAdapter extends RecyclerView.Adapter<WitchlistAdapter.WitchlistViewHolder> {
 
@@ -47,7 +52,7 @@ public class WitchlistAdapter extends RecyclerView.Adapter<WitchlistAdapter.Witc
         holder.witchlist_delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                deleteItem(holder.getAdapterPosition(), v);
             }
         });
     }
@@ -74,4 +79,22 @@ public class WitchlistAdapter extends RecyclerView.Adapter<WitchlistAdapter.Witc
         }
     }
 
+    private void deleteItem(int position, View view) {
+        if (position >= 0 && position < watchlists.size()) {
+            Watchlist itemToRemove = watchlists.get(position);
+
+            // Delete from database
+            Wishlist wishlistData = new Wishlist(view.getContext(), "evenro.dp", null, 1);
+            SQLiteDatabase database = wishlistData.getWritableDatabase();
+            database.delete("wishlist", "eventId = ?", new String[]{itemToRemove.getEventID()});
+            database.close();
+
+            // Remove from list and update RecyclerView
+            watchlists.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, watchlists.size());
+        }
+    }
+
 }
+
