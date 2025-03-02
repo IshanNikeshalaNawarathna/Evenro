@@ -13,12 +13,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
+import lk.evenro.even.adapter.MyTicketAdapter;
+import lk.evenro.even.adapter.WitchlistAdapter;
+import lk.evenro.even.model.EventDetails;
 import lk.evenro.even.model.Watchlist;
 
 public class WishlistActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private ArrayList<Watchlist> fullEventList;
 
 
     @Override
@@ -38,22 +48,43 @@ public class WishlistActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//
-//        Wishlist wishlistData = new Wishlist(getApplicationContext(), "evenro.dp", null, 1);
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                SQLiteDatabase database = wishlistData.getReadableDatabase();
-//                Cursor cursor = database.rawQuery("SELECT * FROM `wishlist`",null);
-//                while (cursor.moveToNext()){
-//                    String name =  cursor.getString(0);
-//                    Log.i("SIGN UP", name);
-//                }
-//
-//            }
-//        }).start();
+        fullEventList = new ArrayList<>();
+        Wishlist wishlistData = new Wishlist(getApplicationContext(), "evenro.dp", null, 1);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SQLiteDatabase database = wishlistData.getReadableDatabase();
+                Cursor cursor = database.rawQuery("SELECT * FROM `wishlist`",null);
+                while (cursor.moveToNext()){
+                    String eventId =  cursor.getString(0);
+                    String eventName =  cursor.getString(1);
+                    String eventLocation =  cursor.getString(2);
+                    String eventPrice =  cursor.getString(3);
+                    String eventDate =  cursor.getString(4);
+                    String eventImage =  cursor.getString(5);
 
+                    Watchlist watchlist = new Watchlist(eventId,eventName,eventLocation,eventPrice,eventDate,eventImage);
+                    fullEventList.add(watchlist);
+                }
+                cursor.close();
+                database.close();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateRecyclerView(fullEventList);
+                    }
+                });
+
+            }
+        }).start();
+
+        recyclerView = findViewById(R.id.witchlist_recycler_view);
+
+    }
+    private void updateRecyclerView(ArrayList<Watchlist> list) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new WitchlistAdapter(list));
     }
 }

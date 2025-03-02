@@ -30,5 +30,10 @@
         android:name="lk.evenro.even.MyTicketActivity"
         android:label="activity_my_ticket"
         tools:layout="@layout/activity_my_ticket" />
+    <activity
+        android:id="@+id/wishlistActivity"
+        android:name="lk.evenro.even.WishlistActivity"
+        android:label="activity_wishlist"
+        tools:layout="@layout/activity_wishlist"/>
 
 </navigation>
