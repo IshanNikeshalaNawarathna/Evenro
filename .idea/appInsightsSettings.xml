@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="lk.evenro.even" />
+                  <option name="mobileSdkAppId" value="1:1003671141527:android:f0a8bb659a6ffdd8e63dd2" />
+                  <option name="projectId" value="evenro-baa22" />
+                  <option name="projectNumber" value="1003671141527" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

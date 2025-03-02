@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/add_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/home_search"
+        android:id="@+id/cart_item_type_qty"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -48,9 +48,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="@color/back_button"
-        app:layout_constraintBottom_toBottomOf="@+id/home_search"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_item_type_qty"
         app:layout_constraintEnd_toEndOf="@+id/textView44"
-        app:layout_constraintTop_toTopOf="@+id/home_search">
+        app:layout_constraintTop_toTopOf="@+id/cart_item_type_qty">
 
         <ImageView
             android:id="@+id/imageView25"
@@ -61,7 +61,7 @@
             app:srcCompat="@drawable/shape_all_view" />
 
         <ImageButton
-            android:id="@+id/imageButton11"
+            android:id="@+id/search_all_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -69,168 +69,18 @@
             app:srcCompat="@drawable/custome_filter" />
     </FrameLayout>
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_music"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_item_recycle_view"
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:chipBackgroundColor="@color/back_button"
-        app:chipStrokeColor="@color/back_button"
-        app:layout_constraintEnd_toStartOf="@+id/chip_art"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_search" />
-
-    <FrameLayout
-        android:id="@+id/frameLayout20"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/chip_music"
-        app:layout_constraintStart_toStartOf="@+id/chip_music"
-        app:layout_constraintTop_toTopOf="@+id/chip_music">
-
-        <ImageView
-            android:id="@+id/imageView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="#FCF5FD"
-            app:srcCompat="@drawable/shape_curicle" />
-
-        <FrameLayout
-            android:layout_width="25dp"
-            android:layout_height="25dp">
-
-            <ImageView
-                android:id="@+id/imageView26"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/music" />
-        </FrameLayout>
-    </FrameLayout>
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_art"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:chipBackgroundColor="@color/back_button"
-        app:chipStrokeColor="@color/back_button"
-        app:layout_constraintEnd_toStartOf="@+id/chip_sport"
-        app:layout_constraintStart_toEndOf="@+id/chip_music"
-        app:layout_constraintTop_toBottomOf="@+id/home_search" />
-
-    <FrameLayout
-        android:id="@+id/frameLayout21"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/chip_art"
-        app:layout_constraintStart_toStartOf="@+id/chip_art"
-        app:layout_constraintTop_toTopOf="@+id/chip_art">
-
-        <ImageView
-            android:id="@+id/imageView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="#FCF5FD"
-            app:srcCompat="@drawable/shape_curicle" />
-
-        <FrameLayout
-            android:layout_width="25dp"
-            android:layout_height="25dp">
-
-            <ImageView
-                android:id="@+id/imageView28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/painting" />
-        </FrameLayout>
-    </FrameLayout>
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_sport"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:chipBackgroundColor="@color/back_button"
-        app:chipIconVisible="true"
-        app:chipStrokeColor="@color/back_button"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/chip_art"
-        app:layout_constraintTop_toBottomOf="@+id/home_search" />
-
-    <FrameLayout
-        android:id="@+id/frameLayout23"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/chip_sport"
-        app:layout_constraintStart_toStartOf="@+id/chip_sport"
-        app:layout_constraintTop_toTopOf="@+id/chip_sport">
-
-        <ImageView
-            android:id="@+id/imageView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="#FCF5FD"
-            app:srcCompat="@drawable/shape_curicle" />
-
-        <FrameLayout
-            android:layout_width="25dp"
-            android:layout_height="25dp">
-
-            <ImageView
-                android:id="@+id/imageView29"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/tennis_ball" />
-        </FrameLayout>
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/textView45"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter_semi_bold"
-        android:text="@string/chipe_title1"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout20"
-        app:layout_constraintStart_toEndOf="@+id/frameLayout20"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout20" />
-
-    <TextView
-        android:id="@+id/textView46"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter_semi_bold"
-        android:text="@string/chipe_title2"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout21"
-        app:layout_constraintStart_toEndOf="@+id/frameLayout21"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout21" />
-
-    <TextView
-        android:id="@+id/textView50"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter_semi_bold"
-        android:text="@string/chipe_title3"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout23"
-        app:layout_constraintStart_toEndOf="@+id/frameLayout23"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout23" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cart_item_type_qty" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

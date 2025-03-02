@@ -2,55 +2,35 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/add_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="#4C4C37"
     tools:context=".DetailEventActivity">
 
-    <FrameLayout
-        android:id="@+id/details_image_frame"
+    <ImageView
+        android:id="@+id/event_detail_image"
         android:layout_width="0dp"
         android:layout_height="300dp"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/imgs" />
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/imgs" />
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+        android:id="@+id/event_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/inter_semi_bold"
         android:text="@string/event_details_title_name"
         android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/event_price"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/details_image_frame" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="87dp"
-        android:layout_height="37dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="@color/main_color_sub"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        android:text="@string/event_details_prices"
-        app:iconPadding="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/event_detail_image" />
 
     <FrameLayout
         android:id="@+id/frameLayout7"
@@ -59,7 +39,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8">
+        app:layout_constraintTop_toBottomOf="@+id/event_title">
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -70,7 +50,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/event_locations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -87,9 +67,9 @@
         android:layout_height="24dp"
         android:layout_marginStart="24dp"
         android:backgroundTint="#687077"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toTopOf="@+id/textView12">
+        app:layout_constraintBottom_toBottomOf="@+id/event_locations"
+        app:layout_constraintStart_toEndOf="@+id/event_locations"
+        app:layout_constraintTop_toTopOf="@+id/event_locations">
 
         <ImageButton
             android:id="@+id/imageButton3"
@@ -100,7 +80,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/event_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -119,9 +99,9 @@
         android:layout_height="2dp"
         android:layout_marginTop="10dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="@+id/event_date"
         app:layout_constraintStart_toStartOf="@+id/frameLayout7"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/event_locations" />
 
     <FrameLayout
         android:id="@+id/frameLayout9"
@@ -132,16 +112,25 @@
         app:layout_constraintTop_toBottomOf="@+id/divider3">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
+            android:id="@+id/profile_images"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/profile"
+            android:src="@drawable/shape_curicle"
             app:civ_border_color="#FF000000" />
+
+        <TextView
+            android:id="@+id/user_email_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_semi_bold"
+            android:text="@string/profile_icon"
+            android:textSize="34sp" />
 
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/organize_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -176,7 +165,7 @@
         app:layout_constraintTop_toBottomOf="@+id/frameLayout9" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/wishlist_event_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -188,17 +177,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buy_ticket_button"
         android:layout_width="0dp"
         android:layout_height="45dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/button_color"
         android:fontFamily="@font/inter_semi_bold"
         android:text="@string/event_details_button"
-        app:layout_constraintEnd_toEndOf="@+id/textView18"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintEnd_toEndOf="@+id/wishlist_event_description"
+        app:layout_constraintStart_toEndOf="@+id/wishlist_save_button"
+        app:layout_constraintTop_toBottomOf="@+id/wishlist_event_description" />
 
     <FrameLayout
         android:id="@+id/call_icon_framelayout"
@@ -206,8 +195,8 @@
         android:layout_height="30dp"
         android:layout_marginStart="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView16"
-        app:layout_constraintStart_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toTopOf="@+id/textView15">
+        app:layout_constraintStart_toEndOf="@+id/organize_name"
+        app:layout_constraintTop_toTopOf="@+id/organize_name">
 
         <ImageView
             android:id="@+id/imageView8"
@@ -217,7 +206,7 @@
             app:srcCompat="@drawable/shape_curicle" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/call_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -241,7 +230,7 @@
             app:srcCompat="@drawable/shape_curicle" />
 
         <ImageButton
-            android:id="@+id/imageButton8"
+            android:id="@+id/message_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FDFDFD"
@@ -270,5 +259,27 @@
             android:backgroundTint="@color/back_button"
             app:srcCompat="@drawable/share" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/event_price"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/event_details_prices"
+        android:textColor="@color/main_color"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/event_title"
+        app:layout_constraintEnd_toEndOf="@+id/divider3"
+        app:layout_constraintTop_toTopOf="@+id/event_title" />
+
+    <ImageButton
+        android:id="@+id/wishlist_save_button"
+        android:layout_width="45dp"
+        android:layout_height="46dp"
+        android:backgroundTint="#FCF5FD"
+        app:layout_constraintBottom_toBottomOf="@+id/buy_ticket_button"
+        app:layout_constraintStart_toStartOf="@+id/wishlist_event_description"
+        app:layout_constraintTop_toTopOf="@+id/buy_ticket_button"
+        app:srcCompat="@drawable/bookmark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
