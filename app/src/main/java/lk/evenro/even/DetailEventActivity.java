@@ -1,8 +1,11 @@
 package lk.evenro.even;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -32,6 +36,7 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import lk.evenro.even.model.EventDetails;
+import lk.evenro.even.model.Wishlist;
 
 public class DetailEventActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
@@ -164,28 +169,25 @@ public class DetailEventActivity extends AppCompatActivity {
         wishlist_save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Wishlist wishlistData = new Wishlist(getApplicationContext(), "evenro.dp", null, 1);
 
-                EventDetails eventDetails = new EventDetails();
-                eventDetails.setEventName(details.getEventName());
-                eventDetails.setEventLocations(details.getEventLocations());
-                eventDetails.setEventDescriptions(details.getEventDescriptions());
-                eventDetails.setPrices(details.getPrices());
-                eventDetails.setEventCategory(details.getEventCategory());
-                eventDetails.setQty(details.getQty());
-                eventDetails.setEventDate(details.getEventDate());
-                eventDetails.setEventTime(details.getEventTime());
-                eventDetails.setOrganizerName(details.getOrganizerName());
-                eventDetails.setEventID(details.getEventID());
-                eventDetails.setMobileNumber(details.getMobileNumber());
-                eventDetails.setImageUri(details.getImageUri());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SQLiteDatabase database = wishlistData.getWritableDatabase();
 
-                Gson gson = new Gson();
-                String wishlistData = gson.toJson(eventDetails);
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("eventID",details.getEventID());
+                        contentValues.put("eventName",details.getEventName());
+                        contentValues.put("eventLoaction",details.getEventLocations());
+                        contentValues.put("eventPrice",details.getPrices());
+                        contentValues.put("eventDate",details.getEventDate());
+                        contentValues.put("eventImageUri",details.getImageUri());
 
-                SharedPreferences sharedPreferences = getSharedPreferences("lk.evenro.even.data", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("wishlist_data", wishlistData);
-                editor.apply();
+                        long id = database.insert("wishlist",null,contentValues);
+                        Log.i("Watchlist Data",String.valueOf(id));
+                    }
+                }).start();
 
                 Intent intent = new Intent(getApplicationContext(), WishlistActivity.class);
                 startActivity(intent);

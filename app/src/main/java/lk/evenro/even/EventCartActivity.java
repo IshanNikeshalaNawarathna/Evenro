@@ -51,6 +51,7 @@ public class EventCartActivity extends AppCompatActivity {
     private int code;
     private String date, event_date, event_time, eventID, typeQty, event_name,name,email,eventImage;
     private int event_qty;
+    private static final int PAYHERE_REQUEST = 100;
 
 
 
@@ -137,7 +138,6 @@ public class EventCartActivity extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 date = simpleDateFormat.format(new Date());
                 paymentMethod();
-                uploadInvoice();
             }
         });
 
@@ -164,47 +164,31 @@ public class EventCartActivity extends AppCompatActivity {
 
     }
 
-    private final ActivityResultLauncher<Intent> paymentLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    Intent data = result.getData();
-                    if (data.hasExtra(PHConstants.INTENT_EXTRA_DATA)) {
-                        Serializable serializable = data.getSerializableExtra(PHConstants.INTENT_EXTRA_DATA);
-                        if (serializable instanceof PHResponse) {
-                            PHResponse<StatusResponse> response = (PHResponse<StatusResponse>) serializable;
-                            if (response.isSuccess()) {
-                                Log.i("Payment Message", "Payment Success");
-                                Toast.makeText(getApplicationContext(), "Payment Success", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Log.i("Payment Message", "Payment Failed" + response);
-                                Toast.makeText(getApplicationContext(), "Payment Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PAYHERE_REQUEST && data != null && data.hasExtra(PHConstants.INTENT_EXTRA_RESULT)) {
+            PHResponse<StatusResponse> response = (PHResponse<StatusResponse>) data.getSerializableExtra(PHConstants.INTENT_EXTRA_RESULT);
+            if (resultCode == Activity.RESULT_OK) {
+                String msg;
+                if (response != null)
+                    if (response.isSuccess())
+                        InvoicePayment(code, event_name, name,email, totalPrice, date, typeQty, event_date, event_time, eventID,eventImage);
+                    else
+                        Toast.makeText(EventCartActivity.this,response.toString(),Toast.LENGTH_SHORT).show();
+                else
+                  Toast.makeText(EventCartActivity.this,"Result: no response",Toast.LENGTH_SHORT).show();
 
-                    }
-                } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
-                    Log.i("Payment Message", "Payment Cancelled");
-                    Toast.makeText(getApplicationContext(), "Payment Cancelled", Toast.LENGTH_SHORT).show();
-                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                if (response != null)
+                    Toast.makeText(EventCartActivity.this,response.toString(),Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(EventCartActivity.this,"User canceled the request",Toast.LENGTH_SHORT).show();
             }
-    );
-
-    private void uploadInvoice() {
-        new Thread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(6000);
-                            InvoicePayment(code, event_name, name,email, totalPrice, date, typeQty, event_date, event_time, eventID,eventImage);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                    }
-                }
-        ).start();
+        }
     }
+
+
 
     private void TicketPriceCale(String qty, int event_price) {
 
@@ -242,7 +226,7 @@ public class EventCartActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), PHMainActivity.class);
         intent.putExtra(PHConstants.INTENT_EXTRA_DATA, req);
         PHConfigs.setBaseUrl(PHConfigs.SANDBOX_URL);
-        paymentLauncher.launch(intent);
+        startActivityForResult(intent, PAYHERE_REQUEST);
     }
 
     private void InvoicePayment(int payment_id, String event_name, String buyer_name, String buyer_email, int ticket_price, String payment_date, String qty, String event_date, String event_time, String eventID,String eventImage) {

@@ -21,8 +21,12 @@
             android:title="@string/menu_ticket" />
         <item
             android:id="@+id/myTicketActivity"
-            android:icon="@drawable/add_to_photos"
+            android:icon="@drawable/book_online"
             android:title="@string/my_event" />
+        <item
+            android:id="@+id/wishlistActivity"
+            android:icon="@drawable/bookmark"
+            android:title="@string/witchlist" />
         <item
             android:id="@+id/nav_sign_out"
             android:icon="@drawable/logout"
