@@ -1,5 +1,6 @@
 package lk.evenro.even;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -86,7 +87,14 @@ public class WishlistActivity extends AppCompatActivity {
 
     }
     private void updateRecyclerView(ArrayList<Watchlist> list) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new WitchlistAdapter(list));
+        if (list.isEmpty()) {
+            Intent intent = new Intent(WishlistActivity.this, EmaityActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+            recyclerView.setAdapter(new WitchlistAdapter(list));
+        }
     }
+
 }
