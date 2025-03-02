@@ -102,7 +102,6 @@ private boolean isFlip;
             builder.show();
             showPermissionRationaleDialog();
         } else {
-            // Request the permission
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQ_CODE);
         }
     }

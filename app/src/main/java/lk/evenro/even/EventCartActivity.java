@@ -161,7 +161,6 @@ public class EventCartActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please Inter your user Cradintal", Toast.LENGTH_SHORT).show();
         }
 
-
     }
 
     @Override
@@ -170,15 +169,17 @@ public class EventCartActivity extends AppCompatActivity {
         if (requestCode == PAYHERE_REQUEST && data != null && data.hasExtra(PHConstants.INTENT_EXTRA_RESULT)) {
             PHResponse<StatusResponse> response = (PHResponse<StatusResponse>) data.getSerializableExtra(PHConstants.INTENT_EXTRA_RESULT);
             if (resultCode == Activity.RESULT_OK) {
-                String msg;
-                if (response != null)
-                    if (response.isSuccess())
-                        InvoicePayment(code, event_name, name,email, totalPrice, date, typeQty, event_date, event_time, eventID,eventImage);
-                    else
-                        Toast.makeText(EventCartActivity.this,response.toString(),Toast.LENGTH_SHORT).show();
-                else
-                  Toast.makeText(EventCartActivity.this,"Result: no response",Toast.LENGTH_SHORT).show();
-
+                if (response != null) {
+                    if (response.isSuccess()) {
+                        InvoicePayment(code, event_name, name, email, totalPrice, date, typeQty, event_date, event_time, eventID, eventImage);
+                        Intent intent = new Intent(EventCartActivity.this, SearchActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(EventCartActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(EventCartActivity.this, "Result: no response", Toast.LENGTH_SHORT).show();
+                }
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 if (response != null)
                     Toast.makeText(EventCartActivity.this,response.toString(),Toast.LENGTH_SHORT).show();
