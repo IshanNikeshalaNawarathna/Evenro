@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="lk.evenro.even.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+    <activity
+        android:id="@+id/invoiceHistoryActivity"
+        android:name="lk.evenro.even.InvoiceHistoryActivity"
+        android:label="activity_invoice_history"
+        tools:layout="@layout/activity_invoice_history" />
+    <activity
+        android:id="@+id/editProfileActivity"
+        android:name="lk.evenro.even.EditProfileActivity"
+        android:label="activity_edit_profile"
+        tools:layout="@layout/activity_edit_profile" />
+    <activity
+        android:id="@+id/eventAddActivity"
+        android:name="lk.evenro.even.EventAddActivity"
+        android:label="activity_event_add"
+        tools:layout="@layout/activity_event_add" />
+    <activity
+        android:id="@+id/myTicketActivity"
+        android:name="lk.evenro.even.MyTicketActivity"
+        android:label="activity_my_ticket"
+        tools:layout="@layout/activity_my_ticket" />
+    <activity
+        android:id="@+id/wishlistActivity"
+        android:name="lk.evenro.even.WishlistActivity"
+        android:label="activity_wishlist"
+        tools:layout="@layout/activity_wishlist"/>
+
+</navigation>

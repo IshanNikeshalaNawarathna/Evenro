@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:gravity="center"
+        android:text="@string/search_title"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/cart_item_type_qty"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/custome_input"
+        android:backgroundTint="@color/back_button"
+        android:drawableStart="@drawable/baseline_search"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        android:hint="@string/input_plaesholder5"
+        android:inputType="text"
+        android:paddingStart="8dp"
+        android:paddingEnd="5dp"
+        android:state_enabled="false"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/frameLayout19"
+        app:layout_constraintStart_toStartOf="@+id/textView44"
+        app:layout_constraintTop_toBottomOf="@+id/textView44" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout19"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:backgroundTint="@color/back_button"
+        app:layout_constraintBottom_toBottomOf="@+id/cart_item_type_qty"
+        app:layout_constraintEnd_toEndOf="@+id/textView44"
+        app:layout_constraintTop_toTopOf="@+id/cart_item_type_qty">
+
+        <ImageView
+            android:id="@+id/imageView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundTint="@color/back_button"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/shape_all_view" />
+
+        <ImageButton
+            android:id="@+id/search_all_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/back_button"
+            app:srcCompat="@drawable/custome_filter" />
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_item_recycle_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cart_item_type_qty" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

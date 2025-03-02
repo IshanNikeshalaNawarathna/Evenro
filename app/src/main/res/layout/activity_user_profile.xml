@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserProfileActivity">
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:gravity="center"
+        android:text="@string/user_profile_title"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout11"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView20"
+        app:layout_constraintStart_toStartOf="@+id/textView20"
+        app:layout_constraintTop_toBottomOf="@+id/textView20">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_images"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/shape_curicle"
+            app:civ_border_color="#FF000000" />
+
+        <TextView
+            android:id="@+id/textView51"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_semi_bold"
+            android:text="@string/profile_icon"
+            android:textSize="34sp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/eidt_icon_framelayout"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout11"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout11">
+
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/main_color"
+            app:srcCompat="@drawable/shape_curicle" />
+
+        <FrameLayout
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:backgroundTint="@color/main_color">
+
+            <ImageButton
+                android:id="@+id/user_image_select_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F56B10"
+                app:srcCompat="@drawable/baseline_create" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="@string/user_profile_name"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout11"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout11"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout11" />
+
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/textView20"
+        app:layout_constraintStart_toStartOf="@+id/textView20"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/user_profile_name_lable1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout12"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout12"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout12" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/user_profile_name_edit1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView24"
+        app:layout_constraintEnd_toEndOf="@+id/divider7"
+        app:layout_constraintStart_toEndOf="@+id/textView24"
+        app:layout_constraintTop_toTopOf="@+id/textView24"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/user_profile_name_edit2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintEnd_toEndOf="@+id/textView25"
+        app:layout_constraintStart_toEndOf="@+id/textView26"
+        app:layout_constraintTop_toTopOf="@+id/textView26"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/user_profile_name_lable2"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout13"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout13"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout13" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/user_profile_name_lable3"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout14"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout14"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout14" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/user_profile_name_edit3"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView28"
+        app:layout_constraintEnd_toEndOf="@+id/textView27"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintTop_toTopOf="@+id/textView28" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout12"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/divider7"
+        app:layout_constraintTop_toBottomOf="@+id/divider7">
+
+        <ImageView
+            android:id="@+id/imageView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tint="@color/icon_color"
+            app:srcCompat="@drawable/baseline_call" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout13"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout12"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout12">
+
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tint="@color/icon_color"
+            app:srcCompat="@drawable/custome_email" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout14"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout13"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout13">
+
+        <ImageView
+            android:id="@+id/imageView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tint="@color/icon_color"
+            app:srcCompat="@drawable/baseline_home" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout15"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout14"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout14">
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:tint="@color/icon_color"
+            app:srcCompat="@drawable/baseline_calendar" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/user_profile_name_lable4"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout15"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout15"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout15" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/event_details_date"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView30"
+        app:layout_constraintTop_toTopOf="@+id/textView30" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

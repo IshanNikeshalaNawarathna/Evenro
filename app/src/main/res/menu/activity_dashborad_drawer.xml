@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/editProfileActivity"
+            android:icon="@drawable/user"
+            android:title="@string/menu_account" />
+        <item
+            android:id="@+id/nav_calender"
+            android:icon="@drawable/baseline_calendar"
+            android:title="@string/menu_calender" />
+        <item
+            android:id="@+id/invoiceHistoryActivity"
+            android:icon="@drawable/baseline_beenhere"
+            android:title="@string/menu_setting" />
+        <item
+            android:id="@+id/eventAddActivity"
+            android:icon="@drawable/add_to_photos"
+            android:title="@string/menu_ticket" />
+        <item
+            android:id="@+id/myTicketActivity"
+            android:icon="@drawable/book_online"
+            android:title="@string/my_event" />
+        <item
+            android:id="@+id/wishlistActivity"
+            android:icon="@drawable/bookmark"
+            android:title="@string/witchlist" />
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@drawable/logout"
+            android:title="@string/menu_sign_out" />
+    </group>
+</menu>
