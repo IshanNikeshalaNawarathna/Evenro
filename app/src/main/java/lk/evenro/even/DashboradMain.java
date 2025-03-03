@@ -85,7 +85,7 @@ private boolean isFlip;
 
     private void requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Notification permissions granted! ", Toast.LENGTH_SHORT).show();
+
         } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Your app needs notifications to show the status of your order!")

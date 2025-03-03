@@ -1,6 +1,5 @@
 package lk.evenro.even.model;
 
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,12 +8,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import lk.evenro.even.R;
 
-public class MessagingService extends FirebaseMessagingService{
+
+public class MessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
@@ -30,17 +31,15 @@ public class MessagingService extends FirebaseMessagingService{
             );
             notificationManager.createNotificationChannel(notificationChannel);
 
-            Notification notification = new Notification.Builder(getApplicationContext(), "C1")
+            Notification notification = new Notification.Builder(getApplicationContext(),"C1")
                     .setContentTitle(message.getNotification().getTitle())
                     .setContentText(message.getNotification().getBody())
                     .setSmallIcon(R.drawable.logos)
                     .setPriority(Notification.PRIORITY_DEFAULT).build();
 
-            notificationManager.notify(1, notification);
-
+            notificationManager.notify(1,notification);
 
         }
 
     }
 }
-

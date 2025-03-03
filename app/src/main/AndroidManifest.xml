@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="lk.evenro.even">
 
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- <uses-permission android:name="android.permission.MANAGE_DEVICE_POLICY_MICROPHONE" /> -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -35,18 +35,9 @@
             android:exported="false" />
         <activity
             android:name=".ErrorActivity"
-            android:exported="false" /> <!-- <receiver -->
-        <!-- android:name=".model.NetworkChangeReceiver" -->
-        <!-- android:exported="false"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
-        <activity
-            android:name=".GoogleMapActivity"
             android:exported="false" />
         <activity
-            android:name=".MapActivity"
+            android:name=".GoogleMapActivity"
             android:exported="false" />
         <activity
             android:name=".DashboradMain"
@@ -61,18 +52,12 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".InvoiceHistoryActivity"
             android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".EventCartActivity"
@@ -80,13 +65,6 @@
         <activity
             android:name=".EventAddActivity"
             android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".SearchActivity"
@@ -110,12 +88,6 @@
             android:name=".SignUpActivity"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".SignInActivity"

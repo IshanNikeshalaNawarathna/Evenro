@@ -75,7 +75,7 @@ public class TicketViewActivity extends AppCompatActivity {
                             OkHttpClient okHttpClient = new OkHttpClient();
                             RequestBody requestBody = RequestBody.create(gson.toJson(jsonObject), MediaType.parse("application/json"));
                             Request request = new Request.Builder()
-                                    .url("https://1bee-2402-d000-a400-5ed3-a921-c84d-78a9-a087.ngrok-free.app/EmailSending/EmailSending")
+                                    .url("https://8065-2402-d000-a400-225d-c091-f58a-add-d067.ngrok-free.app/EmailSending/EmailSending")
                                     .post(requestBody)
                                     .build();
 
