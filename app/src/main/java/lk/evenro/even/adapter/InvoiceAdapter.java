@@ -40,7 +40,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.EventVie
             purchase_ticket_qty = itemView.findViewById(R.id.ticket_qty);
             purchase_ticket_price = itemView.findViewById(R.id.buying_ticket_price);
             purchase_ticket_view_button = itemView.findViewById(R.id.ticket_view_button);
-            profile_image = itemView.findViewById(R.id.profile_images);
+            profile_image = itemView.findViewById(R.id.purch_profile_image);
 
         }
     }

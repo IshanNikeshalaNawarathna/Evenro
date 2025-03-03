@@ -132,6 +132,7 @@
     <string name="event_time">Event Time</string>
     <string name="purchase_date">Purchase Date</string>
     <string name="seat">Seat</string>
+    <string name="purch_1">1</string>
 
 
 </resources>
