@@ -15,7 +15,7 @@
     <string name="input_plaesholder4">Type your confirm password</string>
     <string name="sign_up_bottom_text1">Alraady have an account ? </string>
     <string name="sign_up_bottom_text2">Sign In</string>
-    <string name="item_button">JOIN NOW</string>
+    <string name="item_button">JOIN</string>
     <string name="event_details_prices">200$</string>
     <string name="event_details_button">BUY A TICKET</string>
     <string name="event_details_title_name">Music Show</string>
