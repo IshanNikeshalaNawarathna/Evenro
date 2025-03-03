@@ -6,133 +6,148 @@
     android:layout_height="wrap_content"
     android:foregroundTint="@color/main_color">
 
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/back_button"
-        android:backgroundTint="@color/white"
-        android:tint="#F7F7F9"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:padding="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/item_shape" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <FrameLayout
-        android:id="@+id/frameLayout10"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-        app:layout_constraintStart_toStartOf="@+id/imageView13"
-        app:layout_constraintTop_toTopOf="@+id/imageView13">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/witchlist_profile_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/imgs"
-            app:civ_border_color="#FF000000" />
-    </FrameLayout>
+            <!-- Event Image -->
+            <ImageView
+                android:id="@+id/witchlist_profile_image"
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Event Image"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/imgs" />
 
-    <TextView
-        android:id="@+id/witchlist_event_item_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="@font/inter_semi_bold"
-        android:text="@string/event_details_title_name"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/divider4"
-        app:layout_constraintStart_toEndOf="@+id/frameLayout10"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout10" />
+            <!-- Event Details -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
+                <!-- Event Name -->
 
-    <TextView
-        android:id="@+id/witchlist_event_item_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/event_details_date"
-        android:textSize="8sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView23"
-        app:layout_constraintStart_toEndOf="@+id/imageView23"
-        app:layout_constraintTop_toTopOf="@+id/imageView23" />
+                <!-- Location -->
 
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="2dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="70dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout10"
-        app:layout_constraintEnd_toEndOf="@+id/imageView13"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout10" />
+                <TextView
+                    android:id="@+id/witchlist_event_item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_semi_bold"
+                    android:text="Event Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/witchlist_event_item_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:fontFamily="@font/inter_semi_bold"
-        android:gravity="center"
-        android:text="@string/event_details_prices"
-        android:textColor="@color/main_color"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView13"
-        app:layout_constraintStart_toEndOf="@+id/divider4"
-        app:layout_constraintTop_toTopOf="@+id/divider4" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/witchlist_event_item_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:fontFamily="@font/inter_regular"
-        android:text="@string/event_details_locations"
-        android:textSize="8sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView24"
-        app:layout_constraintStart_toEndOf="@+id/imageView24"
-        app:layout_constraintTop_toTopOf="@+id/imageView24" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="Location Icon"
+                        android:tint="@color/main_color"
+                        app:srcCompat="@drawable/baseline_location" />
 
-    <ImageView
-        android:id="@+id/imageView23"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout10"
-        app:layout_constraintStart_toEndOf="@+id/frameLayout10"
-        app:srcCompat="@drawable/baseline_calendar" />
+                    <TextView
+                        android:id="@+id/witchlist_event_item_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Location Name"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="10sp" />
+                </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView24"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/witchlist_event_item_date"
-        app:layout_constraintStart_toEndOf="@+id/witchlist_event_item_date"
-        app:layout_constraintTop_toTopOf="@+id/witchlist_event_item_date"
-        app:srcCompat="@drawable/baseline_location" />
+                <!-- Date -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/witchlist_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="#FD0000"
-        app:layout_constraintBottom_toBottomOf="@+id/divider4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView13"
-        app:layout_constraintStart_toEndOf="@+id/divider4"
-        app:layout_constraintTop_toBottomOf="@+id/witchlist_event_item_price"
-        app:srcCompat="@drawable/delete" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="Date Icon"
+                        android:tint="@color/main_color"
+                        app:srcCompat="@drawable/baseline_calendar" />
+
+                    <TextView
+                        android:id="@+id/witchlist_event_item_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="Event Date"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <!-- Ticket Price -->
+                <TextView
+                    android:id="@+id/witchlist_event_item_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_semi_bold"
+                    android:text="$20"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Join Button -->
+            <View
+                android:id="@+id/divider11"
+                android:layout_width="2dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="0"
+                android:background="?android:attr/listDivider" />
+
+            <ImageButton
+                android:id="@+id/witchlist_delete_button"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="@color/back_button"
+                android:tint="#FF0600"
+                app:srcCompat="@drawable/delete" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
